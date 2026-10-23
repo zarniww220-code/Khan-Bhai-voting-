@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KHAN BHAI | Township Voting</title>
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #f4f6f8;
+      color: #172033;
+    }
+
+    header {
+      background: #12372a;
+      color: white;
+      padding: 28px 20px;
+      text-align: center;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 29px;
+      letter-spacing: 2px;
+    }
+
+    header p {
+      margin-bottom: 0;
+      color: #d9e8df;
+    }
+
+    main {
+      max-width: 600px;
+      margin: 24px auto;
+      padding: 0 16px;
+    }
+
+    .card {
+      background: white;
+      padding: 22px;
+      border-radius: 16px;
+      margin-bottom: 18px;
+      box-shadow: 0 4px 18px #0000000b;
+    }
+
+    h2 {
+      margin-top: 0;
+      font-size: 21px;
+    }
+
+    select, button {
+      width: 100%;
+      padding: 14px;
+      border-radius: 10px;
+      font-size: 16px;
+    }
+
+    select {
+      border: 1px solid #ccd4dc;
+      background: white;
+      margin: 8px 0 14px;
+    }
+
+    button {
+      border: none;
+      background: #176b45;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:disabled {
+      background: #9ca3af;
+    }
+
+    #message {
+      margin-top: 12px;
+      line-height: 1.6;
+    }
+
+    .result {
+      margin: 18px 0;
+    }
+
+    .result-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 7px;
+    }
+
+    .bar-bg {
+      background: #e5e9ed;
+      height: 10px;
+      border-radius: 20px;
+      overflow: hidden;
+    }
+
+    .bar {
+      background: #218455;
+      height: 100%;
+      width: 0%;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      color: #667085;
+      font-size: 13px;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>KHAN BHAI</h1>
+    <p>မြို့နယ်ရွေးချယ်မှု မဲပေးစနစ်</p>
+  </header>
+
+  <main>
+    <section class="card">
+      <h2>📍 မနက်ဖြန် ဘယ်မြို့နယ်ကို သွားရောင်းသင့်သလဲ?</h2>
+      <p>သင်ရွေးချယ်လိုတဲ့ မြို့နယ်ကို ရွေးပြီး မဲပေးနိုင်ပါတယ်။</p>
+
+      <label for="township">မြို့နယ်ရွေးချယ်ပါ</label>
+      <select id="township">
+        <option value="">မြို့နယ်ရွေးချယ်ရန်</option>
+        <option>အလုံ</option>
+        <option>ဗဟန်း</option>
+        <option>ဗိုလ်တထောင်</option>
+        <option>ဒဂုံ</option>
+        <option>ဒဂုံမြို့သစ် (မြောက်ပိုင်း)</option>
+        <option>ဒဂုံမြို့သစ် (တောင်ပိုင်း)</option>
+        <option>ဒဂုံမြို့သစ် (အရှေ့ပိုင်း)</option>
+        <option>ဒဂုံမြို့သစ် (ဆိပ်ကမ်း)</option>
+        <option>ဒေါပုံ</option>
+        <option>ဒလ</option>
+        <option>အင်းစိန်</option>
+        <option>ကမာရွတ်</option>
+        <option>ကော့မှူး</option>
+        <option>ကျောက်တံတား</option>
+        <option>ကြည့်မြင်တိုင်</option>
+        <option>လှိုင်</option>
+        <option>လှိုင်သာယာ (အရှေ့ပိုင်း)</option>
+        <option>လှိုင်သာယာ (အနောက်ပိုင်း)</option>
+        <option>လမ်းမတော်</option>
+        <option>လသာ</option>
+        <option>မင်္ဂလာဒုံ</option>
+        <option>မင်္ဂလာတောင်ညွန့်</option>
+        <option>မြောက်ဥက္ကလာပ</option>
+        <option>ပန်းဘဲတန်း</option>
+        <option>ပုဇွန်တောင်</option>
+        <option>စမ်းချောင်း</option>
+        <option>ရွှေပြည်သာ</option>
+        <option>တောင်ဥက္ကလာပ</option>
+        <option>တာမွေ</option>
+        <option>သင်္ဃန်းကျွန်း</option>
+        <option>သန်လျင်</option>
+        <option>တွံတေး</option>
+        <option>ရန်ကင်း</option>
+      </select>
+
+      <button id="voteButton" onclick="vote()">🗳️ မဲပေးမယ်</button>
+      <p id="message" role="status"></p>
+    </section>
+
+    <section class="card">
+      <h2>📊 လက်ရှိမဲရလဒ်</h2>
+      <p id="totalVotes">စုစုပေါင်းမဲ: 0</p>
+      <div id="results"></div>
+    </section>
+  </main>
+
+  <footer>
+    KHAN BHAI Township Voting System
+  </footer>
+
+  <script>
+    const townships = [
+      ...document.querySelectorAll("#township option")
+    ].map(option => option.value || option.textContent)
+     .filter(name => name !== "မြို့နယ်ရွေးချယ်ရန်");
+
+    const votes = {};
+    townships.forEach(name => votes[name] = 0);
+
+    function vote() {
+      const selected = document.getElementById("township").value;
+      const message = document.getElementById("message");
+
+      if (!selected) {
+        message.textContent = "မဲပေးရန် မြို့နယ်တစ်ခုကို အရင်ရွေးချယ်ပါ။";
+        return;
+      }
+
+      votes[selected]++;
+      message.textContent =
+        "“" + selected + "” မြို့နယ်ကို မဲပေးပြီးပါပြီ။ (စမ်းသပ်မဲသာဖြစ်သည်)";
+      renderResults();
+    }
+
+    function renderResults() {
+      const total = Object.values(votes)
+        .reduce((sum, count) => sum + count, 0);
+
+      document.getElementById("totalVotes").textContent =
+        "စုစုပေါင်းမဲ: " + total;
+
+      const sorted = Object.entries(votes)
+        .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0], "my"));
+
+      document.getElementById("results").innerHTML =
+        sorted.map(([name, count], index) => {
+          const percent = total ? (count / total) * 100 : 0;
+          return `
+            <div class="result">
+              <div class="result-head">
+                <span>${index + 1}. ${name}</span>
+                <strong>${count} မဲ</strong>
+              </div>
+              <div class="bar-bg">
+                <div class="bar" style="width:${percent}%"></div>
+              </div>
+            </div>`;
+        }).join("");
+    }
+
+    renderResults();
+  </script>
+</body>
+</html>
