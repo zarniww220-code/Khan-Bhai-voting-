@@ -1,0 +1,204 @@
+
+<!DOCTYPE html>
+<html lang="my">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101827">
+  <title>KHAN BHAI | Admin Login</title>
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      padding: 24px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #101827;
+      color: #111827;
+    }
+
+    .container { width: 100%; max-width: 420px; }
+
+    .brand {
+      text-align: center;
+      margin-bottom: 24px;
+      color: white;
+    }
+
+    .brand h1 {
+      margin: 0;
+      font-size: 32px;
+      font-weight: 900;
+      letter-spacing: 1px;
+    }
+
+    .brand p { color: #CBD5E1; font-size: 14px; }
+
+    .card {
+      padding: 26px 22px;
+      border-radius: 20px;
+      background: white;
+    }
+
+    .description { color: #64748B; font-size: 14px; line-height: 1.7; }
+
+    label {
+      display: block;
+      margin: 17px 0 8px;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    input {
+      width: 100%;
+      min-height: 48px;
+      padding: 12px;
+      border: 1px solid #E2E8F0;
+      border-radius: 11px;
+      font-size: 16px;
+    }
+
+    button {
+      display: block;
+      margin: 23px auto 0;
+      min-width: 150px;
+      min-height: 48px;
+      padding: 0 24px;
+      border: 0;
+      border-radius: 11px;
+      background: #3B82F6;
+      color: white;
+      font-size: 16px;
+      font-weight: 800;
+    }
+
+    button:disabled { opacity: .6; }
+
+    #message {
+      display: none;
+      margin-top: 16px;
+      padding: 12px;
+      border-radius: 10px;
+      font-size: 14px;
+      line-height: 1.6;
+      overflow-wrap: anywhere;
+    }
+
+    #message.show { display: block; }
+    #message.error { background: #FEF2F2; color: #991B1B; }
+    #message.success { background: #EFF6FF; color: #1D4ED8; }
+
+    .note {
+      margin-top: 20px;
+      color: #CBD5E1;
+      font-size: 12px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <main class="container">
+    <header class="brand">
+      <h1>KHAN BHAI</h1>
+      <p>Township Voting System</p>
+    </header>
+
+    <section class="card">
+      <h2>Admin Login</h2>
+      <p class="description">စီမံခန့်ခွဲသူအကောင့်ဖြင့် ဝင်ရောက်ပါ။</p>
+
+      <form id="loginForm">
+        <label for="email">Email Address</label>
+        <input id="email" type="email" autocomplete="username"
+          placeholder="Admin email" required>
+
+        <label for="password">Password</label>
+        <input id="password" type="password"
+          autocomplete="current-password"
+          placeholder="Password" required>
+
+        <button id="loginButton" type="submit">Login</button>
+      </form>
+
+      <div id="message" role="status" aria-live="polite"></div>
+    </section>
+
+    <p class="note">Authorized administrators only.</p>
+  </main>
+
+  <script type="module">
+    import { createClient } from
+      "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
+
+    const SUPABASE_URL =
+      "https://vefqgexluwfwabdapklf.supabase.co";
+
+    const SUPABASE_PUBLISHABLE_KEY =
+      "PASTE_YOUR_SUPABASE_PUBLISHABLE_KEY_HERE";
+
+    const supabase = createClient(
+      SUPABASE_URL,
+      SUPABASE_PUBLISHABLE_KEY
+    );
+
+    const form = document.getElementById("loginForm");
+    const button = document.getElementById("loginButton");
+    const message = document.getElementById("message");
+
+    function showMessage(text, type = "error") {
+      message.textContent = text;
+      message.className = "show " + type;
+    }
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      button.disabled = true;
+      button.textContent = "Checking...";
+      message.className = "";
+
+      try {
+        if (SUPABASE_PUBLISHABLE_KEY.startsWith("PASTE_")) {
+          throw new Error("sb_publishable_8eMPJX9TY1RIKxRhG4O1Aw_vLPcFm8R");
+        }
+
+        const { data, error } = await supabase.auth.signInWithPassword({
+          email: document.getElementById("email").value.trim(),
+          password: document.getElementById("password").value
+        });
+
+        if (error) throw new Error("Login မအောင်မြင်ပါ။ Email နှင့် Password ကို စစ်ဆေးပါ။");
+
+        const { data: admin, error: adminError } = await supabase
+          .from("admin_users")
+          .select("user_id")
+          .eq("user_id", data.user.id)
+          .maybeSingle();
+
+        if (adminError) {
+          await supabase.auth.signOut();
+          throw new Error("Admin ခွင့်ပြုချက်စစ်ဆေးမရပါ။ Database Policy ကို စစ်ဆေးရန်လိုနိုင်သည်။");
+        }
+
+        if (!admin) {
+          await supabase.auth.signOut();
+          throw new Error("ဤအကောင့်တွင် Admin ခွင့်ပြုချက်မရှိပါ။");
+        }
+
+        showMessage(
+          "Login အောင်မြင်ပါသည်။ Admin ခွင့်ပြုချက် အတည်ပြုပြီးပါပြီ။ Dashboard ကို နောက်အဆင့်တွင် ချိတ်ဆက်ပါမည်။",
+          "success"
+        );
+      } catch (error) {
+        showMessage(error.message || "Error ဖြစ်ပွားခဲ့သည်။");
+      } finally {
+        button.disabled = false;
+        button.textContent = "Login";
+      }
+    });
+  </script>
+</body>
+</html>
