@@ -140,9 +140,13 @@
     const SUPABASE_PUBLISHABLE_KEY =
       "sb_publishable_8eMPJX9TY1RIKxRhG4O1Aw_vLPcFm8R";
 
-    const supabase = createClient (SUPABASE_URL,
+    const supabase = createClient (
 
-  SUPABASE_PUBLISHABLE_KEY);
+  SUPABASE_URL,
+
+  SUPABASE_PUBLISHABLE_KEY
+
+);
     const form = document.getElementById("loginForm");
     const button = document.getElementById("loginButton");
     const message = document.getElementById("message");
