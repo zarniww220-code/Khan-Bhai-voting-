@@ -1,89 +1,115 @@
+
 <!DOCTYPE html>
 <html lang="my">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101827">
   <title>KHAN BHAI | Township Voting</title>
+
   <style>
     * { box-sizing: border-box; }
 
     body {
       margin: 0;
       font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-      background: #f4f6f8;
-      color: #172033;
+      background: #101827;
+      color: #111827;
     }
 
     header {
-      background: #12372a;
+      background: #172338;
       color: white;
-      padding: 28px 20px;
       text-align: center;
+      padding: 26px 16px;
+      border-bottom: 3px solid #3B82F6;
     }
 
     header h1 {
       margin: 0;
-      font-size: 29px;
-      letter-spacing: 2px;
+      font-size: 30px;
+      font-weight: 900;
+      letter-spacing: 1px;
     }
 
     header p {
+      color: #CBD5E1;
       margin-bottom: 0;
-      color: #d9e8df;
     }
 
     main {
+      width: 100%;
       max-width: 600px;
-      margin: 24px auto;
-      padding: 0 16px;
+      margin: 22px auto;
+      padding: 0 14px;
     }
 
     .card {
-      background: white;
-      padding: 22px;
+      background: #FFFFFF;
       border-radius: 16px;
-      margin-bottom: 18px;
-      box-shadow: 0 4px 18px #0000000b;
+      padding: 20px;
+      margin-bottom: 16px;
+      box-shadow: 0 5px 18px #00000025;
     }
 
     h2 {
       margin-top: 0;
-      font-size: 21px;
+      font-size: 20px;
+    }
+
+    p { line-height: 1.7; }
+
+    .status {
+      padding: 12px;
+      background: #EFF6FF;
+      color: #1D4ED8;
+      border-radius: 10px;
+      font-weight: 700;
+      overflow-wrap: anywhere;
+    }
+
+    .error {
+      background: #FEF2F2;
+      color: #991B1B;
+    }
+
+    label {
+      display: block;
+      font-weight: 700;
+      margin: 16px 0 8px;
     }
 
     select, button {
       width: 100%;
-      padding: 14px;
+      min-height: 46px;
       border-radius: 10px;
       font-size: 16px;
     }
 
     select {
-      border: 1px solid #ccd4dc;
+      padding: 10px;
+      border: 1px solid #CBD5E1;
       background: white;
-      margin: 8px 0 14px;
+      color: #111827;
     }
 
     button {
+      margin-top: 12px;
       border: none;
-      background: #176b45;
+      background: #3B82F6;
       color: white;
-      font-weight: bold;
+      font-weight: 800;
       cursor: pointer;
     }
 
     button:disabled {
-      background: #9ca3af;
+      background: #94A3B8;
+      cursor: not-allowed;
     }
 
-    #message {
-      margin-top: 12px;
-      line-height: 1.6;
-    }
+    .muted { color: #64748B; font-size: 14px; }
 
-    .result {
-      margin: 18px 0;
-    }
+    .result { margin: 18px 0; }
 
     .result-head {
       display: flex;
@@ -93,39 +119,45 @@
     }
 
     .bar-bg {
-      background: #e5e9ed;
       height: 10px;
+      background: #E2E8F0;
       border-radius: 20px;
       overflow: hidden;
     }
 
     .bar {
-      background: #218455;
       height: 100%;
-      width: 0%;
+      background: #3B82F6;
     }
 
     footer {
       text-align: center;
       padding: 20px;
-      color: #667085;
-      font-size: 13px;
+      color: #CBD5E1;
+      font-size: 12px;
     }
   </style>
 </head>
-<body>
 
+<body>
   <header>
     <h1>KHAN BHAI</h1>
-    <p>မြို့နယ်ရွေးချယ်မှု မဲပေးစနစ်</p>
+    <p>Township Voting System</p>
   </header>
 
   <main>
     <section class="card">
-      <h2>📍 မနက်ဖြန် ဘယ်မြို့နယ်ကို သွားရောင်းသင့်သလဲ?</h2>
-      <p>သင်ရွေးချယ်လိုတဲ့ မြို့နယ်ကို ရွေးပြီး မဲပေးနိုင်ပါတယ်။</p>
+      <h2>🗳️ မဲပေးရန်</h2>
+      <p>သင်စိတ်ဝင်စားတဲ့ မြို့နယ်ကို ရွေးချယ်ပြီး မဲပေးနိုင်ပါတယ်။</p>
+
+      <div id="status" class="status" role="status">
+        Database ချိတ်ဆက်မှုကို စစ်ဆေးနေပါသည်...
+      </div>
+
+      <p id="countdown" class="muted"></p>
 
       <label for="township">မြို့နယ်ရွေးချယ်ပါ</label>
+
       <select id="township">
         <option value="">မြို့နယ်ရွေးချယ်ရန်</option>
         <option>အလုံ</option>
@@ -163,72 +195,359 @@
         <option>ရန်ကင်း</option>
       </select>
 
-      <button id="voteButton" onclick="vote()">🗳️ မဲပေးမယ်</button>
-      <p id="message" role="status"></p>
+      <button id="voteButton" disabled>မဲပေးရန်</button>
+      <div id="message" role="status" aria-live="polite"></div>
     </section>
 
     <section class="card">
-      <h2>📊 လက်ရှိမဲရလဒ်</h2>
-      <p id="totalVotes">စုစုပေါင်းမဲ: 0</p>
+      <h2>📢 KHAN BHAI ၏ ကြေညာချက်</h2>
+      <div id="announcement" class="muted">
+        ကြေညာချက်ကို ရယူနေပါသည်...
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>📊 မဲရလဒ်</h2>
+      <p id="resultsStatus">မဲရလဒ်ကို သတ်မှတ်ချိန်ရောက်မှ ပြသပါမည်။</p>
       <div id="results"></div>
     </section>
   </main>
 
-  <footer>
-    KHAN BHAI Township Voting System
-  </footer>
+  <footer>KHAN BHAI Township Voting System</footer>
 
-  <script>
-    const townships = [
-      ...document.querySelectorAll("#township option")
-    ].map(option => option.value || option.textContent)
-     .filter(name => name !== "မြို့နယ်ရွေးချယ်ရန်");
+  <script type="module">
+    import { createClient } from
+      "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
 
-    const votes = {};
-    townships.forEach(name => votes[name] = 0);
+    const SUPABASE_URL =
+      "https://vefqgexluwfwabdapklf.supabase.co";
 
-    function vote() {
-      const selected = document.getElementById("township").value;
-      const message = document.getElementById("message");
+    const SUPABASE_KEY =
+      "sb_publishable_8eMPJX9TY1RIKxRhG4O1Aw_vLPcFm8R";
 
-      if (!selected) {
-        message.textContent = "မဲပေးရန် မြို့နယ်တစ်ခုကို အရင်ရွေးချယ်ပါ။";
+    const supabase = createClient(
+      SUPABASE_URL,
+      SUPABASE_KEY
+    );
+
+    const $ = id => document.getElementById(id);
+
+    const voteButton = $("voteButton");
+    const townshipSelect = $("township");
+    const statusBox = $("status");
+    const messageBox = $("message");
+
+    let databaseReady = false;
+    let votingOpen = false;
+    let busy = false;
+
+    function myanmarTime() {
+      const parts = new Intl.DateTimeFormat("en-GB", {
+        timeZone: "Asia/Yangon",
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+        hourCycle: "h23"
+      }).formatToParts(new Date());
+
+      const v = {};
+      for (const p of parts) {
+        if (p.type !== "literal") v[p.type] = p.value;
+      }
+
+      return {
+        date: `${v.year}-${v.month}-${v.day}`,
+        hour: Number(v.hour),
+        minute: Number(v.minute),
+        second: Number(v.second)
+      };
+    }
+
+    function alreadyVotedToday() {
+      try {
+        return localStorage.getItem(
+          "khan_bhai_voted_" + myanmarTime().date
+        ) === "yes";
+      } catch {
+        return false;
+      }
+    }
+
+    function showMessage(text, isError = false) {
+      messageBox.textContent = text;
+      messageBox.className = isError
+        ? "status error"
+        : "status";
+    }
+
+    function formatError(error) {
+      const text = error?.message || String(error);
+
+      if (/Voting is closed/i.test(text)) {
+        return "မဲပေးချိန် မဟုတ်ပါ။ မနက် ၁၀ နာရီမှ ည ၁၀ နာရီအတွင်းသာ မဲပေးနိုင်ပါသည်။";
+      }
+
+      if (/row-level security|permission denied|not allowed/i.test(text)) {
+        return "Database ခွင့်ပြုချက်အမှား ဖြစ်နေပါသည်။ Supabase Policy ကို ပြင်ဆင်ရန်လိုပါသည်။";
+      }
+
+      if (/Failed to fetch|Load failed|NetworkError/i.test(text)) {
+        return "Internet သို့မဟုတ် Supabase ချိတ်ဆက်မှု မအောင်မြင်ပါ။ Internet ကို စစ်ဆေးပြီး ပြန်ကြိုးစားပါ။";
+      }
+
+      return "အမှားအသေးစိတ်: " + text;
+    }
+
+    async function loadAnnouncement() {
+      const { data, error } = await supabase
+        .from("voting_control")
+        .select("confirmed_township,confirmed_visit_time,announcement")
+        .eq("id", true)
+        .maybeSingle();
+
+      if (error) {
+        $("announcement").textContent =
+          "ကြေညာချက် ရယူမရပါ။ " + formatError(error);
         return;
       }
 
-      votes[selected]++;
-      message.textContent =
-        "“" + selected + "” မြို့နယ်ကို မဲပေးပြီးပါပြီ။ (စမ်းသပ်မဲသာဖြစ်သည်)";
-      renderResults();
+      const lines = [];
+
+      if (data?.confirmed_township) {
+        lines.push("အတည်ပြုထားသော မြို့နယ်: " +
+          data.confirmed_township);
+      }
+
+      if (data?.confirmed_visit_time) {
+        lines.push("လာရောက်မည့်အချိန်: " +
+          data.confirmed_visit_time);
+      }
+
+      if (data?.announcement) {
+        lines.push(data.announcement);
+      }
+
+      $("announcement").textContent = lines.length
+        ? lines.join("\n")
+        : "လက်ရှိ ကြေညာချက်မရှိသေးပါ။";
+      $("announcement").style.whiteSpace = "pre-line";
     }
 
-    function renderResults() {
-      const total = Object.values(votes)
-        .reduce((sum, count) => sum + count, 0);
+    async function loadResults() {
+      const t = myanmarTime();
 
-      document.getElementById("totalVotes").textContent =
+      if (t.hour < 22) {
+        $("resultsStatus").textContent =
+          "မဲရလဒ်ကို မြန်မာစံတော်ချိန် ည ၁၀ နာရီရောက်မှ ပြသပါမည်။";
+        $("results").replaceChildren();
+        return;
+      }
+
+      $("resultsStatus").textContent =
+        "Database မှ မဲရလဒ်ကို ရယူနေပါသည်...";
+
+      const { data, error } = await supabase
+        .from("Votes")
+        .select("township");
+
+      if (error) {
+        $("resultsStatus").textContent =
+          "မဲရလဒ် ရယူမရပါ။ " + formatError(error);
+        return;
+      }
+
+      const counts = {};
+      for (const option of townshipSelect.options) {
+        if (option.value) counts[option.value] = 0;
+      }
+
+      for (const vote of data || []) {
+        if (Object.prototype.hasOwnProperty.call(
+          counts, vote.township
+        )) {
+          counts[vote.township]++;
+        }
+      }
+
+      const total = (data || []).length;
+      const sorted = Object.entries(counts)
+        .sort((a, b) => b[1] - a[1]);
+
+      $("resultsStatus").textContent =
         "စုစုပေါင်းမဲ: " + total;
 
-      const sorted = Object.entries(votes)
-        .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0], "my"));
+      $("results").replaceChildren();
 
-      document.getElementById("results").innerHTML =
-        sorted.map(([name, count], index) => {
-          const percent = total ? (count / total) * 100 : 0;
-          return `
-            <div class="result">
-              <div class="result-head">
-                <span>${index + 1}. ${name}</span>
-                <strong>${count} မဲ</strong>
-              </div>
-              <div class="bar-bg">
-                <div class="bar" style="width:${percent}%"></div>
-              </div>
-            </div>`;
-        }).join("");
+      for (const [name, count] of sorted) {
+        if (count === 0) continue;
+
+        const row = document.createElement("div");
+        row.className = "result";
+
+        const head = document.createElement("div");
+        head.className = "result-head";
+
+        const label = document.createElement("span");
+        label.textContent = name;
+
+        const number = document.createElement("strong");
+        number.textContent = count + " မဲ";
+
+        head.append(label, number);
+
+        const background = document.createElement("div");
+        background.className = "bar-bg";
+
+        const bar = document.createElement("div");
+        bar.className = "bar";
+        bar.style.width = (total ? count / total * 100 : 0) + "%";
+
+        background.append(bar);
+        row.append(head, background);
+        $("results").append(row);
+      }
+
+      if (total === 0) {
+        $("results").textContent = "မဲရလဒ် မရှိသေးပါ။";
+      }
     }
 
-    renderResults();
+    async function refreshStatus() {
+      databaseReady = false;
+      votingOpen = false;
+      voteButton.disabled = true;
+
+      try {
+        const { data, error } = await supabase.rpc(
+          "is_voting_open"
+        );
+
+        if (error) throw error;
+
+        databaseReady = true;
+        votingOpen = data === true;
+
+        const t = myanmarTime();
+
+        if (t.hour < 10 || t.hour >= 22) {
+          statusBox.className = "status";
+          statusBox.textContent =
+            "မဲပေးချိန် ပိတ်ထားပါသည်။ မနက် ၁၀ နာရီမှ ည ၁၀ နာရီအထိ မဲပေးနိုင်ပါသည်။";
+        } else if (!votingOpen) {
+          statusBox.className = "status";
+          statusBox.textContent =
+            "Admin မှ မဲပေးခြင်းကို ယာယီပိတ်ထားပါသည်။";
+        } else {
+          statusBox.className = "status";
+          statusBox.textContent =
+            "မဲပေးနေပါသည်။ မဲရလဒ်ကို ည ၁၀ နာရီမှ ပြသပါမည်။";
+        }
+
+        if (t.hour >= 22) {
+          $("countdown").textContent =
+            "ယနေ့ မဲပေးချိန် ပြီးဆုံးပါပြီ။";
+        } else if (t.hour < 10) {
+          $("countdown").textContent =
+            "မဲပေးချိန် စတင်ရန် မနက် ၁၀ နာရီအထိ စောင့်ပါ။";
+        } else {
+          const remaining =
+            22 * 60 - (t.hour * 60 + t.minute);
+
+          $("countdown").textContent =
+            `မဲပိတ်ရန် ကျန်ချိန် ${Math.floor(remaining / 60)} နာရီ ${remaining % 60} မိနစ်`;
+        }
+
+        if (alreadyVotedToday()) {
+          showMessage(
+            "ဤဖုန်း Browser မှ ယနေ့ မဲပေးပြီးပါပြီ။"
+          );
+        }
+
+        voteButton.disabled =
+          !databaseReady || !votingOpen ||
+          alreadyVotedToday() || busy;
+
+      } catch (error) {
+        statusBox.className = "status error";
+        statusBox.textContent =
+          "Database ချိတ်ဆက်မှု စစ်ဆေးမအောင်မြင်ပါ။ " +
+          formatError(error);
+        databaseReady = false;
+        votingOpen = false;
+        voteButton.disabled = true;
+      }
+
+      await loadAnnouncement();
+      await loadResults();
+    }
+
+    voteButton.addEventListener("click", async () => {
+      if (busy || !databaseReady || !votingOpen) return;
+
+      const selected = townshipSelect.value;
+
+      if (!selected) {
+        showMessage("မဲပေးရန် မြို့နယ်တစ်ခုကို ရွေးချယ်ပါ။", true);
+        return;
+      }
+
+      if (alreadyVotedToday()) {
+        showMessage("ဤဖုန်း Browser မှ ယနေ့ မဲပေးပြီးပါပြီ။", true);
+        voteButton.disabled = true;
+        return;
+      }
+
+      const confirmed = window.confirm(
+        `“${selected}” မြို့နယ်ကို မဲပေးမှာ သေချာပါသလား။`
+      );
+
+      if (!confirmed) return;
+
+      busy = true;
+      voteButton.disabled = true;
+      voteButton.textContent = "မဲသိမ်းနေပါသည်...";
+
+      try {
+        // Database function က အချိန်နှင့် Admin ပိတ်ထားမှုကို
+        // ထပ်မံစစ်ဆေးပေးမည်။
+        const { error } = await supabase
+          .from("Votes")
+          .insert({ township: selected });
+
+        if (error) throw error;
+
+        try {
+          localStorage.setItem(
+            "khan_bhai_voted_" + myanmarTime().date,
+            "yes"
+          );
+        } catch {}
+
+        showMessage(
+          `“${selected}” မြို့နယ်အတွက် မဲကို Database ထဲ သိမ်းဆည်းပြီးပါပြီ။ ကျေးဇူးတင်ပါတယ်။`
+        );
+
+        townshipSelect.value = "";
+        await refreshStatus();
+
+      } catch (error) {
+        showMessage(formatError(error), true);
+      } finally {
+        busy = false;
+        voteButton.textContent = "မဲပေးရန်";
+        voteButton.disabled =
+          !databaseReady || !votingOpen ||
+          alreadyVotedToday();
+      }
+    });
+
+    await refreshStatus();
+
+    // အချိန်နှင့် Admin အခြေအနေကို မိနစ်ဝက်တိုင်း ပြန်စစ်မည်။
+    setInterval(refreshStatus, 30000);
   </script>
 </body>
 </html>
