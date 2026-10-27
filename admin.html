@@ -5,202 +5,654 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#101827">
-  <title>KHAN BHAI | Admin Login</title>
+  <title>KHAN BHAI | Admin Dashboard</title>
   <style>
     * { box-sizing: border-box; }
 
     body {
       margin: 0;
-      min-height: 100vh;
-      padding: 24px 16px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, sans-serif;
       background: #101827;
       color: #111827;
     }
 
-    .container { width: 100%; max-width: 420px; }
-
-    .brand {
-      text-align: center;
-      margin-bottom: 24px;
+    header {
+      background: #172338;
       color: white;
+      padding: 22px 16px;
+      border-bottom: 3px solid #3B82F6;
     }
 
-    .brand h1 {
-      margin: 0;
-      font-size: 32px;
+    header h1 {
+      max-width: 760px;
+      margin: auto;
+      font-size: 28px;
       font-weight: 900;
-      letter-spacing: 1px;
     }
 
-    .brand p { color: #CBD5E1; font-size: 14px; }
+    header p {
+      max-width: 760px;
+      margin: 6px auto 0;
+      color: #CBD5E1;
+    }
+
+    main {
+      max-width: 760px;
+      margin: 22px auto;
+      padding: 0 14px;
+    }
 
     .card {
-      padding: 26px 22px;
-      border-radius: 20px;
       background: white;
+      border-radius: 15px;
+      padding: 20px;
+      margin-bottom: 16px;
     }
 
-    .description { color: #64748B; font-size: 14px; line-height: 1.7; }
-
+    h2 { margin: 0 0 14px; font-size: 20px; }
+    p { line-height: 1.65; }
     label {
       display: block;
-      margin: 17px 0 8px;
-      font-size: 14px;
+      margin: 15px 0 7px;
       font-weight: 700;
     }
 
-    input {
+    input, textarea {
       width: 100%;
-      min-height: 48px;
       padding: 12px;
-      border: 1px solid #E2E8F0;
-      border-radius: 11px;
-      font-size: 16px;
+      border: 1px solid #CBD5E1;
+      border-radius: 9px;
+      font: inherit;
+      background: white;
+      color: #111827;
     }
+
+    textarea { min-height: 100px; resize: vertical; }
 
     button {
-      display: block;
-      margin: 23px auto 0;
-      min-width: 150px;
-      min-height: 48px;
-      padding: 0 24px;
+      min-height: 44px;
+      padding: 10px 16px;
       border: 0;
-      border-radius: 11px;
+      border-radius: 9px;
       background: #3B82F6;
       color: white;
-      font-size: 16px;
+      font-size: 15px;
       font-weight: 800;
+      cursor: pointer;
     }
 
-    button:disabled { opacity: .6; }
+    button:disabled { opacity: .55; cursor: not-allowed; }
+    .full { width: 100%; margin-top: 14px; }
+    .secondary { background: #475569; }
+    .danger { background: #B91C1C; }
+    .success { background: #166534; }
 
-    #message {
-      display: none;
-      margin-top: 16px;
+    .notice {
+      margin-top: 12px;
       padding: 12px;
-      border-radius: 10px;
-      font-size: 14px;
-      line-height: 1.6;
+      border-radius: 9px;
+      background: #EFF6FF;
+      color: #1D4ED8;
       overflow-wrap: anywhere;
+      white-space: pre-wrap;
+      line-height: 1.6;
     }
 
-    #message.show { display: block; }
-    #message.error { background: #FEF2F2; color: #991B1B; }
-    #message.success { background: #EFF6FF; color: #1D4ED8; }
-
-    .note {
-      margin-top: 20px;
-      color: #CBD5E1;
-      font-size: 12px;
-      text-align: center;
+    .error { background: #FEF2F2; color: #991B1B; }
+    .muted { color: #64748B; font-size: 14px; }
+    .row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
     }
+    .row button { flex: 1; }
+    .result {
+      margin: 14px 0;
+      padding-bottom: 12px;
+      border-bottom: 1px solid #E2E8F0;
+    }
+    .result-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 7px;
+    }
+    .bar-bg {
+      height: 9px;
+      background: #E2E8F0;
+      border-radius: 20px;
+      overflow: hidden;
+    }
+    .bar {
+      height: 100%;
+      background: #3B82F6;
+    }
+
+    [hidden] { display: none !important; }
   </style>
 </head>
+
 <body>
-  <main class="container">
-    <header class="brand">
-      <h1>KHAN BHAI</h1>
-      <p>Township Voting System</p>
-    </header>
+<header>
+  <h1>KHAN BHAI</h1>
+  <p>Admin Dashboard · Township Voting System</p>
+</header>
 
-    <section class="card">
-      <h2>Admin Login</h2>
-      <p class="description">စီမံခန့်ခွဲသူအကောင့်ဖြင့် ဝင်ရောက်ပါ။</p>
+<main>
+  <section id="loginSection" class="card">
+    <h2>Admin Login</h2>
+    <p class="muted">စီမံခန့်ခွဲသူအကောင့်ဖြင့် ဝင်ရောက်ပါ။</p>
 
-      <form id="loginForm">
-        <label for="email">Email Address</label>
-        <input id="email" type="email" autocomplete="username"
-          placeholder="Admin email" required>
+    <form id="loginForm">
+      <label for="email">Email Address</label>
+      <input id="email" type="email"
+        autocomplete="username" required>
 
-        <label for="password">Password</label>
-        <input id="password" type="password"
-          autocomplete="current-password"
-          placeholder="Password" required>
+      <label for="password">Password</label>
+      <input id="password" type="password"
+        autocomplete="current-password" required>
 
-        <button id="loginButton" type="submit">Login</button>
+      <button id="loginButton" class="full" type="submit">
+        Login
+      </button>
+    </form>
+
+    <div id="loginMessage" class="notice" hidden></div>
+  </section>
+
+  <section id="dashboard" hidden>
+    <div class="card">
+      <h2>မဲပေးမှု အခြေအနေ</h2>
+      <div id="votingStatus" class="notice">
+        အခြေအနေ ရယူနေပါသည်...
+      </div>
+
+      <p class="muted">
+        မဲပေးချိန်သည် မြန်မာစံတော်ချိန် မနက် ၁၀ နာရီမှ
+        ည ၁၀ နာရီအထိ ဖြစ်သည်။ အချိန်ရောက်လျှင်
+        စနစ်က အလိုအလျောက် ပိတ်/ဖွင့်မည်။
+      </p>
+
+      <button id="toggleButton" class="full" disabled>
+        အခြေအနေ ရယူနေပါသည်...
+      </button>
+
+      <button id="refreshButton" class="full secondary">
+        အချက်အလက် ပြန်လည်ရယူရန်
+      </button>
+
+      <button id="logoutButton" class="full secondary">
+        Logout
+      </button>
+
+      <div id="controlMessage" class="notice" hidden></div>
+    </div>
+
+    <div class="card">
+      <h2>📢 ကြေညာချက်နှင့် လာရောက်မည့်အချိန်</h2>
+
+      <form id="announcementForm">
+        <label for="confirmedTownship">
+          အတည်ပြုထားသော မြို့နယ်
+        </label>
+        <input id="confirmedTownship"
+          placeholder="ဥပမာ - ဒလ">
+
+        <label for="visitTime">လာရောက်မည့်အချိန်</label>
+        <input id="visitTime"
+          placeholder="ဥပမာ - ညနေ ၅:၃၀ နာရီ">
+
+        <label for="announcement">ကြေညာချက်</label>
+        <textarea id="announcement"
+          placeholder="ကြေညာချက် သို့မဟုတ် အချိန်ပြောင်းလဲမှု ရေးပါ"></textarea>
+
+        <button id="saveAnnouncement" class="full" type="submit">
+          ကြေညာချက် သိမ်းဆည်းရန်
+        </button>
       </form>
 
-      <div id="message" role="status" aria-live="polite"></div>
-    </section>
+      <div id="announcementMessage" class="notice" hidden></div>
+    </div>
 
-    <p class="note">Authorized administrators only.</p>
-  </main>
+    <div class="card">
+      <h2>📊 မဲရလဒ်</h2>
+      <p class="muted">
+        Admin သည် လက်ရှိမဲအရေအတွက်ကို ကြည့်နိုင်သည်။
+        အများပြည်သူမြင်ရသော ရလဒ်ကိုမူ ည ၁၀ နာရီမှ ပြသမည်။
+      </p>
+      <div id="totalVotes" class="notice">
+        မဲရလဒ် ရယူနေပါသည်...
+      </div>
+      <div id="results"></div>
+    </div>
+  </section>
+</main>
 
-  <script type="module">
-    import { createClient } from
-      "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
+<script type="module">
+  import { createClient } from
+    "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
 
-    const SUPABASE_URL =
-      "https://vefqgexluwfwabdapklf.supabase.co";
+  const SUPABASE_URL =
+    "https://vefqgexluwfwabdapklf.supabase.co";
 
-    const SUPABASE_PUBLISHABLE_KEY =
-      "sb_publishable_8eMPJX9TY1RIKxRhG4O1Aw_vLPcFm8R";
+  const SUPABASE_PUBLISHABLE_KEY =
+    "sb_publishable_8eMPJX9TY1RIKxRhG4O1Aw_vLPcFm8R";
 
-    const supabase = createClient (
+  const supabase = createClient(
+    SUPABASE_URL,
+    SUPABASE_PUBLISHABLE_KEY
+  );
 
-  SUPABASE_URL,
+  const $ = id => document.getElementById(id);
 
-  SUPABASE_PUBLISHABLE_KEY
+  const townships = [
+    "အလုံ", "ဗဟန်း", "ဗိုလ်တထောင်", "ဒဂုံ",
+    "ဒဂုံမြို့သစ် (မြောက်ပိုင်း)",
+    "ဒဂုံမြို့သစ် (တောင်ပိုင်း)",
+    "ဒဂုံမြို့သစ် (အရှေ့ပိုင်း)",
+    "ဒဂုံမြို့သစ် (ဆိပ်ကမ်း)",
+    "ဒေါပုံ", "ဒလ", "အင်းစိန်", "ကမာရွတ်",
+    "ကော့မှူး", "ကျောက်တံတား", "ကြည့်မြင်တိုင်",
+    "လှိုင်", "လှိုင်သာယာ (အရှေ့ပိုင်း)",
+    "လှိုင်သာယာ (အနောက်ပိုင်း)", "လမ်းမတော်",
+    "လသာ", "မင်္ဂလာဒုံ", "မင်္ဂလာတောင်ညွန့်",
+    "မြောက်ဥက္ကလာပ", "ပန်းဘဲတန်း", "ပုဇွန်တောင်",
+    "စမ်းချောင်း", "ရွှေပြည်သာ", "တောင်ဥက္ကလာပ",
+    "တာမွေ", "သင်္ဃန်းကျွန်း", "သန်လျင်",
+    "တွံတေး", "ရန်ကင်း"
+  ];
 
-);
-    const form = document.getElementById("loginForm");
-    const button = document.getElementById("loginButton");
-    const message = document.getElementById("message");
+  let control = null;
+  let isVotingOpen = false;
+  let currentUser = null;
+  let working = false;
 
-    function showMessage(text, type = "error") {
-      message.textContent = text;
-      message.className = "show " + type;
+  function message(id, text, error = false) {
+    const el = $(id);
+    el.textContent = text;
+    el.hidden = false;
+    el.className = "notice" + (error ? " error" : "");
+  }
+
+  function clearMessage(id) {
+    $(id).hidden = true;
+    $(id).textContent = "";
+  }
+
+  function errorText(error) {
+    return error?.message || String(error);
+  }
+
+  function myanmarClock() {
+    const parts = new Intl.DateTimeFormat("en-GB", {
+      timeZone: "Asia/Yangon",
+      hour: "2-digit",
+      minute: "2-digit",
+      hourCycle: "h23"
+    }).formatToParts(new Date());
+
+    const v = {};
+    for (const part of parts) {
+      if (part.type !== "literal") v[part.type] = part.value;
     }
 
-    form.addEventListener("submit", async (event) => {
-      event.preventDefault();
-      button.disabled = true;
-      button.textContent = "Checking...";
-      message.className = "";
+    return {
+      hour: Number(v.hour),
+      minute: Number(v.minute)
+    };
+  }
 
-      try {
-        if (SUPABASE_PUBLISHABLE_KEY.startsWith("PASTE_")) {
-          throw new Error("Supabase Publishable Key မထည့်ရသေးပါ။");
-        }
+  function withinVotingHours() {
+    const t = myanmarClock();
+    const minutes = t.hour * 60 + t.minute;
+    return minutes >= 600 && minutes < 1320;
+  }
 
-        const { data, error } = await supabase.auth.signInWithPassword({
-          email: document.getElementById("email").value.trim(),
-          password: document.getElementById("password").value
+  async function verifyAdmin(user) {
+    const { data, error } = await supabase
+      .from("admin_users")
+      .select("user_id")
+      .eq("user_id", user.id)
+      .maybeSingle();
+
+    if (error) {
+      throw new Error(
+        "Admin ခွင့်ပြုချက် စစ်ဆေးမရပါ: " + errorText(error)
+      );
+    }
+
+    if (!data) {
+      throw new Error(
+        "ဤအကောင့်တွင် Admin ခွင့်ပြုချက် မရှိပါ။"
+      );
+    }
+  }
+
+  async function showDashboard(user) {
+    currentUser = user;
+    await verifyAdmin(user);
+
+    $("loginSection").hidden = true;
+    $("dashboard").hidden = false;
+
+    await refreshDashboard();
+  }
+
+  async function refreshDashboard() {
+    if (!currentUser) return;
+
+    $("refreshButton").disabled = true;
+    $("toggleButton").disabled = true;
+
+    try {
+      const controlResult = await supabase
+        .from("voting_control")
+        .select("*")
+        .eq("id", true)
+        .single();
+
+      if (controlResult.error) {
+        throw new Error(
+          "voting_control ဖတ်မရပါ: " +
+          errorText(controlResult.error)
+        );
+      }
+
+      control = controlResult.data;
+
+      const openResult = await supabase.rpc("is_voting_open");
+
+      if (openResult.error) {
+        throw new Error(
+          "မဲဖွင့်/ပိတ်အခြေအနေ ရယူမရပါ: " +
+          errorText(openResult.error)
+        );
+      }
+
+      isVotingOpen = openResult.data === true;
+
+      const hoursOpen = withinVotingHours();
+
+      if (!hoursOpen) {
+        message(
+          "votingStatus",
+          "အချိန်ဇယားအရ မဲပိတ်ထားပါသည်။ မနက် ၁၀ နာရီမှ ည ၁၀ နာရီအထိ အလိုအလျောက် မဲဖွင့်မည်။"
+        );
+      } else if (isVotingOpen) {
+        message("votingStatus", "မဲပေးမှု ဖွင့်ထားပါသည်။");
+      } else {
+        message(
+          "votingStatus",
+          "မဲပေးမှု ပိတ်ထားပါသည်။ လိုအပ်ပါက အောက်ပါခလုတ်ဖြင့် ပြန်ဖွင့်နိုင်သည်။"
+        );
+      }
+
+      $("toggleButton").textContent = isVotingOpen
+        ? "မဲပေးမှုကို ပိတ်ရန်"
+        : "မဲပေးမှုကို ပြန်ဖွင့်ရန်";
+
+      $("toggleButton").className =
+        isVotingOpen ? "full danger" : "full success";
+
+      $("toggleButton").disabled = !hoursOpen || working;
+
+      $("confirmedTownship").value =
+        control.confirmed_township || "";
+
+      $("visitTime").value =
+        control.confirmed_visit_time || "";
+
+      $("announcement").value =
+        control.announcement || "";
+
+      await loadResults();
+
+    } catch (error) {
+      message("controlMessage", errorText(error), true);
+      message("votingStatus", "အခြေအနေ ရယူမအောင်မြင်ပါ။", true);
+      $("toggleButton").disabled = true;
+    } finally {
+      $("refreshButton").disabled = false;
+    }
+  }
+
+  async function loadResults() {
+    const { data, error } = await supabase
+      .from("Votes")
+      .select("township");
+
+    if (error) {
+      message("totalVotes",
+        "မဲရလဒ် ရယူမရပါ: " + errorText(error), true);
+      $("results").replaceChildren();
+      return;
+    }
+
+    const counts = Object.fromEntries(
+      townships.map(name => [name, 0])
+    );
+
+    for (const vote of data || []) {
+      if (Object.prototype.hasOwnProperty.call(
+        counts, vote.township
+      )) {
+        counts[vote.township]++;
+      }
+    }
+
+    const total = (data || []).length;
+
+    message("totalVotes", "စုစုပေါင်းမဲ: " + total);
+
+    const sorted = Object.entries(counts)
+      .sort((a, b) => b[1] - a[1]);
+
+    const container = $("results");
+    container.replaceChildren();
+
+    for (const [name, count] of sorted) {
+      if (count === 0) continue;
+
+      const row = document.createElement("div");
+      row.className = "result";
+
+      const head = document.createElement("div");
+      head.className = "result-head";
+
+      const label = document.createElement("span");
+      label.textContent = name;
+
+      const value = document.createElement("strong");
+      value.textContent = count + " မဲ";
+
+      head.append(label, value);
+
+      const bg = document.createElement("div");
+      bg.className = "bar-bg";
+
+      const bar = document.createElement("div");
+      bar.className = "bar";
+      bar.style.width = (count / total * 100) + "%";
+
+      bg.append(bar);
+      row.append(head, bg);
+      container.append(row);
+    }
+
+    if (total === 0) {
+      container.textContent = "မဲရလဒ် မရှိသေးပါ။";
+    }
+  }
+
+  $("loginForm").addEventListener("submit", async event => {
+    event.preventDefault();
+
+    const button = $("loginButton");
+    button.disabled = true;
+    button.textContent = "ဝင်ရောက်နေပါသည်...";
+    clearMessage("loginMessage");
+
+    try {
+      const { data, error } = await supabase.auth
+        .signInWithPassword({
+          email: $("email").value.trim(),
+          password: $("password").value
         });
 
-        if (error) throw new Error("Login မအောင်မြင်ပါ။ Email နှင့် Password ကို စစ်ဆေးပါ။");
-
-        const { data: admin, error: adminError } = await supabase
-          .from("admin_users")
-          .select("user_id")
-          .eq("user_id", data.user.id)
-          .maybeSingle();
-
-        if (adminError) {
-          await supabase.auth.signOut();
-          throw new Error("Admin ခွင့်ပြုချက်စစ်ဆေးမရပါ။ Database Policy ကို စစ်ဆေးရန်လိုနိုင်သည်။");
-        }
-
-        if (!admin) {
-          await supabase.auth.signOut();
-          throw new Error("ဤအကောင့်တွင် Admin ခွင့်ပြုချက်မရှိပါ။");
-        }
-
-        showMessage(
-          "Login အောင်မြင်ပါသည်။ Admin ခွင့်ပြုချက် အတည်ပြုပြီးပါပြီ။ Dashboard ကို နောက်အဆင့်တွင် ချိတ်ဆက်ပါမည်။",
-          "success"
-        );
-      } catch (error) {
-        showMessage(error.message || "Error ဖြစ်ပွားခဲ့သည်။");
-      } finally {
-        button.disabled = false;
-        button.textContent = "Login";
+      if (error) {
+        throw new Error("Login မအောင်မြင်ပါ: " + errorText(error));
       }
-    });
-  </script>
+
+      await showDashboard(data.user);
+
+    } catch (error) {
+      message("loginMessage", errorText(error), true);
+    } finally {
+      button.disabled = false;
+      button.textContent = "Login";
+    }
+  });
+
+  $("toggleButton").addEventListener("click", async () => {
+    if (working || !currentUser || !withinVotingHours()) return;
+
+    const closeNow = isVotingOpen;
+
+    const promptText = closeNow
+      ? "ယနေ့ မဲပေးမှုကို ယခု ပိတ်မှာ သေချာပါသလား။"
+      : "မဲပေးမှုကို ပြန်ဖွင့်မှာ သေချာပါသလား။";
+
+    if (!window.confirm(promptText)) return;
+
+    working = true;
+    $("toggleButton").disabled = true;
+    clearMessage("controlMessage");
+
+    try {
+      const { error } = await supabase.rpc(
+        "set_voting_closed",
+        { p_closed: closeNow }
+      );
+
+      if (error) throw error;
+
+      message(
+        "controlMessage",
+        closeNow
+          ? "မဲပိတ်ရန် အမိန့်ကို Database သို့ ပို့ပြီးပါပြီ။"
+          : "မဲပြန်ဖွင့်ရန် အမိန့်ကို Database သို့ ပို့ပြီးပါပြီ။"
+      );
+
+      await refreshDashboard();
+
+    } catch (error) {
+      message("controlMessage",
+        "မဲဖွင့်/ပိတ် မအောင်မြင်ပါ: " + errorText(error), true);
+    } finally {
+      working = false;
+      await refreshDashboard();
+    }
+  });
+
+  $("announcementForm").addEventListener("submit", async event => {
+    event.preventDefault();
+
+    if (working || !currentUser || !control) return;
+
+    if (!window.confirm(
+      "ကြေညာချက်နှင့် အတည်ပြုထားသော အချက်အလက်များကို သိမ်းဆည်းမှာ သေချာပါသလား။"
+    )) return;
+
+    working = true;
+    $("saveAnnouncement").disabled = true;
+    clearMessage("announcementMessage");
+
+    try {
+      const update = {
+        confirmed_township:
+          $("confirmedTownship").value.trim() || null,
+        confirmed_visit_time:
+          $("visitTime").value.trim() || null,
+        announcement:
+          $("announcement").value.trim() || null,
+        updated_at: new Date().toISOString()
+      };
+
+      const { data, error } = await supabase
+        .from("voting_control")
+        .update(update)
+        .eq("id", true)
+        .select("id")
+        .maybeSingle();
+
+      if (error) {
+        throw new Error(errorText(error));
+      }
+
+      if (!data) {
+        throw new Error(
+          "Database မှ အတည်ပြုချက် မရပါ။ Admin update policy ကို စစ်ဆေးရန်လိုနိုင်သည်။"
+        );
+      }
+
+      message(
+        "announcementMessage",
+        "ကြေညာချက်ကို Database ထဲ သိမ်းဆည်းပြီးပါပြီ။"
+      );
+
+      await refreshDashboard();
+
+    } catch (error) {
+      message(
+        "announcementMessage",
+        "သိမ်းဆည်းမအောင်မြင်ပါ: " + errorText(error),
+        true
+      );
+    } finally {
+      working = false;
+      $("saveAnnouncement").disabled = false;
+    }
+  });
+
+  $("refreshButton").addEventListener(
+    "click", refreshDashboard
+  );
+
+  $("logoutButton").addEventListener("click", async () => {
+    if (!window.confirm("Admin အကောင့်မှ ထွက်မှာ သေချာပါသလား။")) {
+      return;
+    }
+
+    const { error } = await supabase.auth.signOut();
+
+    if (error) {
+      message("controlMessage",
+        "Logout မအောင်မြင်ပါ: " + errorText(error), true);
+      return;
+    }
+
+    currentUser = null;
+    control = null;
+    $("dashboard").hidden = true;
+    $("loginSection").hidden = false;
+    $("password").value = "";
+    clearMessage("loginMessage");
+  });
+
+  // ယခင် Login session ရှိလျှင် Dashboard ကို ပြန်ဖွင့်မည်။
+  try {
+    const { data, error } = await supabase.auth.getSession();
+
+    if (error) throw error;
+
+    if (data.session?.user) {
+      await showDashboard(data.session.user);
+    }
+  } catch (error) {
+    message("loginMessage",
+      "Session စစ်ဆေးမရပါ: " + errorText(error), true);
+  }
+</script>
 </body>
 </html>
