@@ -51,6 +51,7 @@
 
     h2 { margin: 0 0 14px; font-size: 20px; }
     p { line-height: 1.65; }
+
     label {
       display: block;
       margin: 15px 0 7px;
@@ -100,30 +101,36 @@
 
     .error { background: #FEF2F2; color: #991B1B; }
     .muted { color: #64748B; font-size: 14px; }
+
     .row {
       display: flex;
       gap: 10px;
       flex-wrap: wrap;
       align-items: center;
     }
+
     .row button { flex: 1; }
+
     .result {
       margin: 14px 0;
       padding-bottom: 12px;
       border-bottom: 1px solid #E2E8F0;
     }
+
     .result-head {
       display: flex;
       justify-content: space-between;
       gap: 12px;
       margin-bottom: 7px;
     }
+
     .bar-bg {
       height: 9px;
       background: #E2E8F0;
       border-radius: 20px;
       overflow: hidden;
     }
+
     .bar {
       height: 100%;
       background: #3B82F6;
@@ -164,6 +171,7 @@
   <section id="dashboard" hidden>
     <div class="card">
       <h2>မဲပေးမှု အခြေအနေ</h2>
+
       <div id="votingStatus" class="notice">
         အခြေအနေ ရယူနေပါသည်...
       </div>
@@ -196,14 +204,17 @@
         <label for="confirmedTownship">
           အတည်ပြုထားသော မြို့နယ်
         </label>
+
         <input id="confirmedTownship"
           placeholder="ဥပမာ - ဒလ">
 
         <label for="visitTime">လာရောက်မည့်အချိန်</label>
+
         <input id="visitTime"
           placeholder="ဥပမာ - ညနေ ၅:၃၀ နာရီ">
 
         <label for="announcement">ကြေညာချက်</label>
+
         <textarea id="announcement"
           placeholder="ကြေညာချက် သို့မဟုတ် အချိန်ပြောင်းလဲမှု ရေးပါ"></textarea>
 
@@ -217,13 +228,16 @@
 
     <div class="card">
       <h2>📊 မဲရလဒ်</h2>
+
       <p class="muted">
         Admin သည် လက်ရှိမဲအရေအတွက်ကို ကြည့်နိုင်သည်။
         အများပြည်သူမြင်ရသော ရလဒ်ကိုမူ ည ၁၀ နာရီမှ ပြသမည်။
       </p>
+
       <div id="totalVotes" class="notice">
         မဲရလဒ် ရယူနေပါသည်...
       </div>
+
       <div id="results"></div>
     </div>
   </section>
@@ -293,8 +307,11 @@
     }).formatToParts(new Date());
 
     const v = {};
+
     for (const part of parts) {
-      if (part.type !== "literal") v[part.type] = part.value;
+      if (part.type !== "literal") {
+        v[part.type] = part.value;
+      }
     }
 
     return {
@@ -417,14 +434,21 @@
     }
   }
 
+  // ပြင်ဆင်ထားသော မဲရလဒ်ရယူသည့် function
+  // မဲအားလုံးကို browser ထဲ တစ်ကြိမ်တည်းဖတ်မည့်အစား
+  // Database RPC မှ မြို့နယ်အလိုက် အရေအတွက်ကို ရယူမည်။
   async function loadResults() {
-    const { data, error } = await supabase
-      .from("Votes")
-      .select("township");
+    const { data, error } = await supabase.rpc(
+      "get_township_vote_counts"
+    );
 
     if (error) {
-      message("totalVotes",
-        "မဲရလဒ် ရယူမရပါ: " + errorText(error), true);
+      message(
+        "totalVotes",
+        "မဲရလဒ် ရယူမရပါ: " + errorText(error),
+        true
+      );
+
       $("results").replaceChildren();
       return;
     }
@@ -433,15 +457,18 @@
       townships.map(name => [name, 0])
     );
 
-    for (const vote of data || []) {
-      if (Object.prototype.hasOwnProperty.call(
-        counts, vote.township
-      )) {
-        counts[vote.township]++;
+    for (const item of data || []) {
+      if (
+        Object.prototype.hasOwnProperty.call(
+          counts, item.township
+        )
+      ) {
+        counts[item.township] = Number(item.vote_count);
       }
     }
 
-    const total = (data || []).length;
+    const total = Object.values(counts)
+      .reduce((sum, count) => sum + count, 0);
 
     message("totalVotes", "စုစုပေါင်းမဲ: " + total);
 
@@ -473,7 +500,8 @@
 
       const bar = document.createElement("div");
       bar.className = "bar";
-      bar.style.width = (count / total * 100) + "%";
+      bar.style.width =
+        (total > 0 ? count / total * 100 : 0) + "%";
 
       bg.append(bar);
       row.append(head, bg);
@@ -501,7 +529,9 @@
         });
 
       if (error) {
-        throw new Error("Login မအောင်မြင်ပါ: " + errorText(error));
+        throw new Error(
+          "Login မအောင်မြင်ပါ: " + errorText(error)
+        );
       }
 
       await showDashboard(data.user);
@@ -547,8 +577,11 @@
       await refreshDashboard();
 
     } catch (error) {
-      message("controlMessage",
-        "မဲဖွင့်/ပိတ် မအောင်မြင်ပါ: " + errorText(error), true);
+      message(
+        "controlMessage",
+        "မဲဖွင့်/ပိတ် မအောင်မြင်ပါ: " + errorText(error),
+        true
+      );
     } finally {
       working = false;
       await refreshDashboard();
@@ -572,10 +605,13 @@
       const update = {
         confirmed_township:
           $("confirmedTownship").value.trim() || null,
+
         confirmed_visit_time:
           $("visitTime").value.trim() || null,
+
         announcement:
           $("announcement").value.trim() || null,
+
         updated_at: new Date().toISOString()
       };
 
@@ -620,15 +656,20 @@
   );
 
   $("logoutButton").addEventListener("click", async () => {
-    if (!window.confirm("Admin အကောင့်မှ ထွက်မှာ သေချာပါသလား။")) {
+    if (!window.confirm(
+      "Admin အကောင့်မှ ထွက်မှာ သေချာပါသလား။"
+    )) {
       return;
     }
 
     const { error } = await supabase.auth.signOut();
 
     if (error) {
-      message("controlMessage",
-        "Logout မအောင်မြင်ပါ: " + errorText(error), true);
+      message(
+        "controlMessage",
+        "Logout မအောင်မြင်ပါ: " + errorText(error),
+        true
+      );
       return;
     }
 
@@ -650,8 +691,11 @@
       await showDashboard(data.session.user);
     }
   } catch (error) {
-    message("loginMessage",
-      "Session စစ်ဆေးမရပါ: " + errorText(error), true);
+    message(
+      "loginMessage",
+      "Session စစ်ဆေးမရပါ: " + errorText(error),
+      true
+    );
   }
 </script>
 </body>
