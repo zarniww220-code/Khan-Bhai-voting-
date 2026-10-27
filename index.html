@@ -208,7 +208,9 @@
 
     <section class="card">
       <h2>📊 မဲရလဒ်</h2>
-      <p id="resultsStatus">မဲရလဒ်ကို သတ်မှတ်ချိန်ရောက်မှ ပြသပါမည်။</p>
+      <p id="resultsStatus">
+        မဲရလဒ်ကို မြန်မာစံတော်ချိန် ည ၁၀ နာရီရောက်မှ ပြသပါမည်။
+      </p>
       <div id="results"></div>
     </section>
   </main>
@@ -254,8 +256,11 @@
       }).formatToParts(new Date());
 
       const v = {};
+
       for (const p of parts) {
-        if (p.type !== "literal") v[p.type] = p.value;
+        if (p.type !== "literal") {
+          v[p.type] = p.value;
+        }
       }
 
       return {
@@ -290,8 +295,12 @@
         return "မဲပေးချိန် မဟုတ်ပါ။ မနက် ၁၀ နာရီမှ ည ၁၀ နာရီအတွင်းသာ မဲပေးနိုင်ပါသည်။";
       }
 
-      if (/row-level security|permission denied|not allowed/i.test(text)) {
-        return "Database ခွင့်ပြုချက်အမှား ဖြစ်နေပါသည်။ Supabase Policy ကို ပြင်ဆင်ရန်လိုပါသည်။";
+      if (/Results are not available/i.test(text)) {
+        return "မဲရလဒ်ကို မြန်မာစံတော်ချိန် ည ၁၀ နာရီရောက်မှ ပြသပါမည်။";
+      }
+
+      if (/row-level security|permission denied|not allowed|Admin access required/i.test(text)) {
+        return "Database ခွင့်ပြုချက်အမှား ဖြစ်နေပါသည်။ Supabase Policy ကို စစ်ဆေးရန်လိုပါသည်။";
       }
 
       if (/Failed to fetch|Load failed|NetworkError/i.test(text)) {
@@ -317,13 +326,17 @@
       const lines = [];
 
       if (data?.confirmed_township) {
-        lines.push("အတည်ပြုထားသော မြို့နယ်: " +
-          data.confirmed_township);
+        lines.push(
+          "အတည်ပြုထားသော မြို့နယ်: " +
+          data.confirmed_township
+        );
       }
 
       if (data?.confirmed_visit_time) {
-        lines.push("လာရောက်မည့်အချိန်: " +
-          data.confirmed_visit_time);
+        lines.push(
+          "လာရောက်မည့်အချိန်: " +
+          data.confirmed_visit_time
+        );
       }
 
       if (data?.announcement) {
@@ -333,15 +346,19 @@
       $("announcement").textContent = lines.length
         ? lines.join("\n")
         : "လက်ရှိ ကြေညာချက်မရှိသေးပါ။";
+
       $("announcement").style.whiteSpace = "pre-line";
     }
 
+    // ည ၁၀ နာရီမှသာ မဲရလဒ်ယူမည်။
+    // နောက်နေ့ မနက် ၁၀ နာရီ မတိုင်ခင်အထိ ပြန်ဖုံးထားမည်။
     async function loadResults() {
       const t = myanmarTime();
 
       if (t.hour < 22) {
         $("resultsStatus").textContent =
           "မဲရလဒ်ကို မြန်မာစံတော်ချိန် ည ၁၀ နာရီရောက်မှ ပြသပါမည်။";
+
         $("results").replaceChildren();
         return;
       }
@@ -349,9 +366,12 @@
       $("resultsStatus").textContent =
         "Database မှ မဲရလဒ်ကို ရယူနေပါသည်...";
 
-      const { data, error } = await supabase
-        .from("Votes")
-        .select("township");
+      $("results").replaceChildren();
+
+      // မဲအရေအတွက်ကို Database Function မှ တိုက်ရိုက်ရယူမည်။
+      const { data, error } = await supabase.rpc(
+        "get_public_township_vote_counts"
+      );
 
       if (error) {
         $("resultsStatus").textContent =
@@ -360,26 +380,32 @@
       }
 
       const counts = {};
-      for (const option of townshipSelect.options) {
-        if (option.value) counts[option.value] = 0;
-      }
 
-      for (const vote of data || []) {
-        if (Object.prototype.hasOwnProperty.call(
-          counts, vote.township
-        )) {
-          counts[vote.township]++;
+      for (const option of townshipSelect.options) {
+        if (option.value) {
+          counts[option.value] = 0;
         }
       }
 
-      const total = (data || []).length;
+      for (const item of data || []) {
+        if (
+          Object.prototype.hasOwnProperty.call(
+            counts, item.township
+          )
+        ) {
+          counts[item.township] =
+            Number(item.vote_count);
+        }
+      }
+
+      const total = Object.values(counts)
+        .reduce((sum, count) => sum + count, 0);
+
       const sorted = Object.entries(counts)
         .sort((a, b) => b[1] - a[1]);
 
       $("resultsStatus").textContent =
         "စုစုပေါင်းမဲ: " + total;
-
-      $("results").replaceChildren();
 
       for (const [name, count] of sorted) {
         if (count === 0) continue;
@@ -403,10 +429,12 @@
 
         const bar = document.createElement("div");
         bar.className = "bar";
-        bar.style.width = (total ? count / total * 100 : 0) + "%";
+        bar.style.width =
+          (total > 0 ? count / total * 100 : 0) + "%";
 
         background.append(bar);
         row.append(head, background);
+
         $("results").append(row);
       }
 
@@ -467,14 +495,17 @@
         }
 
         voteButton.disabled =
-          !databaseReady || !votingOpen ||
-          alreadyVotedToday() || busy;
+          !databaseReady ||
+          !votingOpen ||
+          alreadyVotedToday() ||
+          busy;
 
       } catch (error) {
         statusBox.className = "status error";
         statusBox.textContent =
           "Database ချိတ်ဆက်မှု စစ်ဆေးမအောင်မြင်ပါ။ " +
           formatError(error);
+
         databaseReady = false;
         votingOpen = false;
         voteButton.disabled = true;
@@ -490,12 +521,19 @@
       const selected = townshipSelect.value;
 
       if (!selected) {
-        showMessage("မဲပေးရန် မြို့နယ်တစ်ခုကို ရွေးချယ်ပါ။", true);
+        showMessage(
+          "မဲပေးရန် မြို့နယ်တစ်ခုကို ရွေးချယ်ပါ။",
+          true
+        );
         return;
       }
 
       if (alreadyVotedToday()) {
-        showMessage("ဤဖုန်း Browser မှ ယနေ့ မဲပေးပြီးပါပြီ။", true);
+        showMessage(
+          "ဤဖုန်း Browser မှ ယနေ့ မဲပေးပြီးပါပြီ။",
+          true
+        );
+
         voteButton.disabled = true;
         return;
       }
@@ -511,8 +549,6 @@
       voteButton.textContent = "မဲသိမ်းနေပါသည်...";
 
       try {
-        // Database function က အချိန်နှင့် Admin ပိတ်ထားမှုကို
-        // ထပ်မံစစ်ဆေးပေးမည်။
         const { error } = await supabase
           .from("Votes")
           .insert({ township: selected });
@@ -538,15 +574,17 @@
       } finally {
         busy = false;
         voteButton.textContent = "မဲပေးရန်";
+
         voteButton.disabled =
-          !databaseReady || !votingOpen ||
+          !databaseReady ||
+          !votingOpen ||
           alreadyVotedToday();
       }
     });
 
     await refreshStatus();
 
-    // အချိန်နှင့် Admin အခြေအနေကို မိနစ်ဝက်တိုင်း ပြန်စစ်မည်။
+    // အချိန်နှင့် Admin အခြေအနေကို စက္ကန့် ၃၀ တိုင်း ပြန်စစ်မည်။
     setInterval(refreshStatus, 30000);
   </script>
 </body>
