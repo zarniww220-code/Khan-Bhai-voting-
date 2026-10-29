@@ -2,269 +2,574 @@
 <html lang="my">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>KHAN BHAI - Township Voting System</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#000000">
+  <meta name="color-scheme" content="dark">
+  <title>KHAN BHAI | Township Voting System</title>
 
   <style>
     :root {
       --bg: #000000;
+      --card: #0A0A0A;
+      --blue: #56CCF2;
       --white: #FFFFFF;
-      --sky: #56CCF2;
-      --red: #FF3333;
+      --muted: #A7B0BA;
+      --border: #263642;
+      --red: #FF2020;
     }
 
     * {
       box-sizing: border-box;
     }
 
+    html {
+      min-height: 100%;
+      background: var(--bg);
+      -webkit-text-size-adjust: 100%;
+      text-size-adjust: 100%;
+    }
+
     body {
       margin: 0;
-      padding: 20px 14px;
+      min-height: 100vh;
+      min-height: 100dvh;
+      font-family: -apple-system, BlinkMacSystemFont,
+        "Segoe UI", sans-serif;
       background: var(--bg);
       color: var(--white);
-      font-family: Arial, sans-serif;
-      text-align: center;
+      line-height: 1.6;
+      overflow-wrap: anywhere;
     }
 
-    .container {
-      width: 100%;
-      max-width: 480px;
-      margin: 0 auto;
-    }
-
-    .brand {
-      margin: 18px 0 5px;
-      font-size: clamp(30px, 8vw, 42px);
-      font-weight: 900;
-      letter-spacing: 1px;
-    }
-
-    .subtitle {
-      margin-bottom: 30px;
-      color: var(--sky);
-      font-size: 14px;
-      letter-spacing: 2px;
-    }
-
-    .status {
-      margin: 20px 0;
-      padding: 15px 10px;
-      border: 1px solid var(--sky);
-      border-radius: 10px;
-      color: var(--white);
-      line-height: 1.7;
-    }
-
-    .countdown {
-      margin-top: 10px;
-      color: var(--sky);
-      font-size: clamp(27px, 8vw, 36px);
-      font-weight: bold;
-      letter-spacing: 2px;
-    }
-
-    .section-title {
-      margin: 28px 0 14px;
-      font-size: 17px;
-      font-weight: bold;
-    }
-
-    select,
-    button {
-      width: 100%;
-      min-height: 46px;
-      padding: 12px;
-      border-radius: 8px;
-      font-size: 16px;
-    }
-
-    select {
-      border: 1px solid var(--sky);
-      background: var(--bg);
-      color: var(--white);
-      outline: none;
+    button, select {
+      font: inherit;
     }
 
     button {
       cursor: pointer;
-      border: 1px solid var(--sky);
-      background: var(--bg);
-      color: var(--white);
-      font-weight: bold;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
     }
 
-    button:active {
-      opacity: 0.75;
+    button:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+    }
+
+    [hidden] {
+      display: none !important;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      width: 100%;
+      padding: 20px 16px;
+      padding-top: max(20px, env(safe-area-inset-top));
+      background: #050505;
+      border-bottom: 1px solid var(--blue);
+    }
+
+    .logo-placeholder {
+      width: 46px;
+      height: 46px;
+      flex: 0 0 46px;
+      border: 1px solid var(--blue);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--blue);
+      font-size: 13px;
+      font-weight: 900;
+      letter-spacing: 0;
+    }
+
+    .brand {
+      min-width: 0;
+    }
+
+    .brand h1 {
+      margin: 0;
+      font-size: clamp(21px, 5vw, 27px);
+      line-height: 1.2;
+      font-weight: 900;
+      letter-spacing: 1px;
+      color: var(--white);
+    }
+
+    .brand p {
+      margin: 4px 0 0;
+      color: var(--blue);
+      font-size: clamp(9px, 2.5vw, 11px);
+      font-weight: 800;
+      letter-spacing: 1px;
+    }
+
+    main {
+      width: 100%;
+      max-width: 560px;
+      margin: 20px auto;
+      padding: 0 14px;
+    }
+
+    .card {
+      width: 100%;
+      min-width: 0;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 17px;
+      margin-bottom: 16px;
+    }
+
+    h2 {
+      margin: 0 0 12px;
+      font-size: 18px;
+      line-height: 1.5;
+      color: var(--white);
+    }
+
+    p {
+      margin: 8px 0 14px;
+      font-size: 14px;
+      color: #D6DCE2;
+      line-height: 1.8;
+    }
+
+    .blue {
+      color: var(--blue);
+    }
+
+    .status-box {
+      border: 1px solid var(--blue);
+      border-radius: 10px;
+      padding: 14px 10px;
+      text-align: center;
+      margin: 15px 0;
+      min-width: 0;
+    }
+
+    .status-title {
+      color: var(--blue);
+      font-size: 13px;
+      font-weight: 900;
+      letter-spacing: 0.6px;
+      overflow-wrap: anywhere;
+    }
+
+    .status-message {
+      color: var(--white);
+      font-size: 13px;
+      margin-top: 5px;
+      overflow-wrap: anywhere;
+    }
+
+    .timer-label {
+      color: var(--muted);
+      font-size: 12px;
+      margin-top: 12px;
+    }
+
+    #countdown {
+      color: var(--blue);
+      font-size: clamp(23px, 7vw, 28px);
+      font-weight: 900;
+      letter-spacing: 1px;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+    }
+
+    /* Connection error: show only the approved message. */
+    .status-box.connection-error {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 58px;
+      padding: 15px 10px;
+    }
+
+    .connection-error .status-title,
+    .connection-error .timer-label,
+    .connection-error #countdown {
+      display: none !important;
+    }
+
+    .connection-error .status-message {
+      margin: 0;
+      color: var(--blue);
+      font-size: 15px;
+      font-weight: 800;
+    }
+
+    label {
+      display: block;
+      color: var(--white);
+      font-size: 14px;
+      font-weight: 700;
+      margin: 16px 0 8px;
+    }
+
+    select {
+      display: block;
+      width: 100%;
+      min-width: 0;
+      min-height: 46px;
+      padding: 10px 12px;
+      color: var(--white);
+      background: #050505;
+      border: 1px solid var(--blue);
+      border-radius: 9px;
+      outline: none;
+    }
+
+    select:focus-visible,
+    button:focus-visible {
+      outline: 2px solid var(--blue);
+      outline-offset: 3px;
+    }
+
+    select option {
+      color: var(--white);
+      background: #050505;
     }
 
     .primary-button {
-      margin-top: 14px;
-      background: var(--sky);
+      display: block;
+      width: 100%;
+      min-height: 42px;
+      padding: 9px 12px;
+      margin-top: 13px;
+      border: 1px solid var(--blue);
+      border-radius: 9px;
       color: #000000;
+      background: var(--blue);
+      font-size: 14px;
+      font-weight: 900;
     }
 
-    .announcement-title {
-      margin-top: 38px;
+    .secondary-button {
+      min-height: 38px;
+      padding: 8px 16px;
+      border: 1px solid var(--blue);
+      border-radius: 8px;
+      background: transparent;
+      color: var(--blue);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .message {
+      margin-top: 12px;
+      font-size: 13px;
+      color: var(--blue);
+      overflow-wrap: anywhere;
+    }
+
+    .message.error {
+      color: #FF7777;
+    }
+
+    .muted {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    /* Announcement section */
+    .notice {
+      width: 100%;
+      border: 0;
+      padding: 4px 0 18px;
+      margin: 0 0 16px;
+      text-align: center;
+      background: transparent;
+    }
+
+    .notice h2 {
+      margin: 0 0 12px;
       color: var(--red);
-      font-weight: bold;
-      font-size: 18px;
+      font-size: 16px;
+      font-weight: 900;
     }
 
     .announcement-button {
-      margin-top: 12px;
-      border: 1px solid var(--sky);
+      display: block;
+      width: 100%;
+      min-height: 42px;
+      padding: 9px 14px;
+      border: 1px solid var(--blue);
+      border-radius: 9px;
+      background: transparent;
       color: var(--white);
-      background: var(--bg);
+      font-size: 14px;
+      font-weight: 800;
     }
 
-    .results {
-      margin-top: 28px;
+    #announcement {
+      white-space: pre-line;
+      overflow-wrap: anywhere;
+      color: var(--white);
+      font-size: 14px;
       text-align: left;
     }
 
-    .result-row {
-      margin: 15px 0;
+    .result {
+      margin: 16px 0;
     }
 
-    .result-heading {
-      display: flex;
-      justify-content: space-between;
-      gap: 10px;
-      margin-bottom: 7px;
+    .result-head {
+      display: grid;
+      grid-template-columns: 25px minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    .rank {
+      color: var(--blue);
+      font-weight: 900;
+      font-size: 13px;
+    }
+
+    .township-name {
+      min-width: 0;
+      overflow-wrap: anywhere;
       font-size: 14px;
+      color: var(--white);
     }
 
-    .progress-track {
-      width: 100%;
-      height: 8px;
+    .vote-count {
+      color: var(--blue);
+      font-size: 12px;
+      font-weight: 800;
+      white-space: nowrap;
+      text-align: right;
+    }
+
+    .bar-bg {
+      height: 7px;
+      background: #20262D;
+      border-radius: 20px;
       overflow: hidden;
-      border-radius: 10px;
-      background: #242424;
     }
 
-    .progress-bar {
+    .bar {
       height: 100%;
-      border-radius: 10px;
-      background: var(--sky);
+      background: var(--blue);
+      border-radius: 20px;
+      transition: width 0.3s ease;
     }
 
+    /* Completely black, empty footer */
+    footer {
+      width: 100%;
+      min-height: 24px;
+      background: #000000;
+      border: 0;
+      padding: 0;
+      margin: 0;
+    }
+
+    /* Centered popups */
     .modal {
       position: fixed;
       inset: 0;
-      z-index: 10;
-      display: none;
+      z-index: 1000;
+      display: flex;
       align-items: center;
       justify-content: center;
       padding: 20px;
-      background: rgba(0, 0, 0, 0.85);
+      padding-top: max(20px, env(safe-area-inset-top));
+      padding-bottom: max(20px, env(safe-area-inset-bottom));
+      background: #000000E8;
+      overflow-y: auto;
+    }
+
+    .modal[hidden] {
+      display: none !important;
     }
 
     .modal-box {
       width: 100%;
       max-width: 350px;
-      padding: 24px 18px;
-      border: 1px solid var(--sky);
+      max-height: 85vh;
+      max-height: 85dvh;
+      overflow-y: auto;
+      padding: 22px 18px;
+      border: 1px solid var(--blue);
       border-radius: 14px;
-      background: #050505;
+      background: #080808;
+      text-align: center;
     }
 
-    .modal-title {
-      margin: 0 0 18px;
-      font-size: 21px;
-      font-weight: bold;
+    .modal-box h2 {
+      color: var(--blue);
+      font-size: 18px;
+      margin-bottom: 12px;
     }
 
-    .modal-message {
-      margin: 15px 0;
-      line-height: 1.8;
+    .modal-box p {
+      color: var(--white);
       overflow-wrap: anywhere;
     }
 
-    .modal-buttons {
+    .modal-actions {
       display: flex;
       gap: 10px;
-      margin-top: 20px;
+      margin-top: 18px;
     }
 
-    .modal-buttons button {
+    .modal-actions button {
       flex: 1;
       min-width: 0;
-      font-size: 14px;
-    }
-
-    .sky-text {
-      color: var(--sky);
-    }
-
-    .checkmark {
-      margin: 10px 0;
-      color: var(--sky);
-      font-size: 54px;
-    }
-
-    .selected-box {
-      margin: 18px 0;
-      padding: 15px 8px;
-      border: 1px solid var(--sky);
+      min-height: 39px;
+      padding: 8px;
       border-radius: 8px;
-      line-height: 1.8;
+      font-size: 13px;
+      font-weight: 800;
     }
 
-    .hidden {
-      display: none !important;
+    .cancel-button {
+      border: 1px solid #69737D;
+      color: var(--white);
+      background: #151515;
     }
 
-    #message {
-      margin-top: 15px;
-      line-height: 1.7;
-      overflow-wrap: anywhere;
+    .confirm-button {
+      border: 1px solid var(--blue);
+      color: #000000;
+      background: var(--blue);
     }
 
-    @media (max-width: 360px) {
-      body {
-        padding: 15px 10px;
+    .success-icon {
+      color: var(--blue);
+      font-size: 40px;
+      font-weight: 900;
+      line-height: 1.3;
+    }
+
+    .selected-township {
+      border: 1px solid var(--blue);
+      border-radius: 9px;
+      padding: 12px;
+      margin: 16px 0;
+    }
+
+    .selected-township .caption {
+      color: var(--white);
+      font-size: 12px;
+    }
+
+    .selected-township .name {
+      color: var(--blue);
+      font-size: 17px;
+      font-weight: 900;
+      margin-top: 5px;
+    }
+
+    @media (max-width: 380px) {
+      header {
+        gap: 9px;
+        padding-left: 10px;
+        padding-right: 10px;
       }
 
-      .subtitle {
-        font-size: 12px;
-        letter-spacing: 1px;
+      .logo-placeholder {
+        width: 40px;
+        height: 40px;
+        flex-basis: 40px;
       }
 
-      .modal-box {
-        padding: 20px 14px;
+      .brand p {
+        letter-spacing: 0.5px;
+      }
+
+      main {
+        margin-top: 14px;
+        padding-left: 10px;
+        padding-right: 10px;
+      }
+
+      .card {
+        padding: 14px;
+        border-radius: 12px;
+      }
+
+      .result-head {
+        grid-template-columns: 22px minmax(0, 1fr) auto;
+        gap: 6px;
+      }
+
+      .vote-count {
+        font-size: 11px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
       }
     }
   </style>
 </head>
 
 <body>
-  <main class="container">
+  <header>
+    <div class="logo-placeholder" aria-label="KHAN BHAI logo">
+      KB
+    </div>
 
-    <header>
-      <h1 class="brand">KHAN BHAI</h1>
-      <div class="subtitle">TOWNSHIP VOTING SYSTEM</div>
-    </header>
+    <div class="brand">
+      <h1>KHAN BHAI</h1>
+      <p>TOWNSHIP VOTING SYSTEM</p>
+    </div>
+  </header>
 
-    <section class="status">
-      <div id="statusText">Voting အခြေအနေကို စစ်ဆေးနေသည်...</div>
-      <div id="countdown" class="countdown">00:00:00</div>
-    </section>
+  <main>
+    <section class="card">
+      <h2>မြို့နယ်ရွေးချယ်ခြင်း</h2>
 
-    <section id="votingSection">
-      <div class="section-title">Voting လုပ်ရန် မြို့နယ်ရွေးပါ</div>
+      <p>
+        သင်စိတ်ဝင်စားတဲ့ မြို့နယ်ကို ရွေးချယ်ပြီး Voting လုပ်နိုင်ပါတယ်။
+      </p>
 
-      <select id="townshipSelect">
-        <option value="">မြို့နယ်ရွေးချယ်ပါ</option>
+      <div id="statusBox" class="status-box"
+        role="status" aria-live="polite">
+
+        <div id="statusTitle" class="status-title">
+          CHECKING STATUS
+        </div>
+
+        <div id="statusMessage" class="status-message">
+          Database ချိတ်ဆက်မှုကို စစ်ဆေးနေပါသည်...
+        </div>
+
+        <div id="timerLabel" class="timer-label">
+          VOTING CLOSES IN
+        </div>
+
+        <div id="countdown">--:--:--</div>
+      </div>
+
+      <label for="township">မြို့နယ်ရွေးချယ်ပါ</label>
+
+      <select id="township">
+        <option value="">မြို့နယ်ရွေးချယ်ရန်</option>
         <option>အလုံ</option>
         <option>ဗဟန်း</option>
         <option>ဗိုလ်တထောင်</option>
         <option>ဒဂုံ</option>
-        <option>ဒဂုံမြို့သစ် (အရှေ့ပိုင်း)</option>
         <option>ဒဂုံမြို့သစ် (မြောက်ပိုင်း)</option>
         <option>ဒဂုံမြို့သစ် (တောင်ပိုင်း)</option>
+        <option>ဒဂုံမြို့သစ် (အရှေ့ပိုင်း)</option>
         <option>ဒဂုံမြို့သစ် (ဆိပ်ကမ်း)</option>
-        <option>ဒလ</option>
         <option>ဒေါပုံ</option>
+        <option>ဒလ</option>
         <option>အင်းစိန်</option>
         <option>ကမာရွတ်</option>
         <option>ကော့မှူး</option>
@@ -281,199 +586,585 @@
         <option>ပန်းဘဲတန်း</option>
         <option>ပုဇွန်တောင်</option>
         <option>စမ်းချောင်း</option>
-        <option>ဆိပ်ကမ်း</option>
         <option>ရွှေပြည်သာ</option>
         <option>တောင်ဥက္ကလာပ</option>
         <option>တာမွေ</option>
         <option>သင်္ဃန်းကျွန်း</option>
         <option>သန်လျင်</option>
+        <option>တွံတေး</option>
         <option>ရန်ကင်း</option>
       </select>
 
-      <button id="voteButton" class="primary-button">
-        အတည်ပြုမည်
+      <button id="voteButton" class="primary-button" disabled>
+        Voting လုပ်မည်
       </button>
 
-      <div id="message"></div>
+      <div id="message" class="message"
+        role="status" aria-live="polite"></div>
     </section>
 
-    <section>
-      <div class="announcement-title">အသိပေးကြေညာချက်!</div>
-      <button id="announcementButton" class="announcement-button">
+    <!-- Announcement: only heading and button on the main page -->
+    <section class="notice">
+      <h2>အသိပေးကြေညာချက်!</h2>
+
+      <button id="openAnnouncement"
+        class="announcement-button">
         ကြေညာချက်ကြည့်ရန်
       </button>
     </section>
 
-    <section id="resultsSection" class="results hidden">
-      <h2 class="section-title">VOTING RESULTS</h2>
-      <div id="resultsList"></div>
-    </section>
+    <section class="card">
+      <h2 class="blue">VOTING RESULTS</h2>
 
+      <p id="resultsStatus" aria-live="polite">
+        မဲရလဒ်ကို မြန်မာစံတော်ချိန် ည 10 နာရီရောက်မှ ပြသပါမည်။
+      </p>
+
+      <div id="results"></div>
+    </section>
   </main>
 
-  <!-- Vote confirmation popup -->
-  <div id="confirmModal" class="modal">
-    <div class="modal-box">
-      <h2 class="modal-title">အတည်ပြုရန်</h2>
-      <div class="modal-message">
-        ရွေးချယ်ထားသော မြို့နယ် -
-        <strong id="confirmTownship" class="sky-text"></strong>
-      </div>
-      <div class="modal-buttons">
-        <button id="cancelVote">မလုပ်တော့ပါ</button>
-        <button id="confirmVote" class="primary-button">အတည်ပြုမည်</button>
+  <!-- Empty black footer -->
+  <footer aria-hidden="true"></footer>
+
+  <!-- Voting confirmation popup -->
+  <div id="confirmModal" class="modal" hidden>
+    <div class="modal-box" role="dialog"
+      aria-modal="true" aria-labelledby="confirmTitle">
+
+      <h2 id="confirmTitle">အတည်ပြုရန်</h2>
+
+      <p id="confirmText"></p>
+
+      <div class="modal-actions">
+        <button id="cancelVote" class="cancel-button">
+          မလုပ်တော့ပါ
+        </button>
+
+        <button id="confirmVote" class="confirm-button">
+          အတည်ပြုမည်
+        </button>
       </div>
     </div>
   </div>
 
-  <!-- Vote success popup -->
-  <div id="successModal" class="modal">
-    <div class="modal-box">
-      <h2 class="modal-title">Vote Successful!</h2>
-      <div class="checkmark">✓</div>
-      <div class="selected-box">
-        <div>သင်ရွေးချယ်ထားသော မြို့နယ်</div>
-        <strong id="successTownship" class="sky-text"></strong>
+  <!-- Successful vote popup -->
+  <div id="successModal" class="modal" hidden>
+    <div class="modal-box" role="dialog"
+      aria-modal="true" aria-labelledby="successTitle">
+
+      <div class="success-icon">✓</div>
+
+      <h2 id="successTitle">Vote Successful!</h2>
+
+      <div class="selected-township">
+        <div class="caption">သင်ရွေးချယ်ထားသော မြို့နယ်</div>
+        <div id="successTownship" class="name"></div>
       </div>
-      <button id="closeSuccess" class="primary-button">ပိတ်မည်</button>
+
+      <button id="closeSuccess" class="secondary-button">
+        ပိတ်မည်
+      </button>
     </div>
   </div>
 
   <!-- Announcement popup -->
-  <div id="announcementModal" class="modal">
-    <div class="modal-box">
-      <h2 class="modal-title" style="color: var(--red);">
-        အသိပေးကြေညာချက်!
-      </h2>
-      <div id="announcementContent" class="modal-message">
-        ကြေညာချက် မရှိသေးပါ။
+  <div id="announcementModal" class="modal" hidden>
+    <div class="modal-box" role="dialog"
+      aria-modal="true" aria-labelledby="announcementTitle">
+
+      <h2 id="announcementTitle">အသိပေးကြေညာချက်!</h2>
+
+      <div id="announcement" class="muted">
       </div>
-      <button id="closeAnnouncement">ပိတ်မည်</button>
+
+      <button id="closeAnnouncement"
+        class="secondary-button"
+        style="margin-top:18px">
+        ပိတ်မည်
+      </button>
     </div>
   </div>
 
-  <script>
-    /*
-      သတိပြုရန်:
-      ဤနေရာတွင် လက်ရှိ Website ၏ Supabase URL နှင့်
-      anon/publishable key ကို မှန်ကန်စွာ ထည့်သွင်းရပါမည်။
-      လက်ရှိအချက်အလက် မအတည်ပြုရသေးသောကြောင့်
-      ဒီ Coding ကို Live Database နဲ့ အလုပ်လုပ်ပြီးသားဟု
-      မယူဆပါနှင့်။
-    */
+  <script type="module">
+    import { createClient } from
+      "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
 
     const SUPABASE_URL =
       "https://vefqgexluwfwabdapklf.supabase.co";
 
     const SUPABASE_KEY =
-      "YOUR_EXISTING_SUPABASE_ANON_OR_PUBLISHABLE_KEY";
+      "sb_publishable_8eMPJX9TY1RIKxRhG4O1Aw_vLPcFm8R";
 
-    const MYANMAR_OFFSET = 6.5 * 60 * 60 * 1000;
+    const supabase = createClient(
+      SUPABASE_URL,
+      SUPABASE_KEY
+    );
 
+    const $ = id => document.getElementById(id);
+
+    const voteButton = $("voteButton");
+    const townshipSelect = $("township");
+    const statusBox = $("statusBox");
+
+    let databaseReady = false;
     let votingOpen = false;
-    let selectedTownship = "";
-    let announcementText = "";
-    let countdownTimer = null;
+    let busy = false;
+    let pendingTownship = "";
 
-    const $ = (id) => document.getElementById(id);
-
-    function getMyanmarTime() {
-      return new Date(Date.now() + MYANMAR_OFFSET);
+    // Convert Myanmar digits to English digits in displayed data.
+    function englishDigits(value) {
+      return String(value ?? "").replace(
+        /[၀-၉]/g,
+        digit => "0123456789"[
+          "၀၁၂၃၄၅၆၇၈၉".indexOf(digit)
+        ]
+      );
     }
 
-    function formatTime(number) {
-      return String(number).padStart(2, "0");
+    function myanmarTime() {
+      const parts = new Intl.DateTimeFormat("en-GB", {
+        timeZone: "Asia/Yangon",
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+        hourCycle: "h23"
+      }).formatToParts(new Date());
+
+      const v = {};
+
+      for (const p of parts) {
+        if (p.type !== "literal") {
+          v[p.type] = p.value;
+        }
+      }
+
+      return {
+        date: `${v.year}-${v.month}-${v.day}`,
+        hour: Number(v.hour),
+        minute: Number(v.minute),
+        second: Number(v.second)
+      };
+    }
+
+    function alreadyVotedToday() {
+      try {
+        return localStorage.getItem(
+          "khan_bhai_voted_" + myanmarTime().date
+        ) === "yes";
+      } catch {
+        return false;
+      }
+    }
+
+    function showMessage(text, isError = false) {
+      $("message").textContent = englishDigits(text);
+      $("message").className =
+        isError ? "message error" : "message";
+    }
+
+    function formatError(error) {
+      const text = error?.message || String(error);
+
+      if (/Results are not available/i.test(text)) {
+        return "မဲရလဒ်ကို မြန်မာစံတော်ချိန် ည 10 နာရီရောက်မှ ပြသပါမည်။";
+      }
+
+      if (/Voting is closed/i.test(text)) {
+        return "လက်ရှိ Voting ပိတ်ထားပါသည်။";
+      }
+
+      if (/row-level security|permission denied|not allowed|Admin access required/i.test(text)) {
+        return "Database ခွင့်ပြုချက်ကို စစ်ဆေးရန်လိုပါသည်။";
+      }
+
+      if (/Failed to fetch|Load failed|NetworkError|network request failed|timeout/i.test(text)) {
+        return "VPN ချိတ်ဆက်ပါ";
+      }
+
+      return "အမှား: " + englishDigits(text);
     }
 
     function updateCountdown() {
-      const now = getMyanmarTime();
-      const currentSeconds =
-        now.getUTCHours() * 3600 +
-        now.getUTCMinutes() * 60 +
-        now.getUTCSeconds();
+      if (!databaseReady) return;
 
-      const openingSeconds = 10 * 3600;
-      const closingSeconds = 22 * 3600;
+      const t = myanmarTime();
+      const nowSeconds =
+        t.hour * 3600 + t.minute * 60 + t.second;
 
-      let remaining;
+      let targetSeconds;
 
-      if (currentSeconds < openingSeconds) {
-        remaining = openingSeconds - currentSeconds;
-        $("statusText").textContent = "Voting မဖွင့်သေးပါ";
-      } else if (currentSeconds < closingSeconds) {
-        remaining = closingSeconds - currentSeconds;
-        $("statusText").textContent = "Voting ဖွင့်ထားသည်";
+      if (t.hour >= 10 && t.hour < 22) {
+        targetSeconds = 22 * 3600;
+        $("timerLabel").textContent = "VOTING CLOSES IN";
+      } else if (t.hour >= 22) {
+        targetSeconds = 24 * 3600 + 10 * 3600;
+        $("timerLabel").textContent = "NEXT VOTING OPENS IN";
       } else {
-        remaining = 24 * 3600 - currentSeconds + openingSeconds;
-        $("statusText").textContent = "Voting ပိတ်ထားသည်";
+        targetSeconds = 10 * 3600;
+        $("timerLabel").textContent = "VOTING OPENS IN";
       }
+
+      let remaining = targetSeconds - nowSeconds;
+
+      if (remaining < 0) remaining = 0;
 
       const hours = Math.floor(remaining / 3600);
       const minutes = Math.floor((remaining % 3600) / 60);
       const seconds = remaining % 60;
 
       $("countdown").textContent =
-        formatTime(hours) + ":" +
-        formatTime(minutes) + ":" +
-        formatTime(seconds);
-
-      votingOpen =
-        currentSeconds >= openingSeconds &&
-        currentSeconds < closingSeconds;
-
-      $("votingSection").classList.toggle("hidden", !votingOpen);
+        String(hours).padStart(2, "0") + ":" +
+        String(minutes).padStart(2, "0") + ":" +
+        String(seconds).padStart(2, "0");
     }
 
-    updateCountdown();
-    countdownTimer = setInterval(updateCountdown, 1000);
+    async function loadAnnouncement() {
+      const { data, error } = await supabase
+        .from("voting_control")
+        .select("confirmed_township,confirmed_visit_time,announcement")
+        .eq("id", true)
+        .maybeSingle();
 
-    $("voteButton").addEventListener("click", () => {
-      if (!votingOpen) {
-        $("message").textContent = "Voting ပိတ်ထားသည်။";
+      if (error) {
+        $("announcement").textContent =
+          "ကြေညာချက်ကို ရယူ၍မရပါ။";
         return;
       }
 
-      selectedTownship = $("townshipSelect").value;
+      const lines = [];
 
-      if (!selectedTownship) {
-        $("message").textContent = "မြို့နယ်ကို အရင်ရွေးချယ်ပါ။";
+      if (data?.confirmed_township) {
+        lines.push(
+          "အတည်ပြုထားသော မြို့နယ်: " +
+          englishDigits(data.confirmed_township)
+        );
+      }
+
+      if (data?.confirmed_visit_time) {
+        lines.push(
+          "လာရောက်မည့်အချိန်: " +
+          englishDigits(data.confirmed_visit_time)
+        );
+      }
+
+      if (data?.announcement) {
+        lines.push(englishDigits(data.announcement));
+      }
+
+      $("announcement").textContent = lines.length
+        ? lines.join("\n\n")
+        : "လက်ရှိ ကြေညာချက်မရှိသေးပါ။";
+    }
+
+    // Results are visible from 10 PM until the next 10 AM.
+    async function loadResults() {
+      const t = myanmarTime();
+      const resultsVisible = t.hour >= 22 || t.hour < 10;
+
+      if (!resultsVisible) {
+        $("resultsStatus").textContent =
+          "မဲရလဒ်ကို မြန်မာစံတော်ချိန် ည 10 နာရီရောက်မှ ပြသပါမည်။";
+        $("results").replaceChildren();
         return;
       }
 
-      $("confirmTownship").textContent = selectedTownship;
-      $("confirmModal").style.display = "flex";
-    });
+      $("resultsStatus").textContent = "ရလဒ်ကို ရယူနေပါသည်...";
+      $("results").replaceChildren();
+
+      const { data, error } = await supabase.rpc(
+        "get_public_township_vote_counts"
+      );
+
+      if (error) {
+        $("resultsStatus").textContent =
+          "ရလဒ် ရယူမရပါ။ " + formatError(error);
+        return;
+      }
+
+      const counts = {};
+
+      for (const option of townshipSelect.options) {
+        if (option.value) counts[option.value] = 0;
+      }
+
+      for (const item of data || []) {
+        const name = String(item.township ?? "");
+
+        if (Object.prototype.hasOwnProperty.call(counts, name)) {
+          counts[name] = Number(item.vote_count) || 0;
+        }
+      }
+
+      const sorted = Object.entries(counts)
+        .sort((a, b) => b[1] - a[1]);
+
+      const total = Object.values(counts)
+        .reduce((sum, count) => sum + count, 0);
+
+      const highest = sorted.length ? sorted[0][1] : 0;
+
+      $("resultsStatus").textContent =
+        "စုစုပေါင်း Votes: " + englishDigits(total);
+
+      let rank = 0;
+
+      for (const [name, count] of sorted) {
+        if (count === 0) continue;
+
+        rank++;
+
+        const row = document.createElement("div");
+        row.className = "result";
+
+        const head = document.createElement("div");
+        head.className = "result-head";
+
+        const rankLabel = document.createElement("span");
+        rankLabel.className = "rank";
+        rankLabel.textContent = englishDigits(rank) + ".";
+
+        const townshipName = document.createElement("span");
+        townshipName.className = "township-name";
+        townshipName.textContent = name;
+
+        const voteCount = document.createElement("strong");
+        voteCount.className = "vote-count";
+        voteCount.textContent =
+          englishDigits(count) + " Votes";
+
+        head.append(rankLabel, townshipName, voteCount);
+
+        const barBg = document.createElement("div");
+        barBg.className = "bar-bg";
+
+        const bar = document.createElement("div");
+        bar.className = "bar";
+
+        bar.style.width =
+          (highest > 0 ? count / highest * 100 : 0) + "%";
+
+        barBg.append(bar);
+        row.append(head, barBg);
+        $("results").append(row);
+      }
+
+      if (total === 0) {
+        $("results").textContent = "လက်ရှိ Results မရှိသေးပါ။";
+      }
+    }
+
+    async function refreshStatus() {
+      databaseReady = false;
+      votingOpen = false;
+      voteButton.disabled = true;
+
+      try {
+        const { data, error } = await supabase.rpc(
+          "is_voting_open"
+        );
+
+        if (error) throw error;
+
+        databaseReady = true;
+        votingOpen = data === true;
+
+        statusBox.classList.remove("connection-error");
+
+        const t = myanmarTime();
+
+        if (t.hour >= 10 && t.hour < 22 && votingOpen) {
+          $("statusTitle").textContent = "VOTING IS OPEN";
+          $("statusMessage").textContent =
+            "Voting လုပ်နိုင်ပါသည်။ Results ကို ည 10 နာရီမှ ပြသပါမည်။";
+        } else if (t.hour >= 10 && t.hour < 22) {
+          $("statusTitle").textContent = "VOTING IS CLOSED";
+          $("statusMessage").textContent =
+            "Admin မှ Voting ကို ယာယီပိတ်ထားပါသည်။";
+        } else {
+          $("statusTitle").textContent = "VOTING IS CLOSED";
+          $("statusMessage").textContent =
+            "Voting ကို မနက် 10 နာရီမှ ည 10 နာရီအထိ ပြုလုပ်နိုင်ပါသည်။";
+        }
+
+        if (alreadyVotedToday()) {
+          showMessage("ဤ Browser မှ ယနေ့ Voting လုပ်ပြီးပါပြီ။");
+        }
+
+        voteButton.disabled =
+          !databaseReady ||
+          !votingOpen ||
+          alreadyVotedToday() ||
+          busy;
+
+      } catch (error) {
+        databaseReady = false;
+        votingOpen = false;
+        voteButton.disabled = true;
+
+        statusBox.classList.add("connection-error");
+        $("statusTitle").textContent = "";
+        $("statusMessage").textContent = "VPN ချိတ်ဆက်ပါ";
+        $("timerLabel").textContent = "";
+        $("countdown").textContent = "";
+        showMessage("");
+      }
+
+      if (databaseReady) {
+        updateCountdown();
+
+        await Promise.all([
+          loadAnnouncement(),
+          loadResults()
+        ]);
+      } else {
+        // Hide stale data if the database connection is lost.
+        $("results").replaceChildren();
+        $("resultsStatus").textContent = "";
+      }
+    }
+
+    function openConfirm() {
+      if (busy || !databaseReady || !votingOpen) return;
+
+      const selected = townshipSelect.value;
+
+      if (!selected) {
+        showMessage("Voting လုပ်ရန် မြို့နယ်ရွေးချယ်ပါ။", true);
+        return;
+      }
+
+      if (alreadyVotedToday()) {
+        showMessage("ဤ Browser မှ ယနေ့ Voting လုပ်ပြီးပါပြီ။", true);
+        voteButton.disabled = true;
+        return;
+      }
+
+      pendingTownship = selected;
+
+      $("confirmText").textContent =
+        "“" + selected + "” မြို့နယ်ကို ရွေးချယ်မှာ သေချာပါသလား။";
+
+      $("confirmModal").hidden = false;
+    }
+
+    async function submitVote() {
+      if (
+        busy ||
+        !pendingTownship ||
+        !databaseReady ||
+        !votingOpen
+      ) return;
+
+      busy = true;
+      $("confirmVote").disabled = true;
+      $("cancelVote").disabled = true;
+      $("confirmVote").textContent = "သိမ်းဆည်းနေပါသည်...";
+
+      try {
+        const { error } = await supabase
+          .from("Votes")
+          .insert({ township: pendingTownship });
+
+        if (error) throw error;
+
+        try {
+          localStorage.setItem(
+            "khan_bhai_voted_" + myanmarTime().date,
+            "yes"
+          );
+        } catch {}
+
+        $("confirmModal").hidden = true;
+        $("successTownship").textContent = pendingTownship;
+        $("successModal").hidden = false;
+
+        townshipSelect.value = "";
+        showMessage("");
+
+        await refreshStatus();
+
+      } catch (error) {
+        $("confirmModal").hidden = true;
+
+        const errorText = formatError(error);
+
+        if (errorText === "VPN ချိတ်ဆက်ပါ") {
+          statusBox.classList.add("connection-error");
+          $("statusTitle").textContent = "";
+          $("statusMessage").textContent = "VPN ချိတ်ဆက်ပါ";
+          $("timerLabel").textContent = "";
+          $("countdown").textContent = "";
+          showMessage("");
+        } else {
+          showMessage(errorText, true);
+        }
+
+      } finally {
+        busy = false;
+        pendingTownship = "";
+
+        $("confirmVote").disabled = false;
+        $("cancelVote").disabled = false;
+        $("confirmVote").textContent = "အတည်ပြုမည်";
+        voteButton.textContent = "Voting လုပ်မည်";
+
+        voteButton.disabled =
+          !databaseReady ||
+          !votingOpen ||
+          alreadyVotedToday();
+      }
+    }
+
+    voteButton.addEventListener("click", openConfirm);
 
     $("cancelVote").addEventListener("click", () => {
-      $("confirmModal").style.display = "none";
+      if (busy) return;
+
+      $("confirmModal").hidden = true;
+      pendingTownship = "";
     });
 
-    $("confirmVote").addEventListener("click", async () => {
-      /*
-        ဒီနေရာမှာ လက်ရှိ Website မှာ အသုံးပြုနေသော
-        Database vote submission code ကို ထည့်ရပါမည်။
-        Database မချိတ်ဆက်ရသေးသောကြောင့်
-        အောင်မြင်ကြောင်း အတုအယောင် မပြပါ။
-      */
-
-      $("confirmModal").style.display = "none";
-      $("message").textContent =
-        "Database ချိတ်ဆက်မှု Coding ကို အတည်ပြုပြီးမှ Vote တင်နိုင်ပါမည်။";
-    });
+    $("confirmVote").addEventListener("click", submitVote);
 
     $("closeSuccess").addEventListener("click", () => {
-      $("successModal").style.display = "none";
+      $("successModal").hidden = true;
     });
 
-    $("announcementButton").addEventListener("click", () => {
-      $("announcementContent").textContent =
-        announcementText || "ကြေညာချက် မရှိသေးပါ။";
-      $("announcementModal").style.display = "flex";
+    $("confirmModal").addEventListener("click", event => {
+      if (event.target === $("confirmModal") && !busy) {
+        $("confirmModal").hidden = true;
+        pendingTownship = "";
+      }
+    });
+
+    $("openAnnouncement").addEventListener("click", async () => {
+      $("announcementModal").hidden = false;
+      await loadAnnouncement();
     });
 
     $("closeAnnouncement").addEventListener("click", () => {
-      $("announcementModal").style.display = "none";
+      $("announcementModal").hidden = true;
     });
+
+    $("announcementModal").addEventListener("click", event => {
+      if (event.target === $("announcementModal")) {
+        $("announcementModal").hidden = true;
+      }
+    });
+
+    await refreshStatus();
+
+    setInterval(() => {
+      updateCountdown();
+    }, 1000);
+
+    setInterval(() => {
+      refreshStatus();
+    }, 30000);
   </script>
 </body>
 </html>
