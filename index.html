@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="my">
 <head>
@@ -84,7 +85,6 @@
       color: var(--blue);
       font-size: 13px;
       font-weight: 900;
-      letter-spacing: 0;
     }
 
     .brand {
@@ -182,7 +182,6 @@
       white-space: nowrap;
     }
 
-    /* Connection error: show only the approved message. */
     .status-box.connection-error {
       display: flex;
       align-items: center;
@@ -313,6 +312,7 @@
       color: var(--white);
       font-size: 14px;
       text-align: left;
+      line-height: 1.8;
     }
 
     .result {
@@ -362,7 +362,6 @@
       transition: width 0.3s ease;
     }
 
-    /* Completely black, empty footer */
     footer {
       width: 100%;
       min-height: 24px;
@@ -408,6 +407,18 @@
       color: var(--blue);
       font-size: 18px;
       margin-bottom: 12px;
+    }
+
+    /* Only the announcement popup title is red. */
+    #announcementTitle {
+      display: block;
+      width: 100%;
+      padding: 8px 10px;
+      color: var(--red);
+      border: 1px solid var(--red);
+      border-radius: 8px;
+      font-size: 18px;
+      margin-bottom: 16px;
     }
 
     .modal-box p {
@@ -505,6 +516,27 @@
       .vote-count {
         font-size: 11px;
       }
+
+      .modal {
+        padding-left: 12px;
+        padding-right: 12px;
+      }
+
+      .modal-box {
+        padding: 18px 14px;
+      }
+    }
+
+    @media (min-width: 700px) {
+      main {
+        max-width: 560px;
+        padding-left: 18px;
+        padding-right: 18px;
+      }
+
+      .card {
+        padding: 20px;
+      }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -532,11 +564,6 @@
 
   <main>
     <section class="card">
-      <h2>မြို့နယ်ရွေးချယ်ခြင်း</h2>
-
-      <p>
-        သင်စိတ်ဝင်စားတဲ့ မြို့နယ်ကို ရွေးချယ်ပြီး Voting လုပ်နိုင်ပါတယ်။
-      </p>
 
       <div id="statusBox" class="status-box"
         role="status" aria-live="polite">
@@ -603,7 +630,6 @@
         role="status" aria-live="polite"></div>
     </section>
 
-    <!-- Announcement: only heading and button on the main page -->
     <section class="notice">
       <h2>အသိပေးကြေညာချက်!</h2>
 
@@ -624,7 +650,6 @@
     </section>
   </main>
 
-  <!-- Empty black footer -->
   <footer aria-hidden="true"></footer>
 
   <!-- Voting confirmation popup -->
@@ -673,9 +698,9 @@
     <div class="modal-box" role="dialog"
       aria-modal="true" aria-labelledby="announcementTitle">
 
-      <h2 id="announcementTitle">အသိပေးကြေညာချက်!</h2>
+      <h2 id="announcementTitle">အသိပေးချက်</h2>
 
-      <div id="announcement" class="muted">
+      <div id="announcement">
       </div>
 
       <button id="closeAnnouncement"
@@ -712,7 +737,6 @@
     let busy = false;
     let pendingTownship = "";
 
-    // Convert Myanmar digits to English digits in displayed data.
     function englishDigits(value) {
       return String(value ?? "").replace(
         /[၀-၉]/g,
@@ -860,7 +884,6 @@
         : "လက်ရှိ ကြေညာချက်မရှိသေးပါ။";
     }
 
-    // Results are visible from 10 PM until the next 10 AM.
     async function loadResults() {
       const t = myanmarTime();
       const resultsVisible = t.hour >= 22 || t.hour < 10;
@@ -1021,7 +1044,6 @@
           loadResults()
         ]);
       } else {
-        // Hide stale data if the database connection is lost.
         $("results").replaceChildren();
         $("resultsStatus").textContent = "";
       }
