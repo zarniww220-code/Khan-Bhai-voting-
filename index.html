@@ -3,21 +3,22 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#0B0F19">
+  <meta name="theme-color" content="#030712">
   <meta name="color-scheme" content="dark">
   <title>KHAN BHAI | Township Voting System</title>
 
   <style>
     :root {
-      --bg: #0B0F19;          /* Deep trustworthy slate/navy background */
-      --card: #131C2E;        /* Soft elevated card background */
-      --blue: #38BDF8;        /* Clear vibrant blue accent */
-      --blue-hover: #0EA5E9;
-      --white: #F8FAFC;       /* Soft white for perfect readability (non-straining) */
-      --muted: #94A3B8;       /* Subtle gray for secondary text */
-      --border: #1E293B;      /* Clean subtle border */
-      --red: #FB7185;
-      --error-bg: #1F1517;
+      --bg: #030712;
+      --card-bg: rgba(17, 24, 39, 0.75);
+      --card-border: rgba(56, 189, 248, 0.15);
+      --cyan: #38BDF8;
+      --cyan-glow: rgba(56, 189, 248, 0.35);
+      --purple: #C084FC;
+      --white: #FFFFFF;
+      --muted: #9CA3AF;
+      --danger: #F43F5E;
+      --danger-bg: rgba(244, 63, 94, 0.1);
     }
 
     * {
@@ -28,18 +29,21 @@
       min-height: 100%;
       background: var(--bg);
       -webkit-text-size-adjust: 100%;
-      text-size-adjust: 100%;
     }
 
     body {
       margin: 0;
       min-height: 100vh;
       min-height: 100dvh;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       background: var(--bg);
       color: var(--white);
       line-height: 1.6;
       overflow-wrap: anywhere;
+      background-image: 
+        radial-gradient(circle at 10% 20%, rgba(56, 189, 248, 0.08) 0%, transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(192, 132, 252, 0.06) 0%, transparent 40%);
+      background-attachment: fixed;
     }
 
     button, select {
@@ -61,614 +65,544 @@
       display: none !important;
     }
 
-    /* Header Design */
+    /* Slick App Header */
     header {
       display: flex;
       align-items: center;
-      justify-content: center;
-      gap: 14px;
+      justify-content: space-between;
       width: 100%;
-      padding: 18px 16px;
-      padding-top: max(18px, env(safe-area-inset-top));
-      background: #090D16;
-      border-bottom: 1px solid var(--border);
+      max-width: 520px;
+      margin: 0 auto;
+      padding: 20px 16px;
+      padding-top: max(20px, env(safe-area-inset-top));
     }
 
-    .logo-placeholder {
-      width: 48px;
-      height: 48px;
-      flex: 0 0 48px;
-      background: linear-gradient(135deg, #38BDF8, #0284C7);
+    .brand-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo-badge {
+      width: 44px;
+      height: 44px;
+      background: linear-gradient(135deg, var(--cyan), var(--purple));
       border-radius: 12px;
       display: flex;
       align-items: center;
       justify-content: center;
-      color: #000000;
-      font-size: 15px;
+      color: #030712;
+      font-size: 16px;
       font-weight: 900;
-      letter-spacing: 0.5px;
-      box-shadow: 0 4px 12px rgba(56, 189, 248, 0.2);
-    }
-
-    .brand {
-      min-width: 0;
+      box-shadow: 0 0 20px var(--cyan-glow);
     }
 
     .brand h1 {
       margin: 0;
-      font-size: clamp(20px, 5vw, 24px);
-      line-height: 1.2;
-      font-weight: 800;
+      font-size: 18px;
+      font-weight: 900;
       letter-spacing: 0.5px;
-      color: var(--white);
+      background: linear-gradient(90deg, #fff, var(--cyan));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
 
     .brand p {
-      margin: 3px 0 0;
-      color: var(--blue);
-      font-size: clamp(10px, 2.5vw, 12px);
+      margin: 2px 0 0;
+      color: var(--muted);
+      font-size: 10px;
       font-weight: 700;
-      letter-spacing: 1.2px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+
+    .header-announcement-btn {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--card-border);
+      border-radius: 10px;
+      padding: 8px 12px;
+      color: var(--cyan);
+      font-size: 12px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      backdrop-filter: blur(10px);
     }
 
     /* Main Container */
     main {
       width: 100%;
       max-width: 520px;
-      margin: 16px auto;
-      padding: 0 14px;
+      margin: 0 auto;
+      padding: 0 16px 40px;
     }
 
-    .card {
-      width: 100%;
-      min-width: 0;
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 20px 18px;
+    /* Glassmorphic Cards */
+    .glass-card {
+      background: var(--card-bg);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      padding: 22px;
       margin-bottom: 16px;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
     }
 
     h2 {
-      margin: 0 0 10px;
-      font-size: 18px;
-      line-height: 1.4;
-      font-weight: 700;
+      margin: 0 0 8px;
+      font-size: 17px;
+      font-weight: 800;
       color: var(--white);
     }
 
-    p {
-      margin: 6px 0 16px;
-      font-size: 14px;
+    .card-subtitle {
+      margin: 0 0 16px;
+      font-size: 13px;
       color: var(--muted);
-      line-height: 1.6;
+      line-height: 1.5;
     }
 
-    .blue {
-      color: var(--blue);
-    }
-
-    /* Status Box */
-    .status-box {
-      border: 1px solid var(--border);
-      background: #0F172A;
-      border-radius: 12px;
-      padding: 16px 12px;
+    /* Status Display */
+    .status-panel {
+      background: rgba(3, 7, 18, 0.6);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      padding: 16px;
       text-align: center;
-      margin: 16px 0;
-      min-width: 0;
+      margin-bottom: 18px;
     }
 
-    .status-title {
-      color: var(--blue);
-      font-size: 12px;
+    .status-badge {
+      display: inline-block;
+      padding: 4px 10px;
+      background: rgba(56, 189, 248, 0.1);
+      color: var(--cyan);
+      border-radius: 20px;
+      font-size: 11px;
       font-weight: 800;
       letter-spacing: 0.8px;
       text-transform: uppercase;
+      margin-bottom: 6px;
     }
 
-    .status-message {
-      color: var(--white);
+    .status-text {
       font-size: 14px;
-      font-weight: 500;
-      margin-top: 6px;
-      overflow-wrap: anywhere;
+      font-weight: 600;
+      color: var(--white);
+    }
+
+    .timer-container {
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
 
     .timer-label {
-      color: var(--muted);
       font-size: 11px;
-      font-weight: 600;
-      margin-top: 12px;
+      color: var(--muted);
+      font-weight: 700;
       letter-spacing: 0.5px;
     }
 
     #countdown {
-      color: var(--blue);
-      font-size: clamp(22px, 6vw, 26px);
-      font-weight: 800;
-      letter-spacing: 1px;
+      font-size: 16px;
+      font-weight: 900;
+      color: var(--cyan);
       font-variant-numeric: tabular-nums;
-      margin-top: 2px;
+      letter-spacing: 1px;
     }
 
-    /* Connection Error State (VPN Warning Prominent) */
-    .status-box.connection-error {
-      background: var(--error-bg);
-      border-color: #7F1D1D;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      min-height: 80px;
-      padding: 16px;
+    /* Connection Error State (VPN Triggered) */
+    .status-panel.error-state {
+      background: var(--danger-bg);
+      border-color: rgba(244, 63, 94, 0.3);
     }
 
-    .connection-error .status-title,
-    .connection-error .timer-label,
-    .connection-error #countdown {
+    .error-state .status-badge {
+      background: rgba(244, 63, 94, 0.2);
+      color: var(--danger);
+    }
+
+    .error-state .status-text {
+      color: #FDA4AF;
+      font-weight: 700;
+    }
+
+    .error-state .timer-container {
       display: none !important;
     }
 
-    .connection-error .status-message {
-      margin: 0;
-      color: #FCA5A5;
-      font-size: 15px;
-      font-weight: 700;
-      text-align: center;
-    }
-    
-    .connection-error .vpn-hint {
-      display: block;
-      margin-top: 6px;
-      font-size: 12px;
-      color: var(--muted);
-      font-weight: 400;
+    /* Form Controls */
+    .input-group {
+      margin-bottom: 16px;
     }
 
-    /* Form Elements */
     label {
       display: block;
-      color: var(--white);
-      font-size: 14px;
-      font-weight: 600;
-      margin: 16px 0 8px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--muted);
+      margin-bottom: 8px;
+      letter-spacing: 0.3px;
     }
 
     select {
-      display: block;
       width: 100%;
-      min-width: 0;
-      min-height: 50px;
-      padding: 12px 14px;
+      height: 52px;
+      padding: 0 16px;
+      background: rgba(3, 7, 18, 0.8);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
       color: var(--white);
-      background: #090D16;
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      outline: none;
       font-size: 15px;
+      font-weight: 600;
+      outline: none;
       appearance: none;
-      background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2394A3B8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+      background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2338BDF8' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
       background-repeat: no-repeat;
-      background-position: right 14px center;
+      background-position: right 16px center;
       background-size: 18px;
-      padding-right: 40px;
+      transition: all 0.2s ease;
     }
 
     select:focus {
-      border-color: var(--blue);
-      box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.2);
+      border-color: var(--cyan);
+      box-shadow: 0 0 0 3px var(--cyan-glow);
     }
 
     select option {
+      background: #0B0F19;
       color: var(--white);
-      background: #0F172A;
-      padding: 10px;
     }
 
-    /* Buttons */
-    .primary-button {
-      display: block;
+    /* Action Button */
+    .action-btn {
       width: 100%;
-      min-height: 48px;
-      padding: 12px;
-      margin-top: 18px;
+      height: 52px;
+      background: linear-gradient(135deg, var(--cyan), #0284C7);
       border: none;
-      border-radius: 12px;
-      color: #090D16;
-      background: var(--blue);
+      border-radius: 14px;
+      color: #030712;
       font-size: 15px;
-      font-weight: 800;
-      letter-spacing: 0.3px;
-      transition: background 0.2s ease, transform 0.1s ease;
+      font-weight: 900;
+      letter-spacing: 0.5px;
+      box-shadow: 0 4px 20px var(--cyan-glow);
+      transition: transform 0.1s ease, opacity 0.2s ease;
     }
 
-    .primary-button:hover:not(:disabled) {
-      background: var(--blue-hover);
-    }
-
-    .primary-button:active:not(:disabled) {
+    .action-btn:active:not(:disabled) {
       transform: scale(0.98);
     }
 
-    .secondary-button {
-      min-height: 42px;
-      padding: 10px 20px;
-      border: 1px solid var(--blue);
-      border-radius: 10px;
-      background: transparent;
-      color: var(--blue);
-      font-size: 14px;
-      font-weight: 700;
-    }
-
-    .message {
-      margin-top: 14px;
-      font-size: 13px;
-      color: var(--blue);
+    .feedback-msg {
+      margin-top: 12px;
       text-align: center;
-      font-weight: 500;
-      overflow-wrap: anywhere;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--cyan);
     }
 
-    .message.error {
-      color: #FCA5A5;
+    .feedback-msg.error {
+      color: var(--danger);
     }
 
-    .muted {
+    /* Results Layout */
+    .results-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .results-header h2 {
+      margin: 0;
+      color: var(--cyan);
+      font-size: 15px;
+      letter-spacing: 0.5px;
+    }
+
+    #resultsStatus {
+      font-size: 12px;
       color: var(--muted);
-      font-size: 13px;
+      font-weight: 600;
+      margin: 0;
     }
 
-    /* Notice / Announcement Section */
-    .notice {
-      width: 100%;
-      background: transparent;
-      padding: 0;
-      margin: 0 0 16px;
-      text-align: center;
+    .result-card-item {
+      background: rgba(3, 7, 18, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.03);
+      border-radius: 12px;
+      padding: 12px 14px;
+      margin-bottom: 10px;
     }
 
-    .announcement-button {
+    .result-info {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .rank-and-name {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .rank-badge {
+      width: 24px;
+      height: 24px;
+      background: rgba(56, 189, 248, 0.1);
+      color: var(--cyan);
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 900;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 8px;
-      width: 100%;
-      min-height: 46px;
-      padding: 10px 16px;
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      background: var(--card);
-      color: var(--white);
+    }
+
+    .township-title {
       font-size: 14px;
-      font-weight: 600;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    }
-
-    .announcement-button:hover {
-      border-color: var(--blue);
-    }
-
-    #announcement {
-      white-space: pre-line;
-      overflow-wrap: anywhere;
-      color: var(--white);
-      font-size: 14px;
-      text-align: left;
-      line-height: 1.7;
-    }
-
-    /* Results Section */
-    .result {
-      margin: 14px 0;
-    }
-
-    .result-head {
-      display: grid;
-      grid-template-columns: 28px minmax(0, 1fr) auto;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 6px;
-    }
-
-    .rank {
-      color: var(--blue);
-      font-weight: 800;
-      font-size: 13px;
-    }
-
-    .township-name {
-      min-width: 0;
-      overflow-wrap: anywhere;
-      font-size: 14px;
-      font-weight: 500;
-      color: var(--white);
-    }
-
-    .vote-count {
-      color: var(--blue);
-      font-size: 13px;
       font-weight: 700;
-      white-space: nowrap;
-      text-align: right;
+      color: var(--white);
     }
 
-    .bar-bg {
-      height: 8px;
-      background: #090D16;
-      border-radius: 20px;
+    .vote-badge {
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--cyan);
+    }
+
+    .progress-track {
+      height: 6px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 10px;
       overflow: hidden;
     }
 
-    .bar {
+    .progress-fill {
       height: 100%;
-      background: linear-gradient(90deg, #38BDF8, #0284C7);
-      border-radius: 20px;
-      transition: width 0.4s ease;
+      background: linear-gradient(90deg, var(--cyan), var(--purple));
+      border-radius: 10px;
+      transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
-    footer {
-      width: 100%;
-      min-height: 32px;
-      background: transparent;
-    }
-
-    /* Modals / Popups */
-    .modal {
+    /* Modal Styling */
+    .modal-overlay {
       position: fixed;
       inset: 0;
       z-index: 1000;
+      background: rgba(3, 7, 18, 0.85);
+      backdrop-filter: blur(8px);
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 16px;
-      padding-top: max(16px, env(safe-area-inset-top));
-      padding-bottom: max(16px, env(safe-area-inset-bottom));
-      background: rgba(3, 7, 18, 0.85);
-      backdrop-filter: blur(4px);
+      padding: 20px;
     }
 
-    .modal[hidden] {
+    .modal-overlay[hidden] {
       display: none !important;
     }
 
-    .modal-box {
+    .modal-content {
       width: 100%;
       max-width: 340px;
-      max-height: 85vh;
-      max-height: 85dvh;
-      overflow-y: auto;
-      padding: 24px 20px;
-      border: 1px solid var(--border);
-      border-radius: 18px;
-      background: var(--card);
+      background: #0B0F19;
+      border: 1px solid var(--card-border);
+      border-radius: 24px;
+      padding: 24px;
       text-align: center;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
     }
 
-    .modal-box h2 {
-      color: var(--white);
+    .modal-content h2 {
       font-size: 18px;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
+      color: var(--white);
     }
 
-    .modal-box p {
-      color: var(--muted);
-      overflow-wrap: anywhere;
+    .modal-content p {
       font-size: 14px;
+      color: var(--muted);
+      margin-bottom: 20px;
     }
 
     .modal-actions {
       display: flex;
       gap: 10px;
-      margin-top: 20px;
     }
 
-    .modal-actions button {
+    .btn-secondary {
       flex: 1;
-      min-width: 0;
-      min-height: 44px;
-      padding: 10px;
-      border-radius: 10px;
-      font-size: 14px;
-      font-weight: 700;
-    }
-
-    .cancel-button {
-      border: 1px solid var(--border);
+      height: 46px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
       color: var(--muted);
-      background: #090D16;
+      font-weight: 700;
+      font-size: 14px;
     }
 
-    .confirm-button {
+    .btn-primary {
+      flex: 1;
+      height: 46px;
+      background: var(--cyan);
       border: none;
-      color: #090D16;
-      background: var(--blue);
+      border-radius: 12px;
+      color: #030712;
+      font-weight: 900;
+      font-size: 14px;
     }
 
-    .success-icon {
-      width: 56px;
-      height: 56px;
-      margin: 0 auto 14px;
+    .success-circle {
+      width: 60px;
+      height: 60px;
       background: rgba(56, 189, 248, 0.1);
-      border: 1px solid var(--blue);
+      border: 2px solid var(--cyan);
       border-radius: 50%;
+      margin: 0 auto 16px;
       display: flex;
       align-items: center;
       justify-content: center;
-      color: var(--blue);
-      font-size: 24px;
+      color: var(--cyan);
+      font-size: 26px;
       font-weight: 900;
+      box-shadow: 0 0 20px var(--cyan-glow);
     }
 
-    .selected-township {
-      border: 1px solid var(--border);
-      background: #090D16;
-      border-radius: 12px;
-      padding: 14px;
-      margin: 16px 0;
-    }
-
-    .selected-township .caption {
-      color: var(--muted);
-      font-size: 12px;
-    }
-
-    .selected-township .name {
-      color: var(--blue);
-      font-size: 16px;
-      font-weight: 800;
-      margin-top: 4px;
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after {
-        scroll-behavior: auto !important;
-        transition-duration: 0.01ms !important;
-      }
+    .announcement-box {
+      background: rgba(3, 7, 18, 0.6);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      padding: 16px;
+      text-align: left;
+      font-size: 14px;
+      color: var(--white);
+      white-space: pre-line;
+      line-height: 1.6;
+      max-height: 60vh;
+      overflow-y: auto;
     }
   </style>
 </head>
 
 <body>
-  <header>
-    <div class="logo-placeholder" aria-label="KHAN BHAI logo">
-      KB
-    </div>
 
-    <div class="brand">
-      <h1>KHAN BHAI</h1>
-      <p>TOWNSHIP VOTING SYSTEM</p>
+  <header>
+    <div class="brand-group">
+      <div class="logo-badge">KB</div>
+      <div class="brand">
+        <h1>KHAN BHAI</h1>
+        <p>Township Voting</p>
+      </div>
     </div>
+    <button id="openAnnouncement" class="header-announcement-btn">
+      📢 ကြေညာချက်
+    </button>
   </header>
 
   <main>
-    <section class="card">
-      <h2>မြို့နယ်ရွေးချယ်ခြင်း</h2>
+    <div class="glass-card">
+      <h2>မြို့နယ်ရွေးချယ်ရန်</h2>
+      <p class="card-subtitle">သင်စိတ်ဝင်စားရာ မြို့နယ်ကို ရွေးချယ်ပြီး မဲပေးနိုင်ပါသည်။</p>
 
-      <p>
-        သင်စိတ်ဝင်စားတဲ့ မြို့နယ်ကို ရွေးချယ်ပြီး Voting လုပ်နိုင်ပါတယ်။
-      </p>
-
-      <div id="statusBox" class="status-box" role="status" aria-live="polite">
-        <div id="statusTitle" class="status-title">
-          CHECKING STATUS
+      <div id="statusBox" class="status-panel">
+        <div id="statusBadge" class="status-badge">Checking</div>
+        <div id="statusMessage" class="status-text">ချိတ်ဆက်မှုကို စစ်ဆေးနေပါသည်...</div>
+        <div class="timer-container" id="timerContainer">
+          <span class="timer-label" id="timerLabel">VOTING CLOSES IN</span>
+          <span id="countdown">--:--:--</span>
         </div>
-
-        <div id="statusMessage" class="status-message">
-          Database ချိတ်ဆက်မှုကို စစ်ဆေးနေပါသည်...
-        </div>
-
-        <div id="timerLabel" class="timer-label">
-          VOTING CLOSES IN
-        </div>
-
-        <div id="countdown">--:--:--</div>
       </div>
 
-      <label for="township">မြို့နယ်ရွေးချယ်ပါ</label>
+      <div class="input-group">
+        <label for="township">မြို့နယ်အမည်</label>
+        <select id="township">
+          <option value="">မြို့နယ်ရွေးချယ်ရန်</option>
+          <option>အလုံ</option>
+          <option>ဗဟန်း</option>
+          <option>ဗိုလ်တထောင်</option>
+          <option>ဒဂုံ</option>
+          <option>ဒဂုံမြို့သစ် (မြောက်ပိုင်း)</option>
+          <option>ဒဂုံမြို့သစ် (တောင်ပိုင်း)</option>
+          <option>ဒဂုံမြို့သစ် (အရှေ့ပိုင်း)</option>
+          <option>ဒဂုံမြို့သစ် (ဆိပ်ကမ်း)</option>
+          <option>ဒေါပုံ</option>
+          <option>ဒလ</option>
+          <option>အင်းစိန်</option>
+          <option>ကမာရွတ်</option>
+          <option>ကော့မှူး</option>
+          <option>ကျောက်တံတား</option>
+          <option>ကြည့်မြင်တိုင်</option>
+          <option>လှိုင်</option>
+          <option>လှိုင်သာယာ (အရှေ့ပိုင်း)</option>
+          <option>လှိုင်သာယာ (အနောက်ပိုင်း)</option>
+          <option>လမ်းမတော်</option>
+          <option>လသာ</option>
+          <option>မင်္ဂလာဒုံ</option>
+          <option>မင်္ဂလာတောင်ညွန့်</option>
+          <option>မြောက်ဥက္ကလာပ</option>
+          <option>ပန်းဘဲတန်း</option>
+          <option>ပုဇွန်တောင်</option>
+          <option>စမ်းချောင်း</option>
+          <option>ရွှေပြည်သာ</option>
+          <option>တောင်ဥက္ကလာပ</option>
+          <option>တာမွေ</option>
+          <option>သင်္ဃန်းကျွန်း</option>
+          <option>သန်လျင်</option>
+          <option>တွံတေး</option>
+          <option>ရန်ကင်း</option>
+        </select>
+      </div>
 
-      <select id="township">
-        <option value="">မြို့နယ်ရွေးချယ်ရန်</option>
-        <option>အလုံ</option>
-        <option>ဗဟန်း</option>
-        <option>ဗိုလ်တထောင်</option>
-        <option>ဒဂုံ</option>
-        <option>ဒဂုံမြို့သစ် (မြောက်ပိုင်း)</option>
-        <option>ဒဂုံမြို့သစ် (တောင်ပိုင်း)</option>
-        <option>ဒဂုံမြို့သစ် (အရှေ့ပိုင်း)</option>
-        <option>ဒဂုံမြို့သစ် (ဆိပ်ကမ်း)</option>
-        <option>ဒေါပုံ</option>
-        <option>ဒလ</option>
-        <option>အင်းစိန်</option>
-        <option>ကမာရွတ်</option>
-        <option>ကော့မှူး</option>
-        <option>ကျောက်တံတား</option>
-        <option>ကြည့်မြင်တိုင်</option>
-        <option>လှိုင်</option>
-        <option>လှိုင်သာယာ (အရှေ့ပိုင်း)</option>
-        <option>လှိုင်သာယာ (အနောက်ပိုင်း)</option>
-        <option>လမ်းမတော်</option>
-        <option>လသာ</option>
-        <option>မင်္ဂလာဒုံ</option>
-        <option>မင်္ဂလာတောင်ညွန့်</option>
-        <option>မြောက်ဥက္ကလာပ</option>
-        <option>ပန်းဘဲတန်း</option>
-        <option>ပုဇွန်တောင်</option>
-        <option>စမ်းချောင်း</option>
-        <option>ရွှေပြည်သာ</option>
-        <option>တောင်ဥက္ကလာပ</option>
-        <option>တာမွေ</option>
-        <option>သင်္ဃန်းကျွန်း</option>
-        <option>သန်လျင်</option>
-        <option>တွံတေး</option>
-        <option>ရန်ကင်း</option>
-      </select>
+      <button id="voteButton" class="action-btn" disabled>မဲပေးမည်</button>
+      <div id="message" class="feedback-msg" role="status"></div>
+    </div>
 
-      <button id="voteButton" class="primary-button" disabled>
-        Voting လုပ်မည်
-      </button>
-
-      <div id="message" class="message" role="status" aria-live="polite"></div>
-    </section>
-
-    <!-- Announcement Button Section -->
-    <section class="notice">
-      <button id="openAnnouncement" class="announcement-button">
-        📢 <span style="font-weight: 700;">အသိပေးကြေညာချက် ကြည့်ရန်</span>
-      </button>
-    </section>
-
-    <section class="card">
-      <h2 class="blue" style="font-size: 16px; letter-spacing: 0.5px;">VOTING RESULTS</h2>
-
-      <p id="resultsStatus" aria-live="polite">
-        မဲရလဒ်ကို မြန်မာစံတော်ချိန် ည 10 နာရီရောက်မှ ပြသပါမည်။
-      </p>
-
+    <div class="glass-card">
+      <div class="results-header">
+        <h2>VOTING RESULTS</h2>
+        <p id="resultsStatus" aria-live="polite">ည 10 နာရီမှ ပြသမည်</p>
+      </div>
       <div id="results"></div>
-    </section>
+    </div>
   </main>
 
-  <footer aria-hidden="true"></footer>
-
-  <!-- Voting confirmation popup -->
-  <div id="confirmModal" class="modal" hidden>
-    <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="confirmTitle">
-      <h2 id="confirmTitle">အတည်ပြုရန်</h2>
+  <!-- Confirm Modal -->
+  <div id="confirmModal" class="modal-overlay" hidden>
+    <div class="modal-content">
+      <h2>မဲပေးခြင်း အတည်ပြုရန်</h2>
       <p id="confirmText"></p>
-
       <div class="modal-actions">
-        <button id="cancelVote" class="cancel-button">မလုပ်တော့ပါ</button>
-        <button id="confirmVote" class="confirm-button">အတည်ပြုမည်</button>
+        <button id="cancelVote" class="btn-secondary">မလုပ်တော့ပါ</button>
+        <button id="confirmVote" class="btn-primary">အတည်ပြုမည်</button>
       </div>
     </div>
   </div>
 
-  <!-- Successful vote popup -->
-  <div id="successModal" class="modal" hidden>
-    <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="successTitle">
-      <div class="success-icon">✓</div>
-      <h2 id="successTitle" style="color: var(--blue);">Vote Successful!</h2>
-
-      <div class="selected-township">
-        <div class="caption">သင်ရွေးချယ်ထားသော မြို့နယ်</div>
-        <div id="successTownship" class="name"></div>
-      </div>
-
-      <button id="closeSuccess" class="secondary-button" style="width: 100%; margin-top: 4px;">ပိတ်မည်</button>
+  <!-- Success Modal -->
+  <div id="successModal" class="modal-overlay" hidden>
+    <div class="modal-content">
+      <div class="success-circle">✓</div>
+      <h2>Vote Successful!</h2>
+      <p>သင်ရွေးချယ်ထားသော မြို့နယ်ကို မှတ်တမ်းတင်ပြီးပါပြီ။</p>
+      <div style="color: var(--cyan); font-weight: 800; font-size: 16px; margin-bottom: 20px;" id="successTownship"></div>
+      <button id="closeSuccess" class="btn-primary" style="width: 100%;">ပိတ်မည်</button>
     </div>
   </div>
 
-  <!-- Announcement popup -->
-  <div id="announcementModal" class="modal" hidden>
-    <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="announcementTitle">
-      <h2 id="announcementTitle" style="color: var(--blue);">အသိပေးကြေညာချက်</h2>
-      <div id="announcement" class="muted" style="margin-top: 12px;"></div>
-
-      <button id="closeAnnouncement" class="secondary-button" style="width: 100%; margin-top: 20px;">ပိတ်မည်</button>
+  <!-- Announcement Modal -->
+  <div id="announcementModal" class="modal-overlay" hidden>
+    <div class="modal-content" style="max-width: 380px;">
+      <h2 style="color: var(--cyan); margin-bottom: 14px;">အသိပေးကြေညာချက်</h2>
+      <div id="announcement" class="announcement-box"></div>
+      <button id="closeAnnouncement" class="btn-primary" style="width: 100%; margin-top: 18px;">ပိတ်မည်</button>
     </div>
   </div>
 
@@ -679,7 +613,6 @@
     const SUPABASE_KEY = "sb_publishable_8eMPJX9TY1RIKxRhG4O1Aw_vLPcFm8R";
 
     const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
-
     const $ = id => document.getElementById(id);
 
     const voteButton = $("voteButton");
@@ -692,72 +625,39 @@
     let pendingTownship = "";
 
     function englishDigits(value) {
-      return String(value ?? "").replace(
-        /[၀-၉]/g,
-        digit => "0123456789"["၀၁၂၃၄၅၆၇၈၉".indexOf(digit)]
-      );
+      return String(value ?? "").replace(/[၀-၉]/g, d => "0123456789"["၀၁၂၃၄၅၆၇၈၉".indexOf(d)]);
     }
 
     function myanmarTime() {
       const parts = new Intl.DateTimeFormat("en-GB", {
-        timeZone: "Asia/Yangon",
-        year: "numeric",
-        month: "2-digit",
-        day: "2-digit",
-        hour: "2-digit",
-        minute: "2-digit",
-        second: "2-digit",
-        hourCycle: "h23"
+        timeZone: "Asia/Yangon", year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit", second: "2-digit", hourCycle: "h23"
       }).formatToParts(new Date());
 
       const v = {};
-      for (const p of parts) {
-        if (p.type !== "literal") v[p.type] = p.value;
-      }
-
-      return {
-        date: `${v.year}-${v.month}-${v.day}`,
-        hour: Number(v.hour),
-        minute: Number(v.minute),
-        second: Number(v.second)
-      };
+      for (const p of parts) if (p.type !== "literal") v[p.type] = p.value;
+      return { date: `${v.year}-${v.month}-${v.day}`, hour: Number(v.hour), minute: Number(v.minute), second: Number(v.second) };
     }
 
     function alreadyVotedToday() {
-      try {
-        return localStorage.getItem("khan_bhai_voted_" + myanmarTime().date) === "yes";
-      } catch {
-        return false;
-      }
+      try { return localStorage.getItem("khan_bhai_voted_" + myanmarTime().date) === "yes"; } catch { return false; }
     }
 
     function showMessage(text, isError = false) {
       $("message").textContent = englishDigits(text);
-      $("message").className = isError ? "message error" : "message";
+      $("message").className = isError ? "feedback-msg error" : "feedback-msg";
     }
 
     function formatError(error) {
       const text = error?.message || String(error);
-
-      if (/Results are not available/i.test(text)) {
-        return "မဲရလဒ်ကို မြန်မာစံတော်ချိန် ည 10 နာရီရောက်မှ ပြသပါမည်။";
-      }
-      if (/Voting is closed/i.test(text)) {
-        return "လက်ရှိ Voting ပိတ်ထားပါသည်။";
-      }
-      if (/row-level security|permission denied|not allowed|Admin access required/i.test(text)) {
-        return "Database ခွင့်ပြုချက်ကို စစ်ဆေးရန်လိုပါသည်။";
-      }
-      if (/Failed to fetch|Load failed|NetworkError|network request failed|timeout/i.test(text)) {
-        return "VPN ချိတ်ဆက်ပါ";
-      }
-
+      if (/Results are not available/i.test(text)) return "မဲရလဒ်ကို မြန်မာစံတော်ချိန် ည 10 နာရီရောက်မှ ပြသပါမည်။";
+      if (/Voting is closed/i.test(text)) return "လက်ရှိ Voting ပိတ်ထားပါသည်။";
+      if (/row-level security|permission denied|not allowed/i.test(text)) return "Database ခွင့်ပြုချက် လိုအပ်ပါသည်။";
+      if (/Failed to fetch|Load failed|NetworkError|timeout/i.test(text)) return "VPN ချိတ်ဆက်ပါ";
       return "အမှား: " + englishDigits(text);
     }
 
     function updateCountdown() {
       if (!databaseReady) return;
-
       const t = myanmarTime();
       const nowSeconds = t.hour * 3600 + t.minute * 60 + t.second;
       let targetSeconds;
@@ -776,76 +676,48 @@
       let remaining = targetSeconds - nowSeconds;
       if (remaining < 0) remaining = 0;
 
-      const hours = Math.floor(remaining / 3600);
-      const minutes = Math.floor((remaining % 3600) / 60);
-      const seconds = remaining % 60;
+      const h = Math.floor(remaining / 3600);
+      const m = Math.floor((remaining % 3600) / 60);
+      const s = remaining % 60;
 
-      $("countdown").textContent =
-        String(hours).padStart(2, "0") + ":" +
-        String(minutes).padStart(2, "0") + ":" +
-        String(seconds).padStart(2, "0");
+      $("countdown").textContent = `${String(h).padStart(2,"0")}:${String(m).padStart(2,"0")}:${String(s).padStart(2,"0")}`;
     }
 
     async function loadAnnouncement() {
-      const { data, error } = await supabase
-        .from("voting_control")
-        .select("confirmed_township,confirmed_visit_time,announcement")
-        .eq("id", true)
-        .maybeSingle();
-
-      if (error) {
-        $("announcement").textContent = "ကြေညာချက်ကို ရယူ၍မရပါ။";
-        return;
-      }
+      const { data, error } = await supabase.from("voting_control").select("confirmed_township,confirmed_visit_time,announcement").eq("id", true).maybeSingle();
+      if (error) { $("announcement").textContent = "ကြေညာချက်ကို ရယူ၍မရပါ။"; return; }
 
       const lines = [];
-      if (data?.confirmed_township) {
-        lines.push("အတည်ပြုထားသော မြို့နယ်: " + englishDigits(data.confirmed_township));
-      }
-      if (data?.confirmed_visit_time) {
-        lines.push("လာရောက်မည့်အချိန်: " + englishDigits(data.confirmed_visit_time));
-      }
-      if (data?.announcement) {
-        lines.push(englishDigits(data.announcement));
-      }
+      if (data?.confirmed_township) lines.push("အတည်ပြုထားသော မြို့နယ်: " + englishDigits(data.confirmed_township));
+      if (data?.confirmed_visit_time) lines.push("လာရောက်မည့်အချိန်: " + englishDigits(data.confirmed_visit_time));
+      if (data?.announcement) lines.push(englishDigits(data.announcement));
 
       $("announcement").textContent = lines.length ? lines.join("\n\n") : "လက်ရှိ ကြေညာချက်မရှိသေးပါ။";
     }
 
     async function loadResults() {
       const t = myanmarTime();
-      const resultsVisible = t.hour >= 22 || t.hour < 10;
-
-      if (!resultsVisible) {
-        $("resultsStatus").textContent = "မဲရလဒ်ကို မြန်မာစံတော်ချိန် ည 10 နာရီရောက်မှ ပြသပါမည်။";
+      if (!(t.hour >= 22 || t.hour < 10)) {
+        $("resultsStatus").textContent = "ည 10 နာရီမှ ပြသမည်";
         $("results").replaceChildren();
         return;
       }
 
-      $("resultsStatus").textContent = "ရလဒ်ကို ရယူနေပါသည်...";
+      $("resultsStatus").textContent = "ရလဒ် ရယူနေသည်...";
       $("results").replaceChildren();
 
       const { data, error } = await supabase.rpc("get_public_township_vote_counts");
-
-      if (error) {
-        $("resultsStatus").textContent = "ရလဒ် ရယူမရပါ။ " + formatError(error);
-        return;
-      }
+      if (error) { $("resultsStatus").textContent = "ရလဒ် ရယူမရပါ။"; return; }
 
       const counts = {};
-      for (const option of townshipSelect.options) {
-        if (option.value) counts[option.value] = 0;
-      }
-
+      for (const opt of townshipSelect.options) if (opt.value) counts[opt.value] = 0;
       for (const item of data || []) {
         const name = String(item.township ?? "");
-        if (Object.prototype.hasOwnProperty.call(counts, name)) {
-          counts[name] = Number(item.vote_count) || 0;
-        }
+        if (Object.prototype.hasOwnProperty.call(counts, name)) counts[name] = Number(item.vote_count) || 0;
       }
 
       const sorted = Object.entries(counts).sort((a, b) => b[1] - a[1]);
-      const total = Object.values(counts).reduce((sum, count) => sum + count, 0);
+      const total = Object.values(counts).reduce((s, c) => s + c, 0);
       const highest = sorted.length ? sorted[0][1] : 0;
 
       $("resultsStatus").textContent = "စုစုပေါင်း Votes: " + englishDigits(total);
@@ -855,86 +727,73 @@
         if (count === 0) continue;
         rank++;
 
-        const row = document.createElement("div");
-        row.className = "result";
+        const itemEl = document.createElement("div");
+        itemEl.className = "result-card-item";
 
-        const head = document.createElement("div");
-        head.className = "result-head";
+        const info = document.createElement("div");
+        info.className = "result-info";
 
-        const rankLabel = document.createElement("span");
-        rankLabel.className = "rank";
-        rankLabel.textContent = englishDigits(rank) + ".";
+        const left = document.createElement("div");
+        left.className = "rank-and-name";
 
-        const townshipName = document.createElement("span");
-        townshipName.className = "township-name";
-        townshipName.textContent = name;
+        const rBadge = document.createElement("div");
+        rBadge.className = "rank-badge";
+        rBadge.textContent = englishDigits(rank);
 
-        const voteCount = document.createElement("strong");
-        voteCount.className = "vote-count";
-        voteCount.textContent = englishDigits(count) + " Votes";
+        const tName = document.createElement("span");
+        tName.className = "township-title";
+        tName.textContent = name;
 
-        head.append(rankLabel, townshipName, voteCount);
+        left.append(rBadge, tName);
 
-        const barBg = document.createElement("div");
-        barBg.className = "bar-bg";
+        const vBadge = document.createElement("span");
+        vBadge.className = "vote-badge";
+        vBadge.textContent = englishDigits(count) + " Votes";
 
-        const bar = document.createElement("div");
-        bar.className = "bar";
-        bar.style.width = (highest > 0 ? count / highest * 100 : 0) + "%";
+        info.append(left, vBadge);
 
-        barBg.append(bar);
-        row.append(head, barBg);
-        $("results").append(row);
+        const track = document.createElement("div");
+        track.className = "progress-track";
+
+        const fill = document.createElement("div");
+        fill.className = "progress-fill";
+        fill.style.width = (highest > 0 ? (count / highest) * 100 : 0) + "%";
+
+        track.append(fill);
+        itemEl.append(info, track);
+        $("results").append(itemEl);
       }
 
-      if (total === 0) {
-        $("results").textContent = "လက်ရှိ Results မရှိသေးပါ။";
-      }
+      if (total === 0) $("results").textContent = "လက်ရှိ Results မရှိသေးပါ။";
     }
 
     async function refreshStatus() {
-      databaseReady = false;
-      votingOpen = false;
-      voteButton.disabled = true;
+      databaseReady = false; votingOpen = false; voteButton.disabled = true;
 
       try {
         const { data, error } = await supabase.rpc("is_voting_open");
         if (error) throw error;
 
-        databaseReady = true;
-        votingOpen = data === true;
-
-        statusBox.classList.remove("connection-error");
+        databaseReady = true; votingOpen = data === true;
+        statusBox.classList.remove("error-state");
 
         const t = myanmarTime();
         if (t.hour >= 10 && t.hour < 22 && votingOpen) {
-          $("statusTitle").textContent = "VOTING IS OPEN";
-          $("statusMessage").textContent = "Voting လုပ်နိုင်ပါသည်။ Results ကို ည 10 နာရီမှ ပြသပါမည်။";
-        } else if (t.hour >= 10 && t.hour < 22) {
-          $("statusTitle").textContent = "VOTING IS CLOSED";
-          $("statusMessage").textContent = "Admin မှ Voting ကို ယာယီပိတ်ထားပါသည်။";
+          $("statusBadge").textContent = "LIVE";
+          $("statusMessage").textContent = "Voting ဖွင့်ထားပါသည်။ ရလဒ်ကို ည ၁၀ နာရီပြသမည့်။";
         } else {
-          $("statusTitle").textContent = "VOTING IS CLOSED";
-          $("statusMessage").textContent = "Voting ကို မနက် 10 နာရီမှ ည 10 နာရီအထိ ပြုလုပ်နိုင်ပါသည်။";
+          $("statusBadge").textContent = "CLOSED";
+          $("statusMessage").textContent = "လက်ရှိ Voting ပိတ်ထားပါသည်။";
         }
 
-        if (alreadyVotedToday()) {
-          showMessage("ဤ Browser မှ ယနေ့ Voting လုပ်ပြီးပါပြီ။");
-        }
-
+        if (alreadyVotedToday()) showMessage("ဤ Browser မှ ယနေ့ မဲပေးပြီးပါပြီ။");
         voteButton.disabled = !databaseReady || !votingOpen || alreadyVotedToday() || busy;
 
-      } catch (error) {
-        databaseReady = false;
-        votingOpen = false;
-        voteButton.disabled = true;
-
-        // Prominent VPN error design as discussed!
-        statusBox.classList.add("connection-error");
-        $("statusTitle").textContent = "";
-        $("statusMessage").innerHTML = `⚠️ VPN ချိတ်ဆက်ပါ <span class="vpn-hint">မဲပေးရန်အတွက် Internet Connection သို့မဟုတ် VPN ကို စစ်ဆေးပေးပါ။</span>`;
-        $("timerLabel").textContent = "";
-        $("countdown").textContent = "";
+      } catch {
+        databaseReady = false; votingOpen = false; voteButton.disabled = true;
+        statusBox.classList.add("error-state");
+        $("statusBadge").textContent = "ERROR";
+        $("statusMessage").textContent = "⚠️ VPN ချိတ်ဆက်ရန် လိုအပ်ပါသည်။";
         showMessage("");
       }
 
@@ -947,115 +806,52 @@
       }
     }
 
-    function openConfirm() {
-      if (busy || !databaseReady || !votingOpen) return;
-
+    voteButton.addEventListener("click", () => {
       const selected = townshipSelect.value;
-      if (!selected) {
-        showMessage("Voting လုပ်ရန် မြို့နယ်ရွေးချယ်ပါ။", true);
-        return;
-      }
-
-      if (alreadyVotedToday()) {
-        showMessage("ဤ Browser မှ ယနေ့ Voting လုပ်ပြီးပါပြီ။", true);
-        voteButton.disabled = true;
-        return;
-      }
-
+      if (!selected) { showMessage("မြို့နယ်ရွေးချယ်ပါ။", true); return; }
+      if (alreadyVotedToday()) { showMessage("ယနေ့ မဲပေးပြီးပါပြီ။", true); return; }
       pendingTownship = selected;
-      $("confirmText").textContent = "“" + selected + "” မြို့နယ်ကို ရွေးချယ်မှာ သေချာပါသလား။";
+      $("confirmText").textContent = `“${selected}” မြို့နယ်ကို ရွေးချယ်မှာ သေချာပါသလား။`;
       $("confirmModal").hidden = false;
-    }
+    });
 
-    async function submitVote() {
-      if (busy || !pendingTownship || !databaseReady || !votingOpen) return;
+    $("cancelVote").addEventListener("click", () => { $("confirmModal").hidden = true; pendingTownship = ""; });
 
+    $("confirmVote").addEventListener("click", async () => {
+      if (busy || !pendingTownship) return;
       busy = true;
       $("confirmVote").disabled = true;
       $("cancelVote").disabled = true;
-      $("confirmVote").textContent = "သိမ်းဆည်းနေပါသည်...";
 
       try {
-        const { error } = await supabase
-          .from("Votes")
-          .insert({ township: pendingTownship });
-
+        const { error } = await supabase.from("Votes").insert({ township: pendingTownship });
         if (error) throw error;
-
-        try {
-          localStorage.setItem("khan_bhai_voted_" + myanmarTime().date, "yes");
-        } catch {}
+        try { localStorage.setItem("khan_bhai_voted_" + myanmarTime().date, "yes"); } catch {}
 
         $("confirmModal").hidden = true;
         $("successTownship").textContent = pendingTownship;
         $("successModal").hidden = false;
-
         townshipSelect.value = "";
         showMessage("");
         await refreshStatus();
-
-      } catch (error) {
+      } catch (err) {
         $("confirmModal").hidden = true;
-        const errorText = formatError(error);
-
-        if (errorText === "VPN ချိတ်ဆက်ပါ") {
-          statusBox.classList.add("connection-error");
-          $("statusTitle").textContent = "";
-          $("statusMessage").innerHTML = `⚠️ VPN ချိတ်ဆက်ပါ <span class="vpn-hint">မဲပေးရန်အတွက် Internet Connection သို့မဟုတ် VPN ကို စစ်ဆေးပေးပါ။</span>`;
-          $("timerLabel").textContent = "";
-          $("countdown").textContent = "";
-          showMessage("");
-        } else {
-          showMessage(errorText, true);
-        }
+        showMessage(formatError(err), true);
       } finally {
         busy = false;
-        pendingTownship = "";
-
         $("confirmVote").disabled = false;
         $("cancelVote").disabled = false;
-        $("confirmVote").textContent = "အတည်ပြုမည်";
-        voteButton.textContent = "Voting လုပ်မည်";
-
         voteButton.disabled = !databaseReady || !votingOpen || alreadyVotedToday();
       }
-    }
-
-    voteButton.addEventListener("click", openConfirm);
-
-    $("cancelVote").addEventListener("click", () => {
-      if (busy) return;
-      $("confirmModal").hidden = true;
-      pendingTownship = "";
     });
 
-    $("confirmVote").addEventListener("click", submitVote);
     $("closeSuccess").addEventListener("click", () => { $("successModal").hidden = true; });
-
-    $("confirmModal").addEventListener("click", event => {
-      if (event.target === $("confirmModal") && !busy) {
-        $("confirmModal").hidden = true;
-        pendingTownship = "";
-      }
-    });
-
-    $("openAnnouncement").addEventListener("click", async () => {
-      $("announcementModal").hidden = false;
-      await loadAnnouncement();
-    });
-
+    $("openAnnouncement").addEventListener("click", async () => { $("announcementModal").hidden = false; await loadAnnouncement(); });
     $("closeAnnouncement").addEventListener("click", () => { $("announcementModal").hidden = true; });
 
-    $("announcementModal").addEventListener("click", event => {
-      if (event.target === $("announcementModal")) {
-        $("announcementModal").hidden = true;
-      }
-    });
-
     await refreshStatus();
-
-    setInterval(() => { updateCountdown(); }, 1000);
-    setInterval(() => { refreshStatus(); }, 30000);
+    setInterval(updateCountdown, 1000);
+    setInterval(refreshStatus, 30000);
   </script>
 </body>
 </html>
