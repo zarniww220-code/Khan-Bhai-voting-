@@ -1,22 +1,23 @@
-
 <!DOCTYPE html>
 <html lang="my">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#000000">
+  <meta name="theme-color" content="#0B0F19">
   <meta name="color-scheme" content="dark">
   <title>KHAN BHAI | Township Voting System</title>
 
   <style>
     :root {
-      --bg: #000000;
-      --card: #0A0A0A;
-      --blue: #56CCF2;
-      --white: #FFFFFF;
-      --muted: #A7B0BA;
-      --border: #263642;
-      --red: #FF2020;
+      --bg: #0B0F19;          /* Deep trustworthy slate/navy background */
+      --card: #131C2E;        /* Soft elevated card background */
+      --blue: #38BDF8;        /* Clear vibrant blue accent */
+      --blue-hover: #0EA5E9;
+      --white: #F8FAFC;       /* Soft white for perfect readability (non-straining) */
+      --muted: #94A3B8;       /* Subtle gray for secondary text */
+      --border: #1E293B;      /* Clean subtle border */
+      --red: #FB7185;
+      --error-bg: #1F1517;
     }
 
     * {
@@ -34,8 +35,7 @@
       margin: 0;
       min-height: 100vh;
       min-height: 100dvh;
-      font-family: -apple-system, BlinkMacSystemFont,
-        "Segoe UI", sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
       background: var(--bg);
       color: var(--white);
       line-height: 1.6;
@@ -53,7 +53,7 @@
     }
 
     button:disabled {
-      opacity: 0.45;
+      opacity: 0.4;
       cursor: not-allowed;
     }
 
@@ -61,31 +61,33 @@
       display: none !important;
     }
 
+    /* Header Design */
     header {
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 12px;
+      gap: 14px;
       width: 100%;
-      padding: 20px 16px;
-      padding-top: max(20px, env(safe-area-inset-top));
-      background: #050505;
-      border-bottom: 1px solid var(--blue);
+      padding: 18px 16px;
+      padding-top: max(18px, env(safe-area-inset-top));
+      background: #090D16;
+      border-bottom: 1px solid var(--border);
     }
 
     .logo-placeholder {
-      width: 46px;
-      height: 46px;
-      flex: 0 0 46px;
-      border: 1px solid var(--blue);
-      border-radius: 50%;
+      width: 48px;
+      height: 48px;
+      flex: 0 0 48px;
+      background: linear-gradient(135deg, #38BDF8, #0284C7);
+      border-radius: 12px;
       display: flex;
       align-items: center;
       justify-content: center;
-      color: var(--blue);
-      font-size: 13px;
+      color: #000000;
+      font-size: 15px;
       font-weight: 900;
-      letter-spacing: 0;
+      letter-spacing: 0.5px;
+      box-shadow: 0 4px 12px rgba(56, 189, 248, 0.2);
     }
 
     .brand {
@@ -94,25 +96,26 @@
 
     .brand h1 {
       margin: 0;
-      font-size: clamp(21px, 5vw, 27px);
+      font-size: clamp(20px, 5vw, 24px);
       line-height: 1.2;
-      font-weight: 900;
-      letter-spacing: 1px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
       color: var(--white);
     }
 
     .brand p {
-      margin: 4px 0 0;
+      margin: 3px 0 0;
       color: var(--blue);
-      font-size: clamp(9px, 2.5vw, 11px);
-      font-weight: 800;
-      letter-spacing: 1px;
+      font-size: clamp(10px, 2.5vw, 12px);
+      font-weight: 700;
+      letter-spacing: 1.2px;
     }
 
+    /* Main Container */
     main {
       width: 100%;
-      max-width: 560px;
-      margin: 20px auto;
+      max-width: 520px;
+      margin: 16px auto;
       padding: 0 14px;
     }
 
@@ -121,75 +124,85 @@
       min-width: 0;
       background: var(--card);
       border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 17px;
+      border-radius: 16px;
+      padding: 20px 18px;
       margin-bottom: 16px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
     }
 
     h2 {
-      margin: 0 0 12px;
+      margin: 0 0 10px;
       font-size: 18px;
-      line-height: 1.5;
+      line-height: 1.4;
+      font-weight: 700;
       color: var(--white);
     }
 
     p {
-      margin: 8px 0 14px;
+      margin: 6px 0 16px;
       font-size: 14px;
-      color: #D6DCE2;
-      line-height: 1.8;
+      color: var(--muted);
+      line-height: 1.6;
     }
 
     .blue {
       color: var(--blue);
     }
 
+    /* Status Box */
     .status-box {
-      border: 1px solid var(--blue);
-      border-radius: 10px;
-      padding: 14px 10px;
+      border: 1px solid var(--border);
+      background: #0F172A;
+      border-radius: 12px;
+      padding: 16px 12px;
       text-align: center;
-      margin: 15px 0;
+      margin: 16px 0;
       min-width: 0;
     }
 
     .status-title {
       color: var(--blue);
-      font-size: 13px;
-      font-weight: 900;
-      letter-spacing: 0.6px;
-      overflow-wrap: anywhere;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
     }
 
     .status-message {
       color: var(--white);
-      font-size: 13px;
-      margin-top: 5px;
+      font-size: 14px;
+      font-weight: 500;
+      margin-top: 6px;
       overflow-wrap: anywhere;
     }
 
     .timer-label {
       color: var(--muted);
-      font-size: 12px;
+      font-size: 11px;
+      font-weight: 600;
       margin-top: 12px;
+      letter-spacing: 0.5px;
     }
 
     #countdown {
       color: var(--blue);
-      font-size: clamp(23px, 7vw, 28px);
-      font-weight: 900;
+      font-size: clamp(22px, 6vw, 26px);
+      font-weight: 800;
       letter-spacing: 1px;
       font-variant-numeric: tabular-nums;
-      white-space: nowrap;
+      margin-top: 2px;
     }
 
-    /* Connection error: show only the approved message. */
+    /* Connection Error State (VPN Warning Prominent) */
     .status-box.connection-error {
+      background: var(--error-bg);
+      border-color: #7F1D1D;
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
-      min-height: 58px;
-      padding: 15px 10px;
+      min-height: 80px;
+      padding: 16px;
     }
 
     .connection-error .status-title,
@@ -200,16 +213,26 @@
 
     .connection-error .status-message {
       margin: 0;
-      color: var(--blue);
+      color: #FCA5A5;
       font-size: 15px;
-      font-weight: 800;
+      font-weight: 700;
+      text-align: center;
+    }
+    
+    .connection-error .vpn-hint {
+      display: block;
+      margin-top: 6px;
+      font-size: 12px;
+      color: var(--muted);
+      font-weight: 400;
     }
 
+    /* Form Elements */
     label {
       display: block;
       color: var(--white);
       font-size: 14px;
-      font-weight: 700;
+      font-weight: 600;
       margin: 16px 0 8px;
     }
 
@@ -217,95 +240,115 @@
       display: block;
       width: 100%;
       min-width: 0;
-      min-height: 46px;
-      padding: 10px 12px;
+      min-height: 50px;
+      padding: 12px 14px;
       color: var(--white);
-      background: #050505;
-      border: 1px solid var(--blue);
-      border-radius: 9px;
+      background: #090D16;
+      border: 1px solid var(--border);
+      border-radius: 12px;
       outline: none;
+      font-size: 15px;
+      appearance: none;
+      background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2394A3B8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+      background-size: 18px;
+      padding-right: 40px;
     }
 
-    select:focus-visible,
-    button:focus-visible {
-      outline: 2px solid var(--blue);
-      outline-offset: 3px;
+    select:focus {
+      border-color: var(--blue);
+      box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.2);
     }
 
     select option {
       color: var(--white);
-      background: #050505;
+      background: #0F172A;
+      padding: 10px;
     }
 
+    /* Buttons */
     .primary-button {
       display: block;
       width: 100%;
-      min-height: 42px;
-      padding: 9px 12px;
-      margin-top: 13px;
-      border: 1px solid var(--blue);
-      border-radius: 9px;
-      color: #000000;
+      min-height: 48px;
+      padding: 12px;
+      margin-top: 18px;
+      border: none;
+      border-radius: 12px;
+      color: #090D16;
       background: var(--blue);
-      font-size: 14px;
-      font-weight: 900;
+      font-size: 15px;
+      font-weight: 800;
+      letter-spacing: 0.3px;
+      transition: background 0.2s ease, transform 0.1s ease;
+    }
+
+    .primary-button:hover:not(:disabled) {
+      background: var(--blue-hover);
+    }
+
+    .primary-button:active:not(:disabled) {
+      transform: scale(0.98);
     }
 
     .secondary-button {
-      min-height: 38px;
-      padding: 8px 16px;
+      min-height: 42px;
+      padding: 10px 20px;
       border: 1px solid var(--blue);
-      border-radius: 8px;
+      border-radius: 10px;
       background: transparent;
       color: var(--blue);
-      font-size: 13px;
-      font-weight: 800;
+      font-size: 14px;
+      font-weight: 700;
     }
 
     .message {
-      margin-top: 12px;
+      margin-top: 14px;
       font-size: 13px;
       color: var(--blue);
+      text-align: center;
+      font-weight: 500;
       overflow-wrap: anywhere;
     }
 
     .message.error {
-      color: #FF7777;
+      color: #FCA5A5;
     }
 
     .muted {
       color: var(--muted);
-      font-size: 12px;
+      font-size: 13px;
     }
 
-    /* Announcement section */
+    /* Notice / Announcement Section */
     .notice {
       width: 100%;
-      border: 0;
-      padding: 4px 0 18px;
+      background: transparent;
+      padding: 0;
       margin: 0 0 16px;
       text-align: center;
-      background: transparent;
-    }
-
-    .notice h2 {
-      margin: 0 0 12px;
-      color: var(--red);
-      font-size: 16px;
-      font-weight: 900;
     }
 
     .announcement-button {
-      display: block;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
       width: 100%;
-      min-height: 42px;
-      padding: 9px 14px;
-      border: 1px solid var(--blue);
-      border-radius: 9px;
-      background: transparent;
+      min-height: 46px;
+      padding: 10px 16px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: var(--card);
       color: var(--white);
       font-size: 14px;
-      font-weight: 800;
+      font-weight: 600;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    .announcement-button:hover {
+      border-color: var(--blue);
     }
 
     #announcement {
@@ -314,23 +357,25 @@
       color: var(--white);
       font-size: 14px;
       text-align: left;
+      line-height: 1.7;
     }
 
+    /* Results Section */
     .result {
-      margin: 16px 0;
+      margin: 14px 0;
     }
 
     .result-head {
       display: grid;
-      grid-template-columns: 25px minmax(0, 1fr) auto;
+      grid-template-columns: 28px minmax(0, 1fr) auto;
       align-items: center;
       gap: 8px;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
     }
 
     .rank {
       color: var(--blue);
-      font-weight: 900;
+      font-weight: 800;
       font-size: 13px;
     }
 
@@ -338,42 +383,39 @@
       min-width: 0;
       overflow-wrap: anywhere;
       font-size: 14px;
+      font-weight: 500;
       color: var(--white);
     }
 
     .vote-count {
       color: var(--blue);
-      font-size: 12px;
-      font-weight: 800;
+      font-size: 13px;
+      font-weight: 700;
       white-space: nowrap;
       text-align: right;
     }
 
     .bar-bg {
-      height: 7px;
-      background: #20262D;
+      height: 8px;
+      background: #090D16;
       border-radius: 20px;
       overflow: hidden;
     }
 
     .bar {
       height: 100%;
-      background: var(--blue);
+      background: linear-gradient(90deg, #38BDF8, #0284C7);
       border-radius: 20px;
-      transition: width 0.3s ease;
+      transition: width 0.4s ease;
     }
 
-    /* Completely black, empty footer */
     footer {
       width: 100%;
-      min-height: 24px;
-      background: #000000;
-      border: 0;
-      padding: 0;
-      margin: 0;
+      min-height: 32px;
+      background: transparent;
     }
 
-    /* Centered popups */
+    /* Modals / Popups */
     .modal {
       position: fixed;
       inset: 0;
@@ -381,11 +423,11 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 20px;
-      padding-top: max(20px, env(safe-area-inset-top));
-      padding-bottom: max(20px, env(safe-area-inset-bottom));
-      background: #000000E8;
-      overflow-y: auto;
+      padding: 16px;
+      padding-top: max(16px, env(safe-area-inset-top));
+      padding-bottom: max(16px, env(safe-area-inset-bottom));
+      background: rgba(3, 7, 18, 0.85);
+      backdrop-filter: blur(4px);
     }
 
     .modal[hidden] {
@@ -394,124 +436,95 @@
 
     .modal-box {
       width: 100%;
-      max-width: 350px;
+      max-width: 340px;
       max-height: 85vh;
       max-height: 85dvh;
       overflow-y: auto;
-      padding: 22px 18px;
-      border: 1px solid var(--blue);
-      border-radius: 14px;
-      background: #080808;
+      padding: 24px 20px;
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      background: var(--card);
       text-align: center;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.4);
     }
 
     .modal-box h2 {
-      color: var(--blue);
+      color: var(--white);
       font-size: 18px;
       margin-bottom: 12px;
     }
 
     .modal-box p {
-      color: var(--white);
+      color: var(--muted);
       overflow-wrap: anywhere;
+      font-size: 14px;
     }
 
     .modal-actions {
       display: flex;
       gap: 10px;
-      margin-top: 18px;
+      margin-top: 20px;
     }
 
     .modal-actions button {
       flex: 1;
       min-width: 0;
-      min-height: 39px;
-      padding: 8px;
-      border-radius: 8px;
-      font-size: 13px;
-      font-weight: 800;
+      min-height: 44px;
+      padding: 10px;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 700;
     }
 
     .cancel-button {
-      border: 1px solid #69737D;
-      color: var(--white);
-      background: #151515;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      background: #090D16;
     }
 
     .confirm-button {
-      border: 1px solid var(--blue);
-      color: #000000;
+      border: none;
+      color: #090D16;
       background: var(--blue);
     }
 
     .success-icon {
+      width: 56px;
+      height: 56px;
+      margin: 0 auto 14px;
+      background: rgba(56, 189, 248, 0.1);
+      border: 1px solid var(--blue);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       color: var(--blue);
-      font-size: 40px;
+      font-size: 24px;
       font-weight: 900;
-      line-height: 1.3;
     }
 
     .selected-township {
-      border: 1px solid var(--blue);
-      border-radius: 9px;
-      padding: 12px;
+      border: 1px solid var(--border);
+      background: #090D16;
+      border-radius: 12px;
+      padding: 14px;
       margin: 16px 0;
     }
 
     .selected-township .caption {
-      color: var(--white);
+      color: var(--muted);
       font-size: 12px;
     }
 
     .selected-township .name {
       color: var(--blue);
-      font-size: 17px;
-      font-weight: 900;
-      margin-top: 5px;
-    }
-
-    @media (max-width: 380px) {
-      header {
-        gap: 9px;
-        padding-left: 10px;
-        padding-right: 10px;
-      }
-
-      .logo-placeholder {
-        width: 40px;
-        height: 40px;
-        flex-basis: 40px;
-      }
-
-      .brand p {
-        letter-spacing: 0.5px;
-      }
-
-      main {
-        margin-top: 14px;
-        padding-left: 10px;
-        padding-right: 10px;
-      }
-
-      .card {
-        padding: 14px;
-        border-radius: 12px;
-      }
-
-      .result-head {
-        grid-template-columns: 22px minmax(0, 1fr) auto;
-        gap: 6px;
-      }
-
-      .vote-count {
-        font-size: 11px;
-      }
+      font-size: 16px;
+      font-weight: 800;
+      margin-top: 4px;
     }
 
     @media (prefers-reduced-motion: reduce) {
-      *,
-      *::before,
-      *::after {
+      *, *::before, *::after {
         scroll-behavior: auto !important;
         transition-duration: 0.01ms !important;
       }
@@ -539,9 +552,7 @@
         သင်စိတ်ဝင်စားတဲ့ မြို့နယ်ကို ရွေးချယ်ပြီး Voting လုပ်နိုင်ပါတယ်။
       </p>
 
-      <div id="statusBox" class="status-box"
-        role="status" aria-live="polite">
-
+      <div id="statusBox" class="status-box" role="status" aria-live="polite">
         <div id="statusTitle" class="status-title">
           CHECKING STATUS
         </div>
@@ -600,22 +611,18 @@
         Voting လုပ်မည်
       </button>
 
-      <div id="message" class="message"
-        role="status" aria-live="polite"></div>
+      <div id="message" class="message" role="status" aria-live="polite"></div>
     </section>
 
-    <!-- Announcement: only heading and button on the main page -->
+    <!-- Announcement Button Section -->
     <section class="notice">
-      <h2>အသိပေးကြေညာချက်!</h2>
-
-      <button id="openAnnouncement"
-        class="announcement-button">
-        ကြေညာချက်ကြည့်ရန်
+      <button id="openAnnouncement" class="announcement-button">
+        📢 <span style="font-weight: 700;">အသိပေးကြေညာချက် ကြည့်ရန်</span>
       </button>
     </section>
 
     <section class="card">
-      <h2 class="blue">VOTING RESULTS</h2>
+      <h2 class="blue" style="font-size: 16px; letter-spacing: 0.5px;">VOTING RESULTS</h2>
 
       <p id="resultsStatus" aria-live="polite">
         မဲရလဒ်ကို မြန်မာစံတော်ချိန် ည 10 နာရီရောက်မှ ပြသပါမည်။
@@ -625,82 +632,53 @@
     </section>
   </main>
 
-  <!-- Empty black footer -->
   <footer aria-hidden="true"></footer>
 
   <!-- Voting confirmation popup -->
   <div id="confirmModal" class="modal" hidden>
-    <div class="modal-box" role="dialog"
-      aria-modal="true" aria-labelledby="confirmTitle">
-
+    <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="confirmTitle">
       <h2 id="confirmTitle">အတည်ပြုရန်</h2>
-
       <p id="confirmText"></p>
 
       <div class="modal-actions">
-        <button id="cancelVote" class="cancel-button">
-          မလုပ်တော့ပါ
-        </button>
-
-        <button id="confirmVote" class="confirm-button">
-          အတည်ပြုမည်
-        </button>
+        <button id="cancelVote" class="cancel-button">မလုပ်တော့ပါ</button>
+        <button id="confirmVote" class="confirm-button">အတည်ပြုမည်</button>
       </div>
     </div>
   </div>
 
   <!-- Successful vote popup -->
   <div id="successModal" class="modal" hidden>
-    <div class="modal-box" role="dialog"
-      aria-modal="true" aria-labelledby="successTitle">
-
+    <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="successTitle">
       <div class="success-icon">✓</div>
-
-      <h2 id="successTitle">Vote Successful!</h2>
+      <h2 id="successTitle" style="color: var(--blue);">Vote Successful!</h2>
 
       <div class="selected-township">
         <div class="caption">သင်ရွေးချယ်ထားသော မြို့နယ်</div>
         <div id="successTownship" class="name"></div>
       </div>
 
-      <button id="closeSuccess" class="secondary-button">
-        ပိတ်မည်
-      </button>
+      <button id="closeSuccess" class="secondary-button" style="width: 100%; margin-top: 4px;">ပိတ်မည်</button>
     </div>
   </div>
 
   <!-- Announcement popup -->
   <div id="announcementModal" class="modal" hidden>
-    <div class="modal-box" role="dialog"
-      aria-modal="true" aria-labelledby="announcementTitle">
+    <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="announcementTitle">
+      <h2 id="announcementTitle" style="color: var(--blue);">အသိပေးကြေညာချက်</h2>
+      <div id="announcement" class="muted" style="margin-top: 12px;"></div>
 
-      <h2 id="announcementTitle">အသိပေးကြေညာချက်!</h2>
-
-      <div id="announcement" class="muted">
-      </div>
-
-      <button id="closeAnnouncement"
-        class="secondary-button"
-        style="margin-top:18px">
-        ပိတ်မည်
-      </button>
+      <button id="closeAnnouncement" class="secondary-button" style="width: 100%; margin-top: 20px;">ပိတ်မည်</button>
     </div>
   </div>
 
   <script type="module">
-    import { createClient } from
-      "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
+    import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
 
-    const SUPABASE_URL =
-      "https://vefqgexluwfwabdapklf.supabase.co";
+    const SUPABASE_URL = "https://vefqgexluwfwabdapklf.supabase.co";
+    const SUPABASE_KEY = "sb_publishable_8eMPJX9TY1RIKxRhG4O1Aw_vLPcFm8R";
 
-    const SUPABASE_KEY =
-      "sb_publishable_8eMPJX9TY1RIKxRhG4O1Aw_vLPcFm8R";
-
-    const supabase = createClient(
-      SUPABASE_URL,
-      SUPABASE_KEY
-    );
+    const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
 
     const $ = id => document.getElementById(id);
 
@@ -713,13 +691,10 @@
     let busy = false;
     let pendingTownship = "";
 
-    // Convert Myanmar digits to English digits in displayed data.
     function englishDigits(value) {
       return String(value ?? "").replace(
         /[၀-၉]/g,
-        digit => "0123456789"[
-          "၀၁၂၃၄၅၆၇၈၉".indexOf(digit)
-        ]
+        digit => "0123456789"["၀၁၂၃၄၅၆၇၈၉".indexOf(digit)]
       );
     }
 
@@ -736,11 +711,8 @@
       }).formatToParts(new Date());
 
       const v = {};
-
       for (const p of parts) {
-        if (p.type !== "literal") {
-          v[p.type] = p.value;
-        }
+        if (p.type !== "literal") v[p.type] = p.value;
       }
 
       return {
@@ -753,9 +725,7 @@
 
     function alreadyVotedToday() {
       try {
-        return localStorage.getItem(
-          "khan_bhai_voted_" + myanmarTime().date
-        ) === "yes";
+        return localStorage.getItem("khan_bhai_voted_" + myanmarTime().date) === "yes";
       } catch {
         return false;
       }
@@ -763,8 +733,7 @@
 
     function showMessage(text, isError = false) {
       $("message").textContent = englishDigits(text);
-      $("message").className =
-        isError ? "message error" : "message";
+      $("message").className = isError ? "message error" : "message";
     }
 
     function formatError(error) {
@@ -773,15 +742,12 @@
       if (/Results are not available/i.test(text)) {
         return "မဲရလဒ်ကို မြန်မာစံတော်ချိန် ည 10 နာရီရောက်မှ ပြသပါမည်။";
       }
-
       if (/Voting is closed/i.test(text)) {
         return "လက်ရှိ Voting ပိတ်ထားပါသည်။";
       }
-
       if (/row-level security|permission denied|not allowed|Admin access required/i.test(text)) {
         return "Database ခွင့်ပြုချက်ကို စစ်ဆေးရန်လိုပါသည်။";
       }
-
       if (/Failed to fetch|Load failed|NetworkError|network request failed|timeout/i.test(text)) {
         return "VPN ချိတ်ဆက်ပါ";
       }
@@ -793,9 +759,7 @@
       if (!databaseReady) return;
 
       const t = myanmarTime();
-      const nowSeconds =
-        t.hour * 3600 + t.minute * 60 + t.second;
-
+      const nowSeconds = t.hour * 3600 + t.minute * 60 + t.second;
       let targetSeconds;
 
       if (t.hour >= 10 && t.hour < 22) {
@@ -810,7 +774,6 @@
       }
 
       let remaining = targetSeconds - nowSeconds;
-
       if (remaining < 0) remaining = 0;
 
       const hours = Math.floor(remaining / 3600);
@@ -831,44 +794,30 @@
         .maybeSingle();
 
       if (error) {
-        $("announcement").textContent =
-          "ကြေညာချက်ကို ရယူ၍မရပါ။";
+        $("announcement").textContent = "ကြေညာချက်ကို ရယူ၍မရပါ။";
         return;
       }
 
       const lines = [];
-
       if (data?.confirmed_township) {
-        lines.push(
-          "အတည်ပြုထားသော မြို့နယ်: " +
-          englishDigits(data.confirmed_township)
-        );
+        lines.push("အတည်ပြုထားသော မြို့နယ်: " + englishDigits(data.confirmed_township));
       }
-
       if (data?.confirmed_visit_time) {
-        lines.push(
-          "လာရောက်မည့်အချိန်: " +
-          englishDigits(data.confirmed_visit_time)
-        );
+        lines.push("လာရောက်မည့်အချိန်: " + englishDigits(data.confirmed_visit_time));
       }
-
       if (data?.announcement) {
         lines.push(englishDigits(data.announcement));
       }
 
-      $("announcement").textContent = lines.length
-        ? lines.join("\n\n")
-        : "လက်ရှိ ကြေညာချက်မရှိသေးပါ။";
+      $("announcement").textContent = lines.length ? lines.join("\n\n") : "လက်ရှိ ကြေညာချက်မရှိသေးပါ။";
     }
 
-    // Results are visible from 10 PM until the next 10 AM.
     async function loadResults() {
       const t = myanmarTime();
       const resultsVisible = t.hour >= 22 || t.hour < 10;
 
       if (!resultsVisible) {
-        $("resultsStatus").textContent =
-          "မဲရလဒ်ကို မြန်မာစံတော်ချိန် ည 10 နာရီရောက်မှ ပြသပါမည်။";
+        $("resultsStatus").textContent = "မဲရလဒ်ကို မြန်မာစံတော်ချိန် ည 10 နာရီရောက်မှ ပြသပါမည်။";
         $("results").replaceChildren();
         return;
       }
@@ -876,46 +825,34 @@
       $("resultsStatus").textContent = "ရလဒ်ကို ရယူနေပါသည်...";
       $("results").replaceChildren();
 
-      const { data, error } = await supabase.rpc(
-        "get_public_township_vote_counts"
-      );
+      const { data, error } = await supabase.rpc("get_public_township_vote_counts");
 
       if (error) {
-        $("resultsStatus").textContent =
-          "ရလဒ် ရယူမရပါ။ " + formatError(error);
+        $("resultsStatus").textContent = "ရလဒ် ရယူမရပါ။ " + formatError(error);
         return;
       }
 
       const counts = {};
-
       for (const option of townshipSelect.options) {
         if (option.value) counts[option.value] = 0;
       }
 
       for (const item of data || []) {
         const name = String(item.township ?? "");
-
         if (Object.prototype.hasOwnProperty.call(counts, name)) {
           counts[name] = Number(item.vote_count) || 0;
         }
       }
 
-      const sorted = Object.entries(counts)
-        .sort((a, b) => b[1] - a[1]);
-
-      const total = Object.values(counts)
-        .reduce((sum, count) => sum + count, 0);
-
+      const sorted = Object.entries(counts).sort((a, b) => b[1] - a[1]);
+      const total = Object.values(counts).reduce((sum, count) => sum + count, 0);
       const highest = sorted.length ? sorted[0][1] : 0;
 
-      $("resultsStatus").textContent =
-        "စုစုပေါင်း Votes: " + englishDigits(total);
+      $("resultsStatus").textContent = "စုစုပေါင်း Votes: " + englishDigits(total);
 
       let rank = 0;
-
       for (const [name, count] of sorted) {
         if (count === 0) continue;
-
         rank++;
 
         const row = document.createElement("div");
@@ -934,8 +871,7 @@
 
         const voteCount = document.createElement("strong");
         voteCount.className = "vote-count";
-        voteCount.textContent =
-          englishDigits(count) + " Votes";
+        voteCount.textContent = englishDigits(count) + " Votes";
 
         head.append(rankLabel, townshipName, voteCount);
 
@@ -944,9 +880,7 @@
 
         const bar = document.createElement("div");
         bar.className = "bar";
-
-        bar.style.width =
-          (highest > 0 ? count / highest * 100 : 0) + "%";
+        bar.style.width = (highest > 0 ? count / highest * 100 : 0) + "%";
 
         barBg.append(bar);
         row.append(head, barBg);
@@ -964,10 +898,7 @@
       voteButton.disabled = true;
 
       try {
-        const { data, error } = await supabase.rpc(
-          "is_voting_open"
-        );
-
+        const { data, error } = await supabase.rpc("is_voting_open");
         if (error) throw error;
 
         databaseReady = true;
@@ -976,39 +907,32 @@
         statusBox.classList.remove("connection-error");
 
         const t = myanmarTime();
-
         if (t.hour >= 10 && t.hour < 22 && votingOpen) {
           $("statusTitle").textContent = "VOTING IS OPEN";
-          $("statusMessage").textContent =
-            "Voting လုပ်နိုင်ပါသည်။ Results ကို ည 10 နာရီမှ ပြသပါမည်။";
+          $("statusMessage").textContent = "Voting လုပ်နိုင်ပါသည်။ Results ကို ည 10 နာရီမှ ပြသပါမည်။";
         } else if (t.hour >= 10 && t.hour < 22) {
           $("statusTitle").textContent = "VOTING IS CLOSED";
-          $("statusMessage").textContent =
-            "Admin မှ Voting ကို ယာယီပိတ်ထားပါသည်။";
+          $("statusMessage").textContent = "Admin မှ Voting ကို ယာယီပိတ်ထားပါသည်။";
         } else {
           $("statusTitle").textContent = "VOTING IS CLOSED";
-          $("statusMessage").textContent =
-            "Voting ကို မနက် 10 နာရီမှ ည 10 နာရီအထိ ပြုလုပ်နိုင်ပါသည်။";
+          $("statusMessage").textContent = "Voting ကို မနက် 10 နာရီမှ ည 10 နာရီအထိ ပြုလုပ်နိုင်ပါသည်။";
         }
 
         if (alreadyVotedToday()) {
           showMessage("ဤ Browser မှ ယနေ့ Voting လုပ်ပြီးပါပြီ။");
         }
 
-        voteButton.disabled =
-          !databaseReady ||
-          !votingOpen ||
-          alreadyVotedToday() ||
-          busy;
+        voteButton.disabled = !databaseReady || !votingOpen || alreadyVotedToday() || busy;
 
       } catch (error) {
         databaseReady = false;
         votingOpen = false;
         voteButton.disabled = true;
 
+        // Prominent VPN error design as discussed!
         statusBox.classList.add("connection-error");
         $("statusTitle").textContent = "";
-        $("statusMessage").textContent = "VPN ချိတ်ဆက်ပါ";
+        $("statusMessage").innerHTML = `⚠️ VPN ချိတ်ဆက်ပါ <span class="vpn-hint">မဲပေးရန်အတွက် Internet Connection သို့မဟုတ် VPN ကို စစ်ဆေးပေးပါ။</span>`;
         $("timerLabel").textContent = "";
         $("countdown").textContent = "";
         showMessage("");
@@ -1016,13 +940,8 @@
 
       if (databaseReady) {
         updateCountdown();
-
-        await Promise.all([
-          loadAnnouncement(),
-          loadResults()
-        ]);
+        await Promise.all([loadAnnouncement(), loadResults()]);
       } else {
-        // Hide stale data if the database connection is lost.
         $("results").replaceChildren();
         $("resultsStatus").textContent = "";
       }
@@ -1032,7 +951,6 @@
       if (busy || !databaseReady || !votingOpen) return;
 
       const selected = townshipSelect.value;
-
       if (!selected) {
         showMessage("Voting လုပ်ရန် မြို့နယ်ရွေးချယ်ပါ။", true);
         return;
@@ -1045,20 +963,12 @@
       }
 
       pendingTownship = selected;
-
-      $("confirmText").textContent =
-        "“" + selected + "” မြို့နယ်ကို ရွေးချယ်မှာ သေချာပါသလား။";
-
+      $("confirmText").textContent = "“" + selected + "” မြို့နယ်ကို ရွေးချယ်မှာ သေချာပါသလား။";
       $("confirmModal").hidden = false;
     }
 
     async function submitVote() {
-      if (
-        busy ||
-        !pendingTownship ||
-        !databaseReady ||
-        !votingOpen
-      ) return;
+      if (busy || !pendingTownship || !databaseReady || !votingOpen) return;
 
       busy = true;
       $("confirmVote").disabled = true;
@@ -1073,10 +983,7 @@
         if (error) throw error;
 
         try {
-          localStorage.setItem(
-            "khan_bhai_voted_" + myanmarTime().date,
-            "yes"
-          );
+          localStorage.setItem("khan_bhai_voted_" + myanmarTime().date, "yes");
         } catch {}
 
         $("confirmModal").hidden = true;
@@ -1085,25 +992,22 @@
 
         townshipSelect.value = "";
         showMessage("");
-
         await refreshStatus();
 
       } catch (error) {
         $("confirmModal").hidden = true;
-
         const errorText = formatError(error);
 
         if (errorText === "VPN ချိတ်ဆက်ပါ") {
           statusBox.classList.add("connection-error");
           $("statusTitle").textContent = "";
-          $("statusMessage").textContent = "VPN ချိတ်ဆက်ပါ";
+          $("statusMessage").innerHTML = `⚠️ VPN ချိတ်ဆက်ပါ <span class="vpn-hint">မဲပေးရန်အတွက် Internet Connection သို့မဟုတ် VPN ကို စစ်ဆေးပေးပါ။</span>`;
           $("timerLabel").textContent = "";
           $("countdown").textContent = "";
           showMessage("");
         } else {
           showMessage(errorText, true);
         }
-
       } finally {
         busy = false;
         pendingTownship = "";
@@ -1113,10 +1017,7 @@
         $("confirmVote").textContent = "အတည်ပြုမည်";
         voteButton.textContent = "Voting လုပ်မည်";
 
-        voteButton.disabled =
-          !databaseReady ||
-          !votingOpen ||
-          alreadyVotedToday();
+        voteButton.disabled = !databaseReady || !votingOpen || alreadyVotedToday();
       }
     }
 
@@ -1124,16 +1025,12 @@
 
     $("cancelVote").addEventListener("click", () => {
       if (busy) return;
-
       $("confirmModal").hidden = true;
       pendingTownship = "";
     });
 
     $("confirmVote").addEventListener("click", submitVote);
-
-    $("closeSuccess").addEventListener("click", () => {
-      $("successModal").hidden = true;
-    });
+    $("closeSuccess").addEventListener("click", () => { $("successModal").hidden = true; });
 
     $("confirmModal").addEventListener("click", event => {
       if (event.target === $("confirmModal") && !busy) {
@@ -1147,9 +1044,7 @@
       await loadAnnouncement();
     });
 
-    $("closeAnnouncement").addEventListener("click", () => {
-      $("announcementModal").hidden = true;
-    });
+    $("closeAnnouncement").addEventListener("click", () => { $("announcementModal").hidden = true; });
 
     $("announcementModal").addEventListener("click", event => {
       if (event.target === $("announcementModal")) {
@@ -1159,13 +1054,8 @@
 
     await refreshStatus();
 
-    setInterval(() => {
-      updateCountdown();
-    }, 1000);
-
-    setInterval(() => {
-      refreshStatus();
-    }, 30000);
+    setInterval(() => { updateCountdown(); }, 1000);
+    setInterval(() => { refreshStatus(); }, 30000);
   </script>
 </body>
 </html>
