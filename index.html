@@ -19,9 +19,7 @@
       --red: #FF2020;
     }
 
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     html {
       min-height: 100%;
@@ -34,17 +32,14 @@
       margin: 0;
       min-height: 100vh;
       min-height: 100dvh;
-      font-family: -apple-system, BlinkMacSystemFont,
-        "Segoe UI", sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       background: var(--bg);
       color: var(--white);
       line-height: 1.6;
       overflow-wrap: anywhere;
     }
 
-    button, select {
-      font: inherit;
-    }
+    button, select { font: inherit; }
 
     button {
       cursor: pointer;
@@ -57,9 +52,7 @@
       cursor: not-allowed;
     }
 
-    [hidden] {
-      display: none !important;
-    }
+    [hidden] { display: none !important; }
 
     header {
       display: flex;
@@ -87,9 +80,7 @@
       font-weight: 900;
     }
 
-    .brand {
-      min-width: 0;
-    }
+    .brand { min-width: 0; }
 
     .brand h1 {
       margin: 0;
@@ -139,9 +130,7 @@
       line-height: 1.8;
     }
 
-    .blue {
-      color: var(--blue);
-    }
+    .blue { color: var(--blue); }
 
     .status-box {
       border: 1px solid var(--blue);
@@ -267,21 +256,19 @@
       overflow-wrap: anywhere;
     }
 
-    .message.error {
-      color: #FF7777;
-    }
+    .message.error { color: #FF7777; }
 
     .muted {
       color: var(--muted);
       font-size: 12px;
     }
 
-    /* Announcement section */
+    /* Announcement and fixed notice sections */
     .notice {
       width: 100%;
       border: 0;
       padding: 4px 0 18px;
-      margin: 0 0 16px;
+      margin: 0 0 12px;
       text-align: center;
       background: transparent;
     }
@@ -293,12 +280,12 @@
       font-weight: 900;
     }
 
-    .announcement-button {
+    .announcement-button,
+    .fixed-notice-button {
       display: block;
       width: 100%;
       min-height: 42px;
       padding: 9px 14px;
-      border: 1px solid var(--blue);
       border-radius: 9px;
       background: transparent;
       color: var(--white);
@@ -306,7 +293,16 @@
       font-weight: 800;
     }
 
-    #announcement {
+    .announcement-button {
+      border: 1px solid var(--blue);
+    }
+
+    .fixed-notice-button {
+      border: 1px solid var(--red);
+    }
+
+    #announcement,
+    #fixedNoticeText {
       white-space: pre-line;
       overflow-wrap: anywhere;
       color: var(--white);
@@ -315,9 +311,7 @@
       line-height: 1.8;
     }
 
-    .result {
-      margin: 16px 0;
-    }
+    .result { margin: 16px 0; }
 
     .result-head {
       display: grid;
@@ -386,9 +380,7 @@
       overflow-y: auto;
     }
 
-    .modal[hidden] {
-      display: none !important;
-    }
+    .modal[hidden] { display: none !important; }
 
     .modal-box {
       width: 100%;
@@ -409,16 +401,38 @@
       margin-bottom: 12px;
     }
 
-    /* Only the announcement popup title is red. */
+    /* Announcement popup: Sky Blue heading and divider */
     #announcementTitle {
       display: block;
       width: 100%;
+      padding: 0 0 10px;
+      margin: 0 0 16px;
+      color: var(--blue);
+      border: 0;
+      border-bottom: 1px solid var(--blue);
+      border-radius: 0;
+      font-size: 18px;
+      text-align: center;
+    }
+
+    /* Fixed notice popup: red title border and red divider */
+    #fixedNoticeTitle {
+      display: block;
+      width: 100%;
       padding: 8px 10px;
+      margin: 0 0 16px;
       color: var(--red);
       border: 1px solid var(--red);
       border-radius: 8px;
       font-size: 18px;
-      margin-bottom: 16px;
+      text-align: center;
+    }
+
+    .fixed-notice-divider {
+      width: 100%;
+      height: 1px;
+      background: var(--red);
+      margin: -4px 0 16px;
     }
 
     .modal-box p {
@@ -493,9 +507,7 @@
         flex-basis: 40px;
       }
 
-      .brand p {
-        letter-spacing: 0.5px;
-      }
+      .brand p { letter-spacing: 0.5px; }
 
       main {
         margin-top: 14px;
@@ -513,18 +525,14 @@
         gap: 6px;
       }
 
-      .vote-count {
-        font-size: 11px;
-      }
+      .vote-count { font-size: 11px; }
 
       .modal {
         padding-left: 12px;
         padding-right: 12px;
       }
 
-      .modal-box {
-        padding: 18px 14px;
-      }
+      .modal-box { padding: 18px 14px; }
     }
 
     @media (min-width: 700px) {
@@ -534,9 +542,7 @@
         padding-right: 18px;
       }
 
-      .card {
-        padding: 20px;
-      }
+      .card { padding: 20px; }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -564,7 +570,6 @@
 
   <main>
     <section class="card">
-
       <div id="statusBox" class="status-box"
         role="status" aria-live="polite">
 
@@ -630,12 +635,21 @@
         role="status" aria-live="polite"></div>
     </section>
 
+    <!-- Admin-managed announcement -->
     <section class="notice">
-      <h2>အသိပေးကြေညာချက်!</h2>
+      <h2>ကြေညာချက်!</h2>
 
-      <button id="openAnnouncement"
-        class="announcement-button">
+      <button id="openAnnouncement" class="announcement-button">
         ကြေညာချက်ကြည့်ရန်
+      </button>
+    </section>
+
+    <!-- Fixed information notice; not editable by admin -->
+    <section class="notice">
+      <h2>အသိပေးချက်!</h2>
+
+      <button id="openFixedNotice" class="fixed-notice-button">
+        အသိပေးချက်ကြည့်ရန်
       </button>
     </section>
 
@@ -658,7 +672,6 @@
       aria-modal="true" aria-labelledby="confirmTitle">
 
       <h2 id="confirmTitle">အတည်ပြုရန်</h2>
-
       <p id="confirmText"></p>
 
       <div class="modal-actions">
@@ -679,7 +692,6 @@
       aria-modal="true" aria-labelledby="successTitle">
 
       <div class="success-icon">✓</div>
-
       <h2 id="successTitle">Vote Successful!</h2>
 
       <div class="selected-township">
@@ -693,17 +705,38 @@
     </div>
   </div>
 
-  <!-- Announcement popup -->
+  <!-- Admin-managed announcement popup -->
   <div id="announcementModal" class="modal" hidden>
     <div class="modal-box" role="dialog"
       aria-modal="true" aria-labelledby="announcementTitle">
 
-      <h2 id="announcementTitle">အသိပေးချက်</h2>
+      <h2 id="announcementTitle">ကြေညာချက်</h2>
 
       <div id="announcement">
+        ကြေညာချက်ကို ရယူနေပါသည်...
       </div>
 
       <button id="closeAnnouncement"
+        class="secondary-button"
+        style="margin-top:18px">
+        ပိတ်မည်
+      </button>
+    </div>
+  </div>
+
+  <!-- Fixed notice popup; its text is built into this page -->
+  <div id="fixedNoticeModal" class="modal" hidden>
+    <div class="modal-box" role="dialog"
+      aria-modal="true" aria-labelledby="fixedNoticeTitle">
+
+      <h2 id="fixedNoticeTitle">အသိပေးချက်</h2>
+      <div class="fixed-notice-divider"></div>
+
+      <div id="fixedNoticeText">
+        Voting ရလဒ်များသည် မြို့နယ်အလိုက် လူအများ၏ စိတ်ဝင်စားမှုကို သိရှိနိုင်ရန်အတွက်သာ ဖြစ်ပါသည်။ မဲအများဆုံးရရှိသည့် မြို့နယ်သို့ နောက်နေ့တွင် Khan Bhai လာရောက်ရောင်းချမည်ဟု အာမခံထားခြင်း မဟုတ်ပါ။ မည်သည့်မြို့နယ်တွင် မည်သည့်အချိန် လာရောက်ရောင်းချမည်ဆိုသည်မှာ Khan Bhai ဘက်မှ တရားဝင်ထုတ်ပြန်ကြေညာချက်အတိုင်းသာ အတည်ဖြစ်ပါသည်။
+      </div>
+
+      <button id="closeFixedNotice"
         class="secondary-button"
         style="margin-top:18px">
         ပိတ်မည်
@@ -846,6 +879,8 @@
         String(seconds).padStart(2, "0");
     }
 
+    /* Fetch only the Admin-managed announcement here.
+       The fixed information notice is separate and never fetched. */
     async function loadAnnouncement() {
       const { data, error } = await supabase
         .from("voting_control")
@@ -854,8 +889,7 @@
         .maybeSingle();
 
       if (error) {
-        $("announcement").textContent =
-          "ကြေညာချက်ကို ရယူ၍မရပါ။";
+        $("announcement").textContent = "VPN ချိတ်ဆက်ပါ";
         return;
       }
 
@@ -1163,6 +1197,7 @@
       }
     });
 
+    /* Admin-managed announcement popup */
     $("openAnnouncement").addEventListener("click", async () => {
       $("announcementModal").hidden = false;
       await loadAnnouncement();
@@ -1175,6 +1210,21 @@
     $("announcementModal").addEventListener("click", event => {
       if (event.target === $("announcementModal")) {
         $("announcementModal").hidden = true;
+      }
+    });
+
+    /* Fixed notice popup: no database and no admin editing */
+    $("openFixedNotice").addEventListener("click", () => {
+      $("fixedNoticeModal").hidden = false;
+    });
+
+    $("closeFixedNotice").addEventListener("click", () => {
+      $("fixedNoticeModal").hidden = true;
+    });
+
+    $("fixedNoticeModal").addEventListener("click", event => {
+      if (event.target === $("fixedNoticeModal")) {
+        $("fixedNoticeModal").hidden = true;
       }
     });
 
