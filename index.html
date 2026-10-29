@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="my">
 <head>
@@ -263,7 +262,6 @@
       font-size: 12px;
     }
 
-    /* Announcement and fixed notice sections */
     .notice {
       width: 100%;
       border: 0;
@@ -365,7 +363,6 @@
       margin: 0;
     }
 
-    /* Centered popups */
     .modal {
       position: fixed;
       inset: 0;
@@ -401,7 +398,6 @@
       margin-bottom: 12px;
     }
 
-    /* Announcement popup: Sky Blue heading and divider */
     #announcementTitle {
       display: block;
       width: 100%;
@@ -415,15 +411,14 @@
       text-align: center;
     }
 
-    /* Fixed notice popup: red title border and red divider */
     #fixedNoticeTitle {
       display: block;
       width: 100%;
       padding: 8px 10px;
       margin: 0 0 16px;
       color: var(--red);
-      border: 1px solid var(--red);
-      border-radius: 8px;
+      border: 0;
+      border-radius: 0;
       font-size: 18px;
       text-align: center;
     }
@@ -635,19 +630,13 @@
         role="status" aria-live="polite"></div>
     </section>
 
-    <!-- Admin-managed announcement -->
     <section class="notice">
-      <h2>ကြေညာချက်!</h2>
-
       <button id="openAnnouncement" class="announcement-button">
         ကြေညာချက်ကြည့်ရန်
       </button>
     </section>
 
-    <!-- Fixed information notice; not editable by admin -->
     <section class="notice">
-      <h2>အသိပေးချက်!</h2>
-
       <button id="openFixedNotice" class="fixed-notice-button">
         အသိပေးချက်ကြည့်ရန်
       </button>
@@ -666,7 +655,6 @@
 
   <footer aria-hidden="true"></footer>
 
-  <!-- Voting confirmation popup -->
   <div id="confirmModal" class="modal" hidden>
     <div class="modal-box" role="dialog"
       aria-modal="true" aria-labelledby="confirmTitle">
@@ -686,7 +674,6 @@
     </div>
   </div>
 
-  <!-- Successful vote popup -->
   <div id="successModal" class="modal" hidden>
     <div class="modal-box" role="dialog"
       aria-modal="true" aria-labelledby="successTitle">
@@ -705,7 +692,6 @@
     </div>
   </div>
 
-  <!-- Admin-managed announcement popup -->
   <div id="announcementModal" class="modal" hidden>
     <div class="modal-box" role="dialog"
       aria-modal="true" aria-labelledby="announcementTitle">
@@ -724,7 +710,6 @@
     </div>
   </div>
 
-  <!-- Fixed notice popup; its text is built into this page -->
   <div id="fixedNoticeModal" class="modal" hidden>
     <div class="modal-box" role="dialog"
       aria-modal="true" aria-labelledby="fixedNoticeTitle">
@@ -879,8 +864,6 @@
         String(seconds).padStart(2, "0");
     }
 
-    /* Fetch only the Admin-managed announcement here.
-       The fixed information notice is separate and never fetched. */
     async function loadAnnouncement() {
       const { data, error } = await supabase
         .from("voting_control")
@@ -1197,7 +1180,6 @@
       }
     });
 
-    /* Admin-managed announcement popup */
     $("openAnnouncement").addEventListener("click", async () => {
       $("announcementModal").hidden = false;
       await loadAnnouncement();
@@ -1213,7 +1195,6 @@
       }
     });
 
-    /* Fixed notice popup: no database and no admin editing */
     $("openFixedNotice").addEventListener("click", () => {
       $("fixedNoticeModal").hidden = false;
     });
