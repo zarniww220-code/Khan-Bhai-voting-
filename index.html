@@ -1,51 +1,24 @@
 <!DOCTYPE html>
+<html lang="my">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#000000">
+  <meta name="color-scheme" content="dark">
+  <title>KHAN BHAI | Township Voting System</title>
 
-<html lang="my"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
-<meta content="#0B0F19" name="theme-color"/>
-<meta content="dark" name="color-scheme"/>
-<title>KHAN BHAI | Township Voting System</title>
-<style>
+  <style>
     :root {
-      /* Ultra-Modern Deep Midnight Slate & Indigo Canvas */
-      --bg: #070A12;
-      --bg-surface: #0E1424;
-      --card-bg: rgba(14, 21, 38, 0.78);
-      --card-border: rgba(0, 242, 254, 0.22);
-      --card-hover: rgba(20, 30, 52, 0.9);
-      
-      /* Vibrant Electric Multi-Color Palette */
-      --cyan-bright: #00F2FE;
-      --cyan-soft: #4FACFE;
-      --cyan-glow: rgba(0, 242, 254, 0.45);
-      --cyan-dim: rgba(0, 242, 254, 0.12);
-      
-      --emerald-bright: #10B981;
-      --emerald-glow: rgba(16, 185, 129, 0.4);
-      --emerald-dim: rgba(16, 185, 129, 0.12);
-      
-      --violet-neon: #8B5CF6;
-      --violet-glow: rgba(139, 92, 246, 0.4);
-      
-      --gradient-cyan-emerald: linear-gradient(135deg, #00F2FE 0%, #10B981 100%);
-      --gradient-violet-cyan: linear-gradient(135deg, #8B5CF6 0%, #00F2FE 100%);
-      
+      --bg: #000000;
+      --card: #0A0A0A;
+      --blue: #56CCF2;
       --white: #FFFFFF;
-      --text-main: #F1F5F9;
-      --text-secondary: #94A3B8;
-      --muted: #64748B;
-      --border: rgba(148, 163, 184, 0.15);
-      --red: #F43F5E;
-      --red-glow: rgba(244, 63, 94, 0.35);
-      --card-radius: 24px;
+      --muted: #A7B0BA;
+      --border: #263642;
+      --red: #FF2020;
     }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    * { box-sizing: border-box; }
 
     html {
       min-height: 100%;
@@ -55,323 +28,160 @@
     }
 
     body {
+      margin: 0;
       min-height: 100vh;
       min-height: 100dvh;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      background: radial-gradient(circle at 50% 0%, #131E38 0%, #0B1020 40%, var(--bg) 100%);
-      color: var(--text-main);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--bg);
+      color: var(--white);
       line-height: 1.6;
       overflow-wrap: anywhere;
-      position: relative;
-      overflow-x: hidden;
     }
 
-    /* Multi-Color Ambient Glow Blooms */
-    .ambient-glow {
-      position: fixed;
-      pointer-events: none;
-      z-index: 0;
-      border-radius: 50%;
-      filter: blur(120px);
-    }
-
-    .ambient-1 {
-      top: -140px;
-      left: 20%;
-      width: 580px;
-      height: 400px;
-      background: radial-gradient(circle, rgba(0, 242, 254, 0.16) 0%, rgba(79, 172, 254, 0.04) 60%, transparent 80%);
-    }
-
-    .ambient-2 {
-      top: 15%;
-      right: -100px;
-      width: 520px;
-      height: 480px;
-      background: radial-gradient(circle, rgba(139, 92, 246, 0.15) 0%, transparent 70%);
-    }
-
-    .ambient-3 {
-      bottom: 5%;
-      left: 30%;
-      width: 500px;
-      height: 350px;
-      background: radial-gradient(circle, rgba(16, 185, 129, 0.12) 0%, transparent 70%);
-    }
-
-    /* Ambient Subtle Grid Mesh */
-    .bg-grid {
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      z-index: 0;
-      background-image: 
-        linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
-      background-size: 40px 40px;
-    }
-
-    button, select {
-      font: inherit;
-    }
+    button, select { font: inherit; }
 
     button {
       cursor: pointer;
       -webkit-tap-highlight-color: transparent;
       touch-action: manipulation;
-      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     button:disabled {
       opacity: 0.45;
       cursor: not-allowed;
-      filter: grayscale(0.7);
     }
 
     [hidden] { display: none !important; }
 
-    /* Futuristic Header with Dual Tone Glass */
     header {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      backdrop-filter: blur(24px);
-      -webkit-backdrop-filter: blur(24px);
-      background: rgba(11, 16, 32, 0.82);
-      border-bottom: 1px solid rgba(0, 242, 254, 0.18);
-      padding: 16px 20px;
-      padding-top: max(16px, env(safe-area-inset-top));
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 16px;
-      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.6), 0 1px 0 rgba(255, 255, 255, 0.05);
+      gap: 12px;
+      width: 100%;
+      padding: 20px 16px;
+      padding-top: max(20px, env(safe-area-inset-top));
+      background: #050505;
+      border-bottom: 1px solid var(--blue);
     }
 
-    .logo-frame {
-      position: relative;
-      width: 46px;
-      height: 46px;
-      flex: 0 0 46px;
+    /* Logo ပုံအတွက် စတိုင်လ်ပြင်ဆင်ချက် */
+    .logo-container {
+      width: 48px;
+      height: 48px;
+      flex: 0 0 48px;
+      border-radius: 50%;
+      overflow: hidden;
       display: flex;
       align-items: center;
       justify-content: center;
+      border: 1px solid var(--blue);
+      background: #050505;
     }
 
-    .logo-frame::before {
-      content: '';
-      position: absolute;
-      inset: -2px;
-      border-radius: 14px;
-      background: var(--gradient-cyan-emerald);
-      filter: blur(6px);
-      opacity: 0.7;
+    .brand-logo {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
 
-    .logo-placeholder {
-      position: relative;
-      z-index: 1;
-      width: 44px;
-      height: 44px;
-      background: #0D152A;
-      border: 1.5px solid rgba(0, 242, 254, 0.8);
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 16px;
-      font-weight: 800;
-      letter-spacing: 0.8px;
-      box-shadow: 0 0 15px var(--cyan-glow);
-    }
-
-    .logo-text {
-      background: var(--gradient-cyan-emerald);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      font-weight: 900;
-    }
-
-    .brand { min-width: 0; text-align: left; }
+    .brand { min-width: 0; }
 
     .brand h1 {
       margin: 0;
-      font-size: clamp(20px, 4.4vw, 24px);
-      line-height: 1.1;
+      font-size: clamp(21px, 5vw, 27px);
+      line-height: 1.2;
       font-weight: 900;
-      letter-spacing: 1.5px;
-      background: linear-gradient(90deg, #FFFFFF 20%, #A5F3FC 70%, #00F2FE 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      letter-spacing: 1px;
+      color: var(--white);
     }
 
     .brand p {
-      margin: 2px 0 0;
-      color: #38BDF8;
-      font-size: clamp(9px, 2.2vw, 10.5px);
-      font-weight: 700;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      opacity: 0.85;
+      margin: 4px 0 0;
+      color: var(--blue);
+      font-size: clamp(9px, 2.5vw, 11px);
+      font-weight: 800;
+      letter-spacing: 1px;
     }
 
     main {
-      position: relative;
-      z-index: 1;
       width: 100%;
-      max-width: 540px;
-      margin: 24px auto 48px;
-      padding: 0 16px;
+      max-width: 560px;
+      margin: 20px auto;
+      padding: 0 14px;
     }
 
-    /* High-Tech Glassmorphic Cards */
     .card {
       width: 100%;
       min-width: 0;
-      background: var(--card-bg);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-top: 1px solid rgba(0, 242, 254, 0.35);
-      border-radius: var(--card-radius);
-      padding: 26px 22px;
-      margin-bottom: 20px;
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      box-shadow: 0 20px 45px rgba(0, 4, 16, 0.75), inset 0 1px 0 rgba(255, 255, 255, 0.05);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, var(--cyan-bright), var(--emerald-bright), transparent);
-      opacity: 0.6;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 17px;
+      margin-bottom: 16px;
     }
 
     h2 {
-      margin: 0 0 14px;
+      margin: 0 0 12px;
       font-size: 18px;
-      font-weight: 800;
-      letter-spacing: 0.8px;
+      line-height: 1.5;
       color: var(--white);
-      display: flex;
-      align-items: center;
-      gap: 8px;
     }
 
     p {
-      margin: 8px 0 16px;
+      margin: 8px 0 14px;
       font-size: 14px;
-      color: var(--text-secondary);
-      line-height: 1.6;
+      color: #D6DCE2;
+      line-height: 1.8;
     }
 
-    .blue {
-      background: var(--gradient-cyan-emerald);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      display: inline-block;
-    }
+    .blue { color: var(--blue); }
 
-    /* Status Box with Futuristic Cyber Styling */
     .status-box {
-      background: rgba(10, 15, 30, 0.85);
-      border: 1px solid rgba(0, 242, 254, 0.28);
-      border-radius: 18px;
-      padding: 22px 18px;
+      border: 1px solid var(--blue);
+      border-radius: 10px;
+      padding: 14px 10px;
       text-align: center;
-      margin: 4px 0 22px;
+      margin: 15px 0;
       min-width: 0;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45), inset 0 0 24px rgba(0, 242, 254, 0.04);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .status-box::before {
-      content: '';
-      position: absolute;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
-      background: radial-gradient(circle, rgba(0, 242, 254, 0.05) 0%, transparent 60%);
-      pointer-events: none;
     }
 
     .status-title {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      color: #03131D;
-      background: var(--gradient-cyan-emerald);
-      font-size: 11.5px;
-      font-weight: 800;
-      letter-spacing: 1.2px;
-      padding: 5px 16px;
-      border-radius: 20px;
-      text-transform: uppercase;
-      box-shadow: 0 4px 14px var(--cyan-glow);
-    }
-
-    .status-title::before {
-      content: '';
-      display: inline-block;
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: #FFFFFF;
-      box-shadow: 0 0 8px #FFFFFF;
-      animation: pulseLive 1.8s infinite;
-    }
-
-    @keyframes pulseLive {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.4; transform: scale(0.75); }
+      color: var(--blue);
+      font-size: 13px;
+      font-weight: 900;
+      letter-spacing: 0.6px;
+      overflow-wrap: anywhere;
     }
 
     .status-message {
-      color: #E2E8F0;
-      font-size: 13.5px;
-      margin-top: 12px;
-      font-weight: 500;
+      color: var(--white);
+      font-size: 13px;
+      margin-top: 5px;
       overflow-wrap: anywhere;
     }
 
     .timer-label {
-      color: #38BDF8;
-      font-size: 11px;
-      letter-spacing: 1.8px;
-      font-weight: 700;
-      margin-top: 16px;
-      text-transform: uppercase;
+      color: var(--muted);
+      font-size: 12px;
+      margin-top: 12px;
     }
 
     #countdown {
-      background: linear-gradient(180deg, #FFFFFF 0%, #38BDF8 60%, #00F2FE 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      font-size: clamp(32px, 8.5vw, 38px);
+      color: var(--blue);
+      font-size: clamp(23px, 7vw, 28px);
       font-weight: 900;
-      letter-spacing: 2px;
+      letter-spacing: 1px;
       font-variant-numeric: tabular-nums;
       white-space: nowrap;
-      margin-top: 2px;
-      filter: drop-shadow(0 0 16px rgba(0, 242, 254, 0.4));
     }
 
     .status-box.connection-error {
       display: flex;
       align-items: center;
       justify-content: center;
-      min-height: 60px;
-      padding: 16px 12px;
-      border-color: rgba(244, 63, 94, 0.5);
-      background: rgba(244, 63, 94, 0.08);
-      box-shadow: 0 0 20px rgba(244, 63, 94, 0.2);
+      min-height: 58px;
+      padding: 15px 10px;
     }
 
     .connection-error .status-title,
@@ -382,433 +192,155 @@
 
     .connection-error .status-message {
       margin: 0;
-      color: #FB7185;
-      font-size: 14.5px;
-      font-weight: 700;
+      color: var(--blue);
+      font-size: 15px;
+      font-weight: 800;
     }
 
     label {
       display: block;
-      color: #CBD5E1;
-      font-size: 13.5px;
-      font-weight: 600;
-      margin: 18px 0 8px;
+      color: var(--white);
+      font-size: 14px;
+      font-weight: 700;
+      margin: 16px 0 8px;
     }
 
-    /* Custom Modern Dropdown with Cyan Edge */
     select {
       display: block;
       width: 100%;
       min-width: 0;
-      min-height: 50px;
-      padding: 12px 16px;
+      min-height: 46px;
+      padding: 10px 12px;
       color: var(--white);
-      background: #0A0F1E;
-      border: 1.5px solid rgba(0, 242, 254, 0.28);
-      border-radius: 14px;
+      background: #050505;
+      border: 1px solid var(--blue);
+      border-radius: 9px;
       outline: none;
-      font-size: 14px;
-      font-weight: 500;
-      transition: all 0.25s ease;
-      appearance: none;
-      -webkit-appearance: none;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2300F2FE' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
-      background-repeat: no-repeat;
-      background-position: right 16px center;
-      padding-right: 44px;
-      box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.6);
     }
 
-    select:focus {
-      border-color: var(--cyan-bright);
-      box-shadow: 0 0 0 3px rgba(0, 242, 254, 0.2), 0 0 20px var(--cyan-glow);
+    select:focus-visible,
+    button:focus-visible {
+      outline: 2px solid var(--blue);
+      outline-offset: 3px;
     }
 
     select option {
       color: var(--white);
-      background: #0B1020;
-      padding: 10px;
+      background: #050505;
     }
 
-    /* Primary Glowing Cyan-Emerald CTA Button */
     .primary-button {
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      display: block;
       width: 100%;
-      min-height: 52px;
-      padding: 12px 20px;
-      margin-top: 20px;
-      border: none;
-      border-radius: 14px;
-      color: #03131D;
-      background: var(--gradient-cyan-emerald);
-      font-size: 16px;
-      font-weight: 800;
-      letter-spacing: 0.6px;
-      box-shadow: 0 4px 24px var(--cyan-glow), 0 2px 10px var(--emerald-glow);
-      cursor: pointer;
-      overflow: hidden;
-    }
-
-    .primary-button::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(rgba(255, 255, 255, 0.2), transparent);
-      opacity: 0;
-      transition: opacity 0.2s;
-    }
-
-    .primary-button:hover:not(:disabled) {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 32px var(--cyan-glow), 0 4px 16px var(--emerald-glow);
-      color: #010B11;
-    }
-
-    .primary-button:hover:not(:disabled)::after {
-      opacity: 1;
-    }
-
-    .primary-button:active:not(:disabled) {
-      transform: translateY(0);
-      box-shadow: 0 2px 12px var(--cyan-glow);
+      min-height: 42px;
+      padding: 9px 12px;
+      margin-top: 13px;
+      border: 1px solid var(--blue);
+      border-radius: 9px;
+      color: #000000;
+      background: var(--blue);
+      font-size: 14px;
+      font-weight: 900;
     }
 
     .secondary-button {
-      min-height: 44px;
-      padding: 10px 24px;
-      border: 1.5px solid var(--cyan-bright);
-      border-radius: 12px;
-      background: rgba(0, 242, 254, 0.1);
-      color: var(--cyan-bright);
-      font-size: 14px;
-      font-weight: 700;
-      transition: all 0.2s ease;
-    }
-
-    .secondary-button:hover {
-      background: var(--cyan-bright);
-      color: #03131D;
-      box-shadow: 0 0 20px var(--cyan-glow);
+      min-height: 38px;
+      padding: 8px 16px;
+      border: 1px solid var(--blue);
+      border-radius: 8px;
+      background: transparent;
+      color: var(--blue);
+      font-size: 13px;
+      font-weight: 800;
     }
 
     .message {
-      margin-top: 14px;
+      margin-top: 12px;
       font-size: 13px;
-      font-weight: 600;
-      color: #38BDF8;
-      text-align: center;
+      color: var(--blue);
       overflow-wrap: anywhere;
     }
 
-    .message.error {
-      color: #FB7185;
+    .message.error { color: #FF7777; }
+
+    .muted {
+      color: var(--muted);
+      font-size: 12px;
     }
 
     .notice {
       width: 100%;
-      margin: 0 0 14px;
+      border: 0;
+      padding: 4px 0 18px;
+      margin: 0 0 12px;
       text-align: center;
+      background: transparent;
     }
 
-    /* Announcement & Fixed Notice High-Tech Glass Buttons */
+    .notice h2 {
+      margin: 0 0 12px;
+      color: var(--red);
+      font-size: 16px;
+      font-weight: 900;
+    }
+
     .announcement-button,
     .fixed-notice-button {
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      display: block;
       width: 100%;
-      min-height: 50px;
-      padding: 12px 18px;
-      border-radius: 14px;
+      min-height: 42px;
+      padding: 9px 14px;
+      border-radius: 9px;
+      background: transparent;
+      color: var(--white);
       font-size: 14px;
-      font-weight: 700;
-      backdrop-filter: blur(16px);
-      transition: all 0.2s ease;
+      font-weight: 800;
     }
 
     .announcement-button {
-      background: rgba(14, 21, 38, 0.85);
-      border: 1.5px solid rgba(0, 242, 254, 0.3);
-      color: #38BDF8;
-      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
-    }
-
-    .announcement-button:hover {
-      background: rgba(0, 242, 254, 0.14);
-      border-color: var(--cyan-bright);
-      color: #FFFFFF;
-      box-shadow: 0 0 22px var(--cyan-glow);
-      transform: translateY(-1px);
+      border: 1px solid var(--blue);
     }
 
     .fixed-notice-button {
-      background: rgba(14, 21, 38, 0.85);
-      border: 1.5px solid rgba(244, 63, 94, 0.35);
-      color: #FB7185;
-      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
-    }
-
-    .fixed-notice-button:hover {
-      background: rgba(244, 63, 94, 0.14);
-      border-color: var(--red);
-      box-shadow: 0 0 20px var(--red-glow);
-      color: #FFFFFF;
-      transform: translateY(-1px);
+      border: 1px solid var(--red);
     }
 
     #announcement,
     #fixedNoticeText {
       white-space: pre-line;
       overflow-wrap: anywhere;
-      color: #CBD5E1;
+      color: var(--white);
       font-size: 14px;
       text-align: left;
-      line-height: 1.7;
-      background: #080D1A;
-      padding: 18px;
-      border-radius: 14px;
-      border: 1px solid rgba(0, 242, 254, 0.2);
+      line-height: 1.8;
     }
 
-    #resultsStatus {
-      font-size: 13.5px;
-      color: #64748B;
-      font-weight: 600;
-      margin-bottom: 18px;
-    }
-
-    /* Podium Container & Dynamic High-Tech Cards */
-    .podium-container {
-      display: grid;
-      grid-template-columns: 1fr 1.08fr 1fr;
-      gap: 10px;
-      align-items: end;
-      margin: 14px 0 26px;
-    }
-
-    .podium-card {
-      position: relative;
-      border-radius: 18px;
-      padding: 16px 10px 14px;
-      text-align: center;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-end;
-      overflow: hidden;
-      background: rgba(11, 17, 32, 0.85);
-      backdrop-filter: blur(12px);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-
-    .podium-card:hover {
-      transform: translateY(-3px);
-    }
-
-    /* 1st Place: Radiant Cyan & Emerald Glow */
-    .podium-first {
-      order: 2;
-      min-height: 205px;
-      background: linear-gradient(180deg, rgba(0, 242, 254, 0.12) 0%, rgba(10, 16, 30, 0.95) 75%);
-      border: 2px solid var(--cyan-bright);
-      box-shadow: 0 12px 34px rgba(0, 0, 0, 0.8), 0 0 30px var(--cyan-glow);
-      z-index: 2;
-    }
-
-    .podium-second {
-      order: 1;
-      min-height: 170px;
-      background: linear-gradient(180deg, rgba(139, 92, 246, 0.08) 0%, rgba(10, 16, 30, 0.9) 80%);
-      border: 1.5px solid rgba(139, 92, 246, 0.45);
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6), 0 0 16px rgba(139, 92, 246, 0.25);
-      z-index: 1;
-    }
-
-    .podium-third {
-      order: 3;
-      min-height: 155px;
-      background: linear-gradient(180deg, rgba(16, 185, 129, 0.08) 0%, rgba(10, 16, 30, 0.9) 80%);
-      border: 1.5px solid rgba(16, 185, 129, 0.45);
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6), 0 0 16px rgba(16, 185, 129, 0.25);
-      z-index: 1;
-    }
-
-    .podium-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      font-size: 11px;
-      font-weight: 800;
-      letter-spacing: 0.6px;
-      padding: 4px 10px;
-      border-radius: 20px;
-      text-transform: uppercase;
-      margin-bottom: 8px;
-      white-space: nowrap;
-    }
-
-    .podium-first .podium-badge {
-      background: var(--gradient-cyan-emerald);
-      color: #03131D;
-      box-shadow: 0 2px 10px var(--cyan-glow);
-    }
-
-    .podium-second .podium-badge {
-      background: rgba(139, 92, 246, 0.25);
-      color: #C4B5FD;
-      border: 1px solid rgba(139, 92, 246, 0.5);
-    }
-
-    .podium-third .podium-badge {
-      background: rgba(16, 185, 129, 0.25);
-      color: #6EE7B7;
-      border: 1px solid rgba(16, 185, 129, 0.5);
-    }
-
-    .podium-township {
-      font-size: 14.5px;
-      font-weight: 700;
-      color: var(--white);
-      margin: 4px 0 6px;
-      line-height: 1.3;
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-      min-height: 38px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .podium-first .podium-township {
-      font-size: 16px;
-      font-weight: 800;
-      background: linear-gradient(90deg, #FFFFFF, #67E8F9);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    .podium-votes {
-      font-size: 13.5px;
-      font-weight: 800;
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      padding: 4px 10px;
-      border-radius: 10px;
-      margin-top: 2px;
-      background: #060B18;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      color: var(--white);
-    }
-
-    .podium-first .podium-votes {
-      border-color: rgba(0, 242, 254, 0.6);
-      background: #020F18;
-      color: #38BDF8;
-    }
-
-    .podium-percentage {
-      font-size: 10.5px;
-      color: #64748B;
-      font-weight: 600;
-      margin-top: 5px;
-    }
-
-    .podium-first .podium-percentage {
-      color: #00F2FE;
-    }
-
-    /* Ranks 4+ Leaderboard Section */
-    .ranks-list-title {
-      font-size: 11.5px;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      color: #64748B;
-      font-weight: 700;
-      margin: 20px 0 10px;
-      padding-left: 4px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .ranks-list-title::after {
-      content: '';
-      flex: 1;
-      height: 1px;
-      background: linear-gradient(90deg, rgba(0, 242, 254, 0.3), transparent);
-    }
-
-    .result {
-      margin: 9px 0;
-      padding: 12px 14px;
-      background: rgba(10, 16, 30, 0.8);
-      border: 1px solid rgba(0, 242, 254, 0.14);
-      border-radius: 14px;
-      transition: all 0.2s ease;
-    }
-
-    .result:hover {
-      border-color: rgba(0, 242, 254, 0.4);
-      background: rgba(15, 25, 48, 0.9);
-      transform: translateX(2px);
-      box-shadow: 0 4px 16px rgba(0, 242, 254, 0.1);
-    }
+    .result { margin: 16px 0; }
 
     .result-head {
       display: grid;
-      grid-template-columns: 28px minmax(0, 1fr) auto;
+      grid-template-columns: 25px minmax(0, 1fr) auto;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
       margin-bottom: 8px;
     }
 
-    .rank-badge {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 26px;
-      height: 26px;
-      border-radius: 50%;
-      background: #060B18;
-      border: 1px solid rgba(0, 242, 254, 0.35);
-      color: #38BDF8;
-      font-weight: 800;
-      font-size: 12px;
+    .rank {
+      color: var(--blue);
+      font-weight: 900;
+      font-size: 13px;
     }
 
     .township-name {
       min-width: 0;
       overflow-wrap: anywhere;
       font-size: 14px;
-      font-weight: 600;
       color: var(--white);
     }
 
-    .vote-stat {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .vote-percentage-pill {
-      font-size: 11px;
-      font-weight: 700;
-      color: #94A3B8;
-      background: #070D1B;
-      padding: 2px 7px;
-      border-radius: 6px;
-      border: 1px solid rgba(255, 255, 255, 0.08);
-    }
-
     .vote-count {
-      color: #00F2FE;
-      font-size: 13.5px;
+      color: var(--blue);
+      font-size: 12px;
       font-weight: 800;
       white-space: nowrap;
       text-align: right;
@@ -816,30 +348,27 @@
 
     .bar-bg {
       height: 7px;
-      background: #060A16;
-      border-radius: 10px;
+      background: #20262D;
+      border-radius: 20px;
       overflow: hidden;
-      border: 1px solid rgba(255, 255, 255, 0.06);
     }
 
     .bar {
       height: 100%;
-      background: var(--gradient-cyan-emerald);
-      border-radius: 10px;
-      transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-      box-shadow: 0 0 10px var(--cyan-glow);
+      background: var(--blue);
+      border-radius: 20px;
+      transition: width 0.3s ease;
     }
 
     footer {
       width: 100%;
       min-height: 24px;
-      background: transparent;
+      background: #000000;
       border: 0;
       padding: 0;
       margin: 0;
     }
 
-    /* Modal Styling */
     .modal {
       position: fixed;
       inset: 0;
@@ -850,9 +379,7 @@
       padding: 20px;
       padding-top: max(20px, env(safe-area-inset-top));
       padding-bottom: max(20px, env(safe-area-inset-bottom));
-      background: rgba(3, 7, 18, 0.85);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
+      background: #000000E8;
       overflow-y: auto;
     }
 
@@ -860,363 +387,357 @@
 
     .modal-box {
       width: 100%;
-      max-width: 400px;
+      max-width: 350px;
       max-height: 85vh;
       max-height: 85dvh;
       overflow-y: auto;
-      padding: 28px 24px;
-      border: 1.5px solid rgba(0, 242, 254, 0.35);
-      border-radius: 22px;
-      background: #0D1426;
+      padding: 22px 18px;
+      border: 1px solid var(--blue);
+      border-radius: 14px;
+      background: #080808;
       text-align: center;
-      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.9), 0 0 35px var(--cyan-glow);
-      position: relative;
     }
 
     .modal-box h2 {
-      justify-content: center;
-      background: var(--gradient-cyan-emerald);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      font-size: 20px;
-      font-weight: 800;
+      color: var(--blue);
+      font-size: 18px;
       margin-bottom: 12px;
     }
 
     #announcementTitle {
       display: block;
       width: 100%;
-      padding: 0 0 12px;
-      margin: 0 0 18px;
-      background: var(--gradient-cyan-emerald);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      padding: 0 0 10px;
+      margin: 0 0 16px;
+      color: var(--blue);
       border: 0;
-      border-bottom: 1px solid rgba(0, 242, 254, 0.25);
+      border-bottom: 1px solid var(--blue);
       border-radius: 0;
-      font-size: 20px;
-      font-weight: 800;
+      font-size: 18px;
       text-align: center;
     }
 
     #fixedNoticeTitle {
       display: block;
       width: 100%;
-      padding: 0 0 12px;
+      padding: 8px 10px;
       margin: 0 0 16px;
-      color: #FB7185;
+      color: var(--red);
       border: 0;
       border-radius: 0;
-      font-size: 20px;
-      font-weight: 800;
+      font-size: 18px;
       text-align: center;
     }
 
     .fixed-notice-divider {
       width: 100%;
       height: 1px;
-      background: rgba(244, 63, 94, 0.3);
-      margin: -6px 0 18px;
+      background: var(--red);
+      margin: -4px 0 16px;
     }
 
     .modal-box p {
-      color: var(--text-secondary);
+      color: var(--white);
       overflow-wrap: anywhere;
-      font-size: 14.5px;
     }
 
     .modal-actions {
       display: flex;
-      gap: 12px;
-      margin-top: 24px;
+      gap: 10px;
+      margin-top: 18px;
     }
 
     .modal-actions button {
       flex: 1;
       min-width: 0;
-      min-height: 48px;
-      padding: 10px 14px;
-      border-radius: 12px;
-      font-size: 14.5px;
-      font-weight: 700;
+      min-height: 39px;
+      padding: 8px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 800;
     }
 
     .cancel-button {
-      border: 1px solid rgba(148, 163, 184, 0.25);
-      color: var(--muted);
-      background: #131B2E;
-    }
-
-    .cancel-button:hover {
-      background: #1C2742;
+      border: 1px solid #69737D;
       color: var(--white);
+      background: #151515;
     }
 
     .confirm-button {
-      border: none;
-      color: #03131D;
-      background: var(--gradient-cyan-emerald);
-      box-shadow: 0 0 20px var(--cyan-glow);
-    }
-
-    .confirm-button:hover {
-      box-shadow: 0 0 28px var(--cyan-glow), 0 0 16px var(--emerald-glow);
-      filter: brightness(1.1);
+      border: 1px solid var(--blue);
+      color: #000000;
+      background: var(--blue);
     }
 
     .success-icon {
-      color: #03131D;
-      font-size: 32px;
-      font-weight: 800;
-      line-height: 1;
-      width: 60px;
-      height: 60px;
-      margin: 0 auto 16px;
-      background: var(--gradient-cyan-emerald);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 0 30px var(--cyan-glow);
+      color: var(--blue);
+      font-size: 40px;
+      font-weight: 900;
+      line-height: 1.3;
     }
 
     .selected-township {
-      border: 1.5px solid rgba(0, 242, 254, 0.35);
-      background: rgba(0, 242, 254, 0.08);
-      border-radius: 14px;
-      padding: 16px;
-      margin: 20px 0;
+      border: 1px solid var(--blue);
+      border-radius: 9px;
+      padding: 12px;
+      margin: 16px 0;
     }
 
     .selected-township .caption {
-      color: #94A3B8;
+      color: var(--white);
       font-size: 12px;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
     }
 
     .selected-township .name {
-      color: var(--cyan-bright);
-      font-size: 20px;
-      font-weight: 800;
-      margin-top: 6px;
-    }
-
-    @media (max-width: 420px) {
-      .podium-container {
-        gap: 6px;
-      }
-
-      .podium-card {
-        padding: 14px 6px 12px;
-      }
-
-      .podium-badge {
-        font-size: 9.5px;
-        padding: 3px 6px;
-        letter-spacing: 0.4px;
-      }
-
-      .podium-township {
-        font-size: 13px;
-        min-height: 34px;
-      }
-
-      .podium-first .podium-township {
-        font-size: 14px;
-      }
-
-      .podium-votes {
-        font-size: 12px;
-        padding: 3px 7px;
-      }
+      color: var(--blue);
+      font-size: 17px;
+      font-weight: 900;
+      margin-top: 5px;
     }
 
     @media (max-width: 380px) {
       header {
-        gap: 12px;
-        padding-left: 12px;
-        padding-right: 12px;
+        gap: 9px;
+        padding-left: 10px;
+        padding-right: 10px;
       }
 
-      .logo-frame {
+      .logo-container {
         width: 40px;
         height: 40px;
         flex-basis: 40px;
       }
 
-      .logo-placeholder {
-        width: 38px;
-        height: 38px;
-        border-radius: 10px;
-        font-size: 14px;
-      }
+      .brand p { letter-spacing: 0.5px; }
 
       main {
-        margin-top: 16px;
+        margin-top: 14px;
+        padding-left: 10px;
+        padding-right: 10px;
+      }
+
+      .card {
+        padding: 14px;
+        border-radius: 12px;
+      }
+
+      .result-head {
+        grid-template-columns: 22px minmax(0, 1fr) auto;
+        gap: 6px;
+      }
+
+      .vote-count { font-size: 11px; }
+
+      .modal {
         padding-left: 12px;
         padding-right: 12px;
       }
 
-      .card {
-        padding: 20px 16px;
-        border-radius: 18px;
+      .modal-box { padding: 18px 14px; }
+    }
+
+    @media (min-width: 700px) {
+      main {
+        max-width: 560px;
+        padding-left: 18px;
+        padding-right: 18px;
       }
 
-      .result-head {
-        grid-template-columns: 24px minmax(0, 1fr) auto;
-        gap: 6px;
-      }
+      .card { padding: 20px; }
+    }
 
-      .modal-box { padding: 22px 18px; }
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+      }
     }
   </style>
 </head>
+
 <body>
-<!-- Ultra-Modern Multi-Color Ambient Accents & Grid -->
-<div aria-hidden="true" class="bg-grid"></div>
-<div aria-hidden="true" class="ambient-glow ambient-1"></div>
-<div aria-hidden="true" class="ambient-glow ambient-2"></div>
-<div aria-hidden="true" class="ambient-glow ambient-3"></div>
-<header>
-<div class="logo-frame">
-<div aria-label="KHAN BHAI logo" class="logo-placeholder">
-<span class="logo-text">KB</span>
-</div>
-</div>
-<div class="brand">
-<h1>KHAN BHAI</h1>
-<p>TOWNSHIP VOTING SYSTEM</p>
-</div>
-</header>
-<main>
-<section class="card">
-<div aria-live="polite" class="status-box" id="statusBox" role="status">
-<div class="status-title" id="statusTitle">
+  <header>
+    <!-- ပေးပို့လာသော Logo ပုံကို ထည့်သွင်းထားခြင်း -->
+    <div class="logo-container" aria-label="KHAN BHAI logo">
+      <img src="logo.png" alt="KHAN BHAI Logo" class="brand-logo">
+    </div>
+
+    <div class="brand">
+      <h1>KHAN BHAI</h1>
+      <p>TOWNSHIP VOTING SYSTEM</p>
+    </div>
+  </header>
+
+  <main>
+    <section class="card">
+      <div id="statusBox" class="status-box"
+        role="status" aria-live="polite">
+
+        <div id="statusTitle" class="status-title">
           CHECKING STATUS
         </div>
-<div class="status-message" id="statusMessage">
+
+        <div id="statusMessage" class="status-message">
           Database ချိတ်ဆက်မှုကို စစ်ဆေးနေပါသည်...
         </div>
-<div class="timer-label" id="timerLabel">
+
+        <div id="timerLabel" class="timer-label">
           VOTING CLOSES IN
         </div>
-<div id="countdown">--:--:--</div>
-</div>
-<label for="township">မြို့နယ်ရွေးချယ်ပါ</label>
-<!-- အတည်ပြုထားသော မြို့နယ် 33 ခု -->
-<select id="township">
-<option value="">မြို့နယ်ရွေးချယ်ရန်</option>
-<option>အလုံ</option>
-<option>ဗဟန်း</option>
-<option>ဒဂုံ</option>
-<option>ဒဂုံမြို့သစ် (မြောက်ပိုင်း)</option>
-<option>ဒဂုံမြို့သစ် (တောင်ပိုင်း)</option>
-<option>ဒဂုံမြို့သစ် (အရှေ့ပိုင်း)</option>
-<option>ဒဂုံမြို့သစ် (ဆိပ်ကမ်း)</option>
-<option>ဒလ</option>
-<option>အင်းစိန်</option>
-<option>ကမာရွတ်</option>
-<option>ကျောက်တံတား</option>
-<option>ကြည့်မြင်တိုင်</option>
-<option>လှိုင်</option>
-<option>လှိုင်သာယာ (အရှေ့ပိုင်း)</option>
-<option>လှိုင်သာယာ (အနောက်ပိုင်း)</option>
-<option>လမ်းမတော်</option>
-<option>လသာ</option>
-<option>မင်္ဂလာဒုံ</option>
-<option>မင်္ဂလာတောင်ညွန့်</option>
-<option>မြောက်ဥက္ကလာပ</option>
-<option>ပန်းဘဲတန်း</option>
-<option>စမ်းချောင်း</option>
-<option>ရွှေပြည်သာ</option>
-<option>တောင်ဥက္ကလာပ</option>
-<option>တာမွေ</option>
-<option>သင်္ဃန်းကျွန်း</option>
-<option>သန်လျင်</option>
-<option>တွံတေး</option>
-<option>ရန်ကင်း</option>
-<option>လှည်းကူး</option>
-<option>တိုက်ကြီး</option>
-<option>မှော်ဘီ</option>
-<option>မရမ်းကုန်း</option>
-</select>
-<button class="primary-button" disabled="" id="voteButton">
+
+        <div id="countdown">--:--:--</div>
+      </div>
+
+      <label for="township">မြို့နယ်ရွေးချယ်ပါ</label>
+
+      <!-- အတည်ပြုထားသော မြို့နယ် 33 ခု -->
+      <select id="township">
+        <option value="">မြို့နယ်ရွေးချယ်ရန်</option>
+        <option>အလုံ</option>
+        <option>ဗဟန်း</option>
+        <option>ဒဂုံ</option>
+        <option>ဒဂုံမြို့သစ် (မြောက်ပိုင်း)</option>
+        <option>ဒဂုံမြို့သစ် (တောင်ပိုင်း)</option>
+        <option>ဒဂုံမြို့သစ် (အရှေ့ပိုင်း)</option>
+        <option>ဒဂုံမြို့သစ် (ဆိပ်ကမ်း)</option>
+        <option>ဒလ</option>
+        <option>အင်းစိန်</option>
+        <option>ကမာရွတ်</option>
+        <option>ကျောက်တံတား</option>
+        <option>ကြည့်မြင်တိုင်</option>
+        <option>လှိုင်</option>
+        <option>လှိုင်သာယာ (အရှေ့ပိုင်း)</option>
+        <option>လှိုင်သာယာ (အနောက်ပိုင်း)</option>
+        <option>လမ်းမတော်</option>
+        <option>လသာ</option>
+        <option>မင်္ဂလာဒုံ</option>
+        <option>မင်္ဂလာတောင်ညွန့်</option>
+        <option>မြောက်ဥက္ကလာပ</option>
+        <option>ပန်းဘဲတန်း</option>
+        <option>စမ်းချောင်း</option>
+        <option>ရွှေပြည်သာ</option>
+        <option>တောင်ဥက္ကလာပ</option>
+        <option>တာမွေ</option>
+        <option>သင်္ဃန်းကျွန်း</option>
+        <option>သန်လျင်</option>
+        <option>တွံတေး</option>
+        <option>ရန်ကင်း</option>
+        <option>လှည်းကူး</option>
+        <option>တိုက်ကြီး</option>
+        <option>မှော်ဘီ</option>
+        <option>မရမ်းကုန်း</option>
+      </select>
+
+      <button id="voteButton" class="primary-button" disabled>
         Voting လုပ်မည်
       </button>
-<div aria-live="polite" class="message" id="message" role="status"></div>
-</section>
-<section class="notice">
-<button class="announcement-button" id="openAnnouncement">
+
+      <div id="message" class="message"
+        role="status" aria-live="polite"></div>
+    </section>
+
+    <section class="notice">
+      <button id="openAnnouncement" class="announcement-button">
         ကြေညာချက်ကြည့်ရန်
       </button>
-</section>
-<section class="notice">
-<button class="fixed-notice-button" id="openFixedNotice">
+    </section>
+
+    <section class="notice">
+      <button id="openFixedNotice" class="fixed-notice-button">
         အသိပေးချက်ကြည့်ရန်
       </button>
-</section>
-<section class="card">
-<h2 class="blue">VOTING RESULTS</h2>
-<p aria-live="polite" id="resultsStatus">
+    </section>
+
+    <section class="card">
+      <h2 class="blue">VOTING RESULTS</h2>
+
+      <p id="resultsStatus" aria-live="polite">
         မဲရလဒ်ကို မြန်မာစံတော်ချိန် ည 10 နာရီရောက်မှ ပြသပါမည်။
       </p>
-<div id="results"></div>
-</section>
-</main>
-<footer aria-hidden="true"></footer>
-<div class="modal" hidden="" id="confirmModal">
-<div aria-labelledby="confirmTitle" aria-modal="true" class="modal-box" role="dialog">
-<h2 id="confirmTitle">အတည်ပြုရန်</h2>
-<p id="confirmText"></p>
-<div class="modal-actions">
-<button class="cancel-button" id="cancelVote">
+
+      <div id="results"></div>
+    </section>
+  </main>
+
+  <footer aria-hidden="true"></footer>
+
+  <div id="confirmModal" class="modal" hidden>
+    <div class="modal-box" role="dialog"
+      aria-modal="true" aria-labelledby="confirmTitle">
+
+      <h2 id="confirmTitle">အတည်ပြုရန်</h2>
+      <p id="confirmText"></p>
+
+      <div class="modal-actions">
+        <button id="cancelVote" class="cancel-button">
           မလုပ်တော့ပါ
         </button>
-<button class="confirm-button" id="confirmVote">
+
+        <button id="confirmVote" class="confirm-button">
           အတည်ပြုမည်
         </button>
-</div>
-</div>
-</div>
-<div class="modal" hidden="" id="successModal">
-<div aria-labelledby="successTitle" aria-modal="true" class="modal-box" role="dialog">
-<div class="success-icon">✓</div>
-<h2 id="successTitle">Vote Successful!</h2>
-<div class="selected-township">
-<div class="caption">သင်ရွေးချယ်ထားသော မြို့နယ်</div>
-<div class="name" id="successTownship"></div>
-</div>
-<button class="secondary-button" id="closeSuccess">
+      </div>
+    </div>
+  </div>
+
+  <div id="successModal" class="modal" hidden>
+    <div class="modal-box" role="dialog"
+      aria-modal="true" aria-labelledby="successTitle">
+
+      <div class="success-icon">✓</div>
+      <h2 id="successTitle">Vote Successful!</h2>
+
+      <div class="selected-township">
+        <div class="caption">သင်ရွေးချယ်ထားသော မြို့နယ်</div>
+        <div id="successTownship" class="name"></div>
+      </div>
+
+      <button id="closeSuccess" class="secondary-button">
         ပိတ်မည်
       </button>
-</div>
-</div>
-<div class="modal" hidden="" id="announcementModal">
-<div aria-labelledby="announcementTitle" aria-modal="true" class="modal-box" role="dialog">
-<h2 id="announcementTitle">ကြေညာချက်</h2>
-<div id="announcement">
+    </div>
+  </div>
+
+  <div id="announcementModal" class="modal" hidden>
+    <div class="modal-box" role="dialog"
+      aria-modal="true" aria-labelledby="announcementTitle">
+
+      <h2 id="announcementTitle">ကြေညာချက်</h2>
+
+      <div id="announcement">
         ကြေညာချက်ကို ရယူနေပါသည်...
       </div>
-<button class="secondary-button" id="closeAnnouncement" style="margin-top:18px">
+
+      <button id="closeAnnouncement"
+        class="secondary-button"
+        style="margin-top:18px">
         ပိတ်မည်
       </button>
-</div>
-</div>
-<div class="modal" hidden="" id="fixedNoticeModal">
-<div aria-labelledby="fixedNoticeTitle" aria-modal="true" class="modal-box" role="dialog">
-<h2 id="fixedNoticeTitle">အသိပေးချက်</h2>
-<div class="fixed-notice-divider"></div>
-<div id="fixedNoticeText">
+    </div>
+  </div>
+
+  <div id="fixedNoticeModal" class="modal" hidden>
+    <div class="modal-box" role="dialog"
+      aria-modal="true" aria-labelledby="fixedNoticeTitle">
+
+      <h2 id="fixedNoticeTitle">အသိပေးချက်</h2>
+      <div class="fixed-notice-divider"></div>
+
+      <div id="fixedNoticeText">
         Voting ရလဒ်များသည် မြို့နယ်အလိုက် လူအများ၏ စိတ်ဝင်စားမှုကို သိရှိနိုင်ရန်အတွက်သာ ဖြစ်ပါသည်။ မဲအများဆုံးရရှိသည့် မြို့နယ်သို့ နောက်နေ့တွင် Khan Bhai လာရောက်ရောင်းချမည်ဟု အာမခံထားခြင်း မဟုတ်ပါ။ မည်သည့်မြို့နယ်တွင် မည်သည့်အချိန် လာရောက်ရောင်းချမည်ဆိုသည်မှာ Khan Bhai ဘက်မှ တရားဝင်ထုတ်ပြန်ကြေညာချက်အတိုင်းသာ အတည်ဖြစ်ပါသည်။
       </div>
-<button class="secondary-button" id="closeFixedNotice" style="margin-top:18px">
+
+      <button id="closeFixedNotice"
+        class="secondary-button"
+        style="margin-top:18px">
         ပိတ်မည်
       </button>
-</div>
-</div>
-<script type="module">
+    </div>
+  </div>
+
+  <script type="module">
     import { createClient } from
       "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
 
@@ -1429,8 +950,6 @@
       const sorted = Object.entries(counts)
         .sort((a, b) => b[1] - a[1]);
 
-      const activeEntries = sorted.filter(([_, count]) => count > 0);
-
       const total = Object.values(counts)
         .reduce((sum, count) => sum + count, 0);
 
@@ -1439,110 +958,50 @@
       $("resultsStatus").textContent =
         "စုစုပေါင်း Votes: " + englishDigits(total);
 
-      if (total === 0 || activeEntries.length === 0) {
-        $("results").textContent = "လက်ရှိ Results မရှိသေးပါ။";
-        return;
+      let rank = 0;
+
+      for (const [name, count] of sorted) {
+        if (count === 0) continue;
+
+        rank++;
+
+        const row = document.createElement("div");
+        row.className = "result";
+
+        const head = document.createElement("div");
+        head.className = "result-head";
+
+        const rankLabel = document.createElement("span");
+        rankLabel.className = "rank";
+        rankLabel.textContent = englishDigits(rank) + ".";
+
+        const townshipName = document.createElement("span");
+        townshipName.className = "township-name";
+        townshipName.textContent = name;
+
+        const voteCount = document.createElement("strong");
+        voteCount.className = "vote-count";
+        voteCount.textContent =
+          englishDigits(count) + " Votes";
+
+        head.append(rankLabel, townshipName, voteCount);
+
+        const barBg = document.createElement("div");
+        barBg.className = "bar-bg";
+
+        const bar = document.createElement("div");
+        bar.className = "bar";
+
+        bar.style.width =
+          (highest > 0 ? count / highest * 100 : 0) + "%";
+
+        barBg.append(bar);
+        row.append(head, barBg);
+        $("results").append(row);
       }
 
-      const topEntries = activeEntries.slice(0, 3);
-      const remainingEntries = activeEntries.slice(3);
-
-      // 1. Build Top 3 Leaderboard Podium
-      const podium = document.createElement("div");
-      podium.className = "podium-container";
-
-      topEntries.forEach(([name, count], index) => {
-        const rank = index + 1;
-        const card = document.createElement("div");
-        const percentage = total > 0 ? ((count / total) * 100).toFixed(1) : "0";
-
-        if (rank === 1) {
-          card.className = "podium-card podium-first";
-          card.innerHTML = `
-            <div class="podium-badge">👑 1st Rank</div>
-            <div class="podium-township">${name}</div>
-            <div class="podium-votes">
-              <span>⚡</span> ${englishDigits(count)} Votes
-            </div>
-            <div class="podium-percentage">${englishDigits(percentage)}% of total</div>
-          `;
-        } else if (rank === 2) {
-          card.className = "podium-card podium-second";
-          card.innerHTML = `
-            <div class="podium-badge">🥈 2nd Rank</div>
-            <div class="podium-township">${name}</div>
-            <div class="podium-votes">
-              ${englishDigits(count)} Votes
-            </div>
-            <div class="podium-percentage">${englishDigits(percentage)}%</div>
-          `;
-        } else if (rank === 3) {
-          card.className = "podium-card podium-third";
-          card.innerHTML = `
-            <div class="podium-badge">🥉 3rd Rank</div>
-            <div class="podium-township">${name}</div>
-            <div class="podium-votes">
-              ${englishDigits(count)} Votes
-            </div>
-            <div class="podium-percentage">${englishDigits(percentage)}%</div>
-          `;
-        }
-
-        podium.appendChild(card);
-      });
-
-      $("results").append(podium);
-
-      // 2. Build Ranks 4+ Leaderboard List
-      if (remainingEntries.length > 0) {
-        const listHeader = document.createElement("div");
-        listHeader.className = "ranks-list-title";
-        listHeader.textContent = "Rankings 4+";
-        $("results").append(listHeader);
-
-        remainingEntries.forEach(([name, count], index) => {
-          const rank = index + 4;
-          const percentage = total > 0 ? ((count / total) * 100).toFixed(1) : "0";
-
-          const row = document.createElement("div");
-          row.className = "result";
-
-          const head = document.createElement("div");
-          head.className = "result-head";
-
-          const rankBadge = document.createElement("span");
-          rankBadge.className = "rank-badge";
-          rankBadge.textContent = englishDigits(rank);
-
-          const townshipName = document.createElement("span");
-          townshipName.className = "township-name";
-          townshipName.textContent = name;
-
-          const statGroup = document.createElement("div");
-          statGroup.className = "vote-stat";
-
-          const pctPill = document.createElement("span");
-          pctPill.className = "vote-percentage-pill";
-          pctPill.textContent = englishDigits(percentage) + "%";
-
-          const voteCount = document.createElement("strong");
-          voteCount.className = "vote-count";
-          voteCount.textContent = englishDigits(count) + " Votes";
-
-          statGroup.append(pctPill, voteCount);
-          head.append(rankBadge, townshipName, statGroup);
-
-          const barBg = document.createElement("div");
-          barBg.className = "bar-bg";
-
-          const bar = document.createElement("div");
-          bar.className = "bar";
-          bar.style.width = (highest > 0 ? (count / highest) * 100 : 0) + "%";
-
-          barBg.append(bar);
-          row.append(head, barBg);
-          $("results").append(row);
-        });
+      if (total === 0) {
+        $("results").textContent = "လက်ရှိ Results မရှိသေးပါ။";
       }
     }
 
@@ -1768,4 +1227,5 @@
       refreshStatus();
     }, 30000);
   </script>
-</body></html>
+</body>
+</html>
