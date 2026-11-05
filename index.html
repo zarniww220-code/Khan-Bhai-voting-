@@ -1,25 +1,58 @@
-
 <!DOCTYPE html>
-<html lang="my">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#000000">
-  <meta name="color-scheme" content="dark">
-  <title>KHAN BHAI | Township Voting System</title>
 
-  <style>
+<html lang="my"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
+<meta content="#060503" name="theme-color"/>
+<meta content="dark" name="color-scheme"/>
+<title>KHAN BHAI | Township Voting System</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&amp;family=Padauk:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<style>
     :root {
-      --bg: #000000;
-      --card: #0A0A0A;
-      --blue: #56CCF2;
+      --bg: #060503;
+      --bg-surface: #0e0c08;
+      --card-bg: rgba(16, 13, 9, 0.88);
+      --card-border: rgba(229, 184, 98, 0.28);
+      --card-hover: rgba(26, 21, 14, 0.95);
+      
+      /* High-end Metallic Gold Palette */
+      --gold-spark: #FFF9DB;
+      --gold-light: #F7E599;
+      --gold-pure: #ECC86A;
+      --gold-mid: #D4A33B;
+      --gold-rich: #C5952B;
+      --gold-dark: #966C1B;
+      --gold-deep: #63460E;
+      --gold-shadow: #281D06;
+      
+      /* Realistic Metallic Foil & Bullion Gradients */
+      --bullion-gradient: linear-gradient(135deg, #ECC86A 0%, #FFF3B3 24%, #D4A33B 48%, #F8DE8B 73%, #AA7C26 100%);
+      --bullion-hover: linear-gradient(135deg, #FFF0B8 0%, #FFE694 22%, #E5B84B 50%, #FFEFBA 76%, #C59332 100%);
+      --gold-text-metal: linear-gradient(135deg, #FFFFFF 0%, #FFF0B8 22%, #E5BE5C 45%, #DDA838 68%, #9E7422 100%);
+      --silver-gold-metal: linear-gradient(135deg, #FFFFFF 0%, #E8EEF5 30%, #CFD8DC 60%, #90A4AE 100%);
+      --bronze-gold-metal: linear-gradient(135deg, #FFE0B2 0%, #FFB74D 45%, #D87D38 75%, #8D4B18 100%);
+      --gold-border-metal: linear-gradient(135deg, rgba(255, 243, 179, 0.6) 0%, rgba(212, 163, 59, 0.35) 40%, rgba(255, 222, 139, 0.65) 75%, rgba(150, 108, 27, 0.25) 100%);
+      
+      --gold-glow: rgba(236, 200, 106, 0.38);
+      --gold-glow-intense: rgba(255, 217, 115, 0.55);
+      --gold-glow-soft: rgba(212, 163, 59, 0.16);
+      
       --white: #FFFFFF;
-      --muted: #A7B0BA;
-      --border: #263642;
-      --red: #FF2020;
+      --text-main: #FBF8F1;
+      --muted: #AFA595;
+      --border: #2B2213;
+      --red: #E05263;
+      --red-glow: rgba(224, 82, 99, 0.3);
+      --card-radius: 22px;
     }
 
-    * { box-sizing: border-box; }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
     html {
       min-height: 100%;
@@ -29,154 +62,373 @@
     }
 
     body {
-      margin: 0;
       min-height: 100vh;
       min-height: 100dvh;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: var(--bg);
-      color: var(--white);
+      font-family: 'Plus Jakarta Sans', 'Padauk', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(ellipse 90% 60% at 50% -10%, #291f0c 0%, #110d06 50%, var(--bg) 95%);
+      color: var(--text-main);
       line-height: 1.6;
       overflow-wrap: anywhere;
+      position: relative;
+      overflow-x: hidden;
     }
 
-    button, select { font: inherit; }
+    /* Ambient Luxury Gold Cosmic Auras */
+    .ambient-aura {
+      position: fixed;
+      pointer-events: none;
+      z-index: 0;
+      border-radius: 50%;
+      filter: blur(85px);
+    }
+
+    .aura-1 {
+      top: -160px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 780px;
+      height: 480px;
+      background: radial-gradient(circle, rgba(236, 200, 106, 0.22) 0%, rgba(197, 149, 43, 0.08) 50%, transparent 75%);
+      animation: pulseAura 9s ease-in-out infinite alternate;
+    }
+
+    .aura-2 {
+      bottom: 5%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 600px;
+      height: 380px;
+      background: radial-gradient(circle, rgba(212, 163, 59, 0.12) 0%, rgba(150, 108, 27, 0.04) 55%, transparent 75%);
+      animation: pulseAura 11s ease-in-out infinite alternate-reverse;
+    }
+
+    @keyframes pulseAura {
+      0% { opacity: 0.65; transform: translateX(-50%) scale(0.96); }
+      100% { opacity: 1; transform: translateX(-50%) scale(1.06); }
+    }
+
+    /* Gold Dust Particles Container */
+    .particles-field {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .particle {
+      position: absolute;
+      border-radius: 50%;
+      background: radial-gradient(circle, #FFF9DB 10%, #ECC86A 60%, rgba(212, 163, 59, 0) 100%);
+      opacity: 0;
+      box-shadow: 0 0 6px rgba(255, 240, 184, 0.7);
+      animation: floatUp 14s infinite cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .particle:nth-child(1) { left: 15%; width: 3px; height: 3px; animation-duration: 16s; animation-delay: 0s; }
+    .particle:nth-child(2) { left: 28%; width: 4.5px; height: 4.5px; animation-duration: 19s; animation-delay: 3s; }
+    .particle:nth-child(3) { left: 45%; width: 2.5px; height: 2.5px; animation-duration: 15s; animation-delay: 1.5s; }
+    .particle:nth-child(4) { left: 62%; width: 4px; height: 4px; animation-duration: 18s; animation-delay: 5s; }
+    .particle:nth-child(5) { left: 78%; width: 3px; height: 3px; animation-duration: 21s; animation-delay: 2s; }
+    .particle:nth-child(6) { left: 88%; width: 4.5px; height: 4.5px; animation-duration: 17s; animation-delay: 6s; }
+    .particle:nth-child(7) { left: 8%; width: 2.5px; height: 2.5px; animation-duration: 22s; animation-delay: 4s; }
+    .particle:nth-child(8) { left: 52%; width: 5px; height: 5px; animation-duration: 20s; animation-delay: 7s; }
+    .particle:nth-child(9) { left: 36%; width: 3px; height: 3px; animation-duration: 14s; animation-delay: 8.5s; }
+    .particle:nth-child(10) { left: 70%; width: 3.5px; height: 3.5px; animation-duration: 23s; animation-delay: 3.8s; }
+
+    @keyframes floatUp {
+      0% {
+        transform: translateY(105vh) translateX(0) scale(0.6);
+        opacity: 0;
+      }
+      15% {
+        opacity: 0.85;
+      }
+      50% {
+        transform: translateY(50vh) translateX(25px) scale(1);
+        opacity: 0.95;
+      }
+      85% {
+        opacity: 0.7;
+      }
+      100% {
+        transform: translateY(-5vh) translateX(-20px) scale(0.4);
+        opacity: 0;
+      }
+    }
+
+    button, select {
+      font: inherit;
+    }
 
     button {
       cursor: pointer;
       -webkit-tap-highlight-color: transparent;
       touch-action: manipulation;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     button:disabled {
       opacity: 0.45;
       cursor: not-allowed;
+      filter: grayscale(0.65);
     }
 
     [hidden] { display: none !important; }
 
     header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      background: rgba(7, 6, 4, 0.88);
+      border-bottom: 1px solid rgba(236, 200, 106, 0.22);
+      padding: 16px 20px;
+      padding-top: max(16px, env(safe-area-inset-top));
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 12px;
-      width: 100%;
-      padding: 20px 16px;
-      padding-top: max(20px, env(safe-area-inset-top));
-      background: #050505;
-      border-bottom: 1px solid var(--blue);
+      gap: 15px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.75), 0 1px 0 rgba(255, 240, 184, 0.12);
+    }
+
+    /* Metallic Embossed Medallion */
+    .logo-frame {
+      position: relative;
+      width: 48px;
+      height: 48px;
+      flex: 0 0 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .logo-frame::before {
+      content: '';
+      position: absolute;
+      inset: -2px;
+      border-radius: 16px;
+      background: conic-gradient(from 0deg, #ECC86A, #FFF3B3, #AA7C26, #F8DE8B, #ECC86A);
+      animation: rotateRing 14s linear infinite;
+      opacity: 0.8;
+      filter: blur(1.5px);
+    }
+
+    @keyframes rotateRing {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
     }
 
     .logo-placeholder {
-      width: 46px;
-      height: 46px;
-      flex: 0 0 46px;
-      border: 1px solid var(--blue);
-      border-radius: 50%;
+      position: relative;
+      z-index: 1;
+      width: 44px;
+      height: 44px;
+      background: radial-gradient(circle at 35% 30%, #30240F 0%, #151006 70%, #0A0804 100%);
+      border: 1px solid #ECC86A;
+      border-radius: 14px;
       display: flex;
       align-items: center;
       justify-content: center;
-      color: var(--blue);
-      font-size: 13px;
+      font-size: 15px;
       font-weight: 900;
+      letter-spacing: 0.8px;
+      background-clip: padding-box;
+      box-shadow: inset 0 1px 3px rgba(255, 249, 219, 0.4), inset 0 -2px 4px rgba(0, 0, 0, 0.8), 0 0 16px var(--gold-glow);
     }
 
-    .brand { min-width: 0; }
+    .logo-text {
+      background: var(--bullion-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      filter: drop-shadow(0 1px 2px rgba(0,0,0,0.8));
+    }
+
+    .brand { min-width: 0; text-align: left; }
 
     .brand h1 {
       margin: 0;
-      font-size: clamp(21px, 5vw, 27px);
-      line-height: 1.2;
+      font-size: clamp(20px, 4.6vw, 25px);
+      line-height: 1.1;
       font-weight: 900;
-      letter-spacing: 1px;
-      color: var(--white);
+      letter-spacing: 1.5px;
+      background: var(--gold-text-metal);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      filter: drop-shadow(0 2px 8px rgba(212, 163, 59, 0.28));
     }
 
     .brand p {
-      margin: 4px 0 0;
-      color: var(--blue);
-      font-size: clamp(9px, 2.5vw, 11px);
+      margin: 3px 0 0;
+      background: linear-gradient(90deg, #F7E599 0%, #E5BE5C 60%, #D4A33B 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-size: clamp(9px, 2.2vw, 10.5px);
       font-weight: 800;
-      letter-spacing: 1px;
+      letter-spacing: 1.8px;
+      text-transform: uppercase;
+      opacity: 0.95;
     }
 
     main {
+      position: relative;
+      z-index: 1;
       width: 100%;
-      max-width: 560px;
-      margin: 20px auto;
-      padding: 0 14px;
+      max-width: 540px;
+      margin: 24px auto 44px;
+      padding: 0 16px;
     }
 
     .card {
       width: 100%;
       min-width: 0;
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 17px;
-      margin-bottom: 16px;
+      background: var(--card-bg);
+      border: 1px solid transparent;
+      background-clip: padding-box;
+      border-radius: var(--card-radius);
+      padding: 24px 22px;
+      margin-bottom: 22px;
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      box-shadow: 0 16px 45px rgba(0, 0, 0, 0.75), inset 0 1px 1px rgba(255, 243, 179, 0.15), 0 0 0 1px rgba(229, 184, 98, 0.22);
+      position: relative;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    /* Metallic Micro-Bevel Header */
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 15%;
+      right: 15%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, #FFF3B3 50%, transparent);
+      opacity: 0.5;
+      pointer-events: none;
     }
 
     h2 {
-      margin: 0 0 12px;
+      margin: 0 0 14px;
       font-size: 18px;
-      line-height: 1.5;
+      font-weight: 800;
+      letter-spacing: 0.8px;
       color: var(--white);
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
 
     p {
-      margin: 8px 0 14px;
+      margin: 8px 0 16px;
       font-size: 14px;
-      color: #D6DCE2;
-      line-height: 1.8;
+      color: #E2DDD5;
+      line-height: 1.7;
     }
 
-    .blue { color: var(--blue); }
+    .blue {
+      background: var(--gold-text-metal);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      filter: drop-shadow(0 2px 10px rgba(236, 200, 106, 0.35));
+    }
 
+    /* Status Box: Polished Gold Luster Plate */
     .status-box {
-      border: 1px solid var(--blue);
-      border-radius: 10px;
-      padding: 14px 10px;
+      background: linear-gradient(180deg, rgba(236, 200, 106, 0.09) 0%, rgba(22, 17, 10, 0.9) 100%);
+      border: 1px solid rgba(236, 200, 106, 0.38);
+      border-radius: 18px;
+      padding: 20px 16px;
       text-align: center;
-      margin: 15px 0;
+      margin: 4px 0 20px;
       min-width: 0;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5), 0 0 24px var(--gold-glow-soft), inset 0 1px 2px rgba(255, 245, 194, 0.22);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .status-box::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent 5%, #ECC86A 30%, #FFF9DB 50%, #D4A33B 70%, transparent 95%);
     }
 
     .status-title {
-      color: var(--blue);
-      font-size: 13px;
+      display: inline-block;
+      color: #1A1305;
+      background: var(--bullion-gradient);
+      font-size: 11px;
       font-weight: 900;
-      letter-spacing: 0.6px;
-      overflow-wrap: anywhere;
+      letter-spacing: 1.4px;
+      padding: 5px 16px;
+      border-radius: 20px;
+      text-transform: uppercase;
+      box-shadow: 0 3px 12px rgba(236, 200, 106, 0.5), inset 0 1px 1px #FFFDEB;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .status-title::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+      transform: translateX(-100%);
+      animation: shimmerSweep 3.5s infinite;
+    }
+
+    @keyframes shimmerSweep {
+      100% { transform: translateX(100%); }
     }
 
     .status-message {
-      color: var(--white);
-      font-size: 13px;
-      margin-top: 5px;
+      color: var(--text-main);
+      font-size: 13.5px;
+      margin-top: 11px;
+      font-weight: 500;
       overflow-wrap: anywhere;
     }
 
     .timer-label {
-      color: var(--muted);
-      font-size: 12px;
-      margin-top: 12px;
+      color: #C0B49F;
+      font-size: 11px;
+      letter-spacing: 1.5px;
+      font-weight: 750;
+      margin-top: 15px;
+      text-transform: uppercase;
     }
 
     #countdown {
-      color: var(--blue);
-      font-size: clamp(23px, 7vw, 28px);
+      background: var(--gold-text-metal);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-size: clamp(30px, 8.5vw, 36px);
       font-weight: 900;
-      letter-spacing: 1px;
+      letter-spacing: 2.5px;
       font-variant-numeric: tabular-nums;
       white-space: nowrap;
+      margin-top: 2px;
+      filter: drop-shadow(0 2px 14px rgba(247, 229, 153, 0.45));
     }
 
     .status-box.connection-error {
       display: flex;
       align-items: center;
       justify-content: center;
-      min-height: 58px;
-      padding: 15px 10px;
+      min-height: 60px;
+      padding: 16px 12px;
+      border-color: rgba(224, 82, 99, 0.45);
+      background: rgba(224, 82, 99, 0.08);
+      box-shadow: 0 0 20px rgba(224, 82, 99, 0.15);
+    }
+
+    .status-box.connection-error::before {
+      background: linear-gradient(90deg, transparent, var(--red), transparent);
     }
 
     .connection-error .status-title,
@@ -187,183 +439,496 @@
 
     .connection-error .status-message {
       margin: 0;
-      color: var(--blue);
-      font-size: 15px;
+      color: #FF8596;
+      font-size: 14.5px;
       font-weight: 800;
     }
 
     label {
       display: block;
-      color: var(--white);
-      font-size: 14px;
+      color: #F1E5D2;
+      font-size: 13.5px;
       font-weight: 700;
-      margin: 16px 0 8px;
+      margin: 18px 0 8px;
     }
 
     select {
       display: block;
       width: 100%;
       min-width: 0;
-      min-height: 46px;
-      padding: 10px 12px;
+      min-height: 48px;
+      padding: 12px 14px;
       color: var(--white);
-      background: #050505;
-      border: 1px solid var(--blue);
-      border-radius: 9px;
+      background: rgba(14, 11, 7, 0.95);
+      border: 1.5px solid rgba(236, 200, 106, 0.35);
+      border-radius: 13px;
       outline: none;
+      font-size: 14px;
+      font-weight: 500;
+      transition: all 0.2s ease;
+      appearance: none;
+      -webkit-appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23ECC86A' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+      padding-right: 40px;
+      box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.6);
     }
 
-    select:focus-visible,
-    button:focus-visible {
-      outline: 2px solid var(--blue);
-      outline-offset: 3px;
+    select:focus {
+      border-color: var(--gold-light);
+      box-shadow: 0 0 0 3px rgba(236, 200, 106, 0.25), 0 0 18px var(--gold-glow);
     }
 
     select option {
       color: var(--white);
-      background: #050505;
+      background: #141009;
+      padding: 8px;
     }
 
+    /* Primary Button: Realistic Gold Bullion Ingot */
     .primary-button {
-      display: block;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       width: 100%;
-      min-height: 42px;
-      padding: 9px 12px;
-      margin-top: 13px;
-      border: 1px solid var(--blue);
-      border-radius: 9px;
-      color: #000000;
-      background: var(--blue);
-      font-size: 14px;
+      min-height: 50px;
+      padding: 12px 18px;
+      margin-top: 18px;
+      border: 1px solid #FFE9A0;
+      border-radius: 13px;
+      color: #171104;
+      background: var(--bullion-gradient);
+      font-size: 15.5px;
       font-weight: 900;
+      letter-spacing: 0.6px;
+      box-shadow: 0 5px 22px var(--gold-glow), 0 1px 0 rgba(255, 255, 255, 0.6) inset, inset 0 -2px 0 rgba(150, 108, 27, 0.6);
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    .primary-button::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.35), transparent);
+      transform: translateX(-120%);
+      transition: transform 0.6s ease;
+      pointer-events: none;
+    }
+
+    .primary-button:hover:not(:disabled) {
+      transform: translateY(-2px);
+      background: var(--bullion-hover);
+      box-shadow: 0 8px 30px var(--gold-glow-intense), 0 0 18px rgba(255, 240, 184, 0.6), 0 1px 0 #FFFFFF inset;
+      color: #0F0B02;
+    }
+
+    .primary-button:hover:not(:disabled)::before {
+      transform: translateX(120%);
+    }
+
+    .primary-button:active:not(:disabled) {
+      transform: translateY(0);
+      box-shadow: 0 3px 14px var(--gold-glow);
     }
 
     .secondary-button {
-      min-height: 38px;
-      padding: 8px 16px;
-      border: 1px solid var(--blue);
-      border-radius: 8px;
-      background: transparent;
-      color: var(--blue);
-      font-size: 13px;
+      min-height: 42px;
+      padding: 10px 22px;
+      border: 1.5px solid var(--gold-pure);
+      border-radius: 11px;
+      background: rgba(236, 200, 106, 0.1);
+      color: var(--gold-light);
+      font-size: 13.5px;
       font-weight: 800;
+      box-shadow: 0 0 14px var(--gold-glow-soft);
+    }
+
+    .secondary-button:hover {
+      background: var(--bullion-gradient);
+      color: #151004;
+      border-color: #FFF3B3;
+      box-shadow: 0 0 20px var(--gold-glow);
     }
 
     .message {
-      margin-top: 12px;
+      margin-top: 14px;
       font-size: 13px;
-      color: var(--blue);
+      font-weight: 600;
+      color: var(--gold-light);
+      text-align: center;
       overflow-wrap: anywhere;
     }
 
-    .message.error { color: #FF7777; }
-
-    .muted {
-      color: var(--muted);
-      font-size: 12px;
+    .message.error {
+      color: #FF7084;
+      text-shadow: 0 0 10px rgba(255, 112, 132, 0.3);
     }
 
     .notice {
       width: 100%;
-      border: 0;
-      padding: 4px 0 18px;
-      margin: 0 0 12px;
+      margin: 0 0 14px;
       text-align: center;
-      background: transparent;
-    }
-
-    .notice h2 {
-      margin: 0 0 12px;
-      color: var(--red);
-      font-size: 16px;
-      font-weight: 900;
     }
 
     .announcement-button,
     .fixed-notice-button {
-      display: block;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       width: 100%;
-      min-height: 42px;
-      padding: 9px 14px;
-      border-radius: 9px;
-      background: transparent;
-      color: var(--white);
+      min-height: 48px;
+      padding: 11px 16px;
+      border-radius: 13px;
       font-size: 14px;
       font-weight: 800;
+      letter-spacing: 0.3px;
+      backdrop-filter: blur(10px);
     }
 
     .announcement-button {
-      border: 1px solid var(--blue);
+      background: rgba(236, 200, 106, 0.07);
+      border: 1.5px solid rgba(236, 200, 106, 0.38);
+      color: #F8DE8B;
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 240, 184, 0.15);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .announcement-button:hover {
+      background: rgba(236, 200, 106, 0.16);
+      border-color: var(--gold-light);
+      box-shadow: 0 0 20px var(--gold-glow), 0 4px 20px rgba(0,0,0,0.5);
+      color: #FFFBEA;
     }
 
     .fixed-notice-button {
-      border: 1px solid var(--red);
+      background: rgba(224, 82, 99, 0.07);
+      border: 1.5px solid rgba(224, 82, 99, 0.38);
+      color: #F87185;
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.4);
+    }
+
+    .fixed-notice-button:hover {
+      background: rgba(224, 82, 99, 0.16);
+      border-color: var(--red);
+      box-shadow: 0 0 18px var(--red-glow);
     }
 
     #announcement,
     #fixedNoticeText {
       white-space: pre-line;
       overflow-wrap: anywhere;
-      color: var(--white);
+      color: #EAE3D6;
       font-size: 14px;
       text-align: left;
       line-height: 1.8;
+      background: rgba(5, 4, 3, 0.55);
+      padding: 16px;
+      border-radius: 12px;
+      border: 1px solid rgba(236, 200, 106, 0.18);
     }
 
-    .result { margin: 16px 0; }
+    #resultsStatus {
+      font-size: 13.5px;
+      color: var(--muted);
+      font-weight: 600;
+      margin-bottom: 16px;
+    }
+
+    /* ========================================================
+       TOP 3 PODIUM & PRESTIGE LEADERBOARD STYLING
+       ======================================================== */
+    .podium-container {
+      display: grid;
+      grid-template-columns: 1fr 1.08fr 1fr;
+      gap: 10px;
+      align-items: end;
+      margin: 12px 0 24px;
+    }
+
+    .podium-card {
+      position: relative;
+      border-radius: 18px;
+      padding: 16px 10px 14px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+      overflow: hidden;
+      backdrop-filter: blur(12px);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .podium-card:hover {
+      transform: translateY(-3px);
+    }
+
+    /* 1st Place Champion Crown Card */
+    .podium-first {
+      order: 2;
+      min-height: 195px;
+      background: linear-gradient(180deg, rgba(236, 200, 106, 0.2) 0%, rgba(32, 24, 13, 0.95) 100%);
+      border: 1.8px solid #FFE48F;
+      box-shadow: 0 12px 36px rgba(0, 0, 0, 0.7), 0 0 32px rgba(236, 200, 106, 0.35), inset 0 1px 2px #FFF9DB;
+      z-index: 2;
+    }
+
+    .podium-first::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--bullion-gradient);
+      box-shadow: 0 0 12px #FFE599;
+    }
+
+    .podium-second {
+      order: 1;
+      min-height: 165px;
+      background: linear-gradient(180deg, rgba(207, 216, 220, 0.12) 0%, rgba(20, 18, 15, 0.92) 100%);
+      border: 1.4px solid rgba(220, 230, 242, 0.45);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6), 0 0 18px rgba(207, 216, 220, 0.15);
+      z-index: 1;
+    }
+
+    .podium-third {
+      order: 3;
+      min-height: 150px;
+      background: linear-gradient(180deg, rgba(216, 125, 56, 0.12) 0%, rgba(20, 16, 13, 0.92) 100%);
+      border: 1.4px solid rgba(255, 183, 77, 0.4);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6), 0 0 18px rgba(216, 125, 56, 0.15);
+      z-index: 1;
+    }
+
+    .podium-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: 0.8px;
+      padding: 4px 10px;
+      border-radius: 20px;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+      white-space: nowrap;
+    }
+
+    .podium-first .podium-badge {
+      background: var(--bullion-gradient);
+      color: #171104;
+      box-shadow: 0 2px 10px rgba(236, 200, 106, 0.6);
+      animation: championGlow 3s ease-in-out infinite alternate;
+    }
+
+    @keyframes championGlow {
+      0% { box-shadow: 0 2px 10px rgba(236, 200, 106, 0.5); }
+      100% { box-shadow: 0 3px 20px rgba(255, 243, 179, 0.85); }
+    }
+
+    .podium-second .podium-badge {
+      background: var(--silver-gold-metal);
+      color: #1A2027;
+      box-shadow: 0 2px 8px rgba(207, 216, 220, 0.4);
+    }
+
+    .podium-third .podium-badge {
+      background: var(--bronze-gold-metal);
+      color: #1F1206;
+      box-shadow: 0 2px 8px rgba(216, 125, 56, 0.4);
+    }
+
+    .podium-township {
+      font-size: 14.5px;
+      font-weight: 800;
+      color: #FFFFFF;
+      margin: 4px 0 6px;
+      line-height: 1.3;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      min-height: 38px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .podium-first .podium-township {
+      font-size: 16px;
+      background: var(--gold-text-metal);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      filter: drop-shadow(0 1px 4px rgba(236, 200, 106, 0.3));
+    }
+
+    .podium-votes {
+      font-size: 13.5px;
+      font-weight: 900;
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      padding: 4px 10px;
+      border-radius: 12px;
+      margin-top: 2px;
+      background: rgba(0, 0, 0, 0.45);
+      border: 1px solid rgba(236, 200, 106, 0.25);
+    }
+
+    .podium-first .podium-votes {
+      border-color: rgba(255, 230, 148, 0.6);
+      background: rgba(28, 22, 12, 0.8);
+      color: #FFF6D1;
+    }
+
+    .podium-first .podium-votes .fire {
+      display: inline-block;
+      animation: flamePulse 1.8s infinite ease-in-out;
+    }
+
+    @keyframes flamePulse {
+      0%, 100% { transform: scale(1); filter: drop-shadow(0 0 2px #FFB300); }
+      50% { transform: scale(1.22); filter: drop-shadow(0 0 6px #FF7043); }
+    }
+
+    .podium-percentage {
+      font-size: 10.5px;
+      color: #B5A893;
+      font-weight: 700;
+      margin-top: 5px;
+      letter-spacing: 0.3px;
+    }
+
+    .podium-first .podium-percentage {
+      color: #F8DE8B;
+    }
+
+    /* Ranks 4+ Leaderboard Section */
+    .ranks-list-title {
+      font-size: 11.5px;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: #A39682;
+      font-weight: 800;
+      margin: 18px 0 10px;
+      padding-left: 4px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .ranks-list-title::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, rgba(236, 200, 106, 0.25), transparent);
+    }
+
+    .result {
+      margin: 9px 0;
+      padding: 10px 14px;
+      background: rgba(20, 16, 11, 0.72);
+      border: 1px solid rgba(236, 200, 106, 0.18);
+      border-radius: 14px;
+      box-shadow: inset 0 1px 0 rgba(255, 240, 184, 0.06), 0 3px 10px rgba(0, 0, 0, 0.35);
+      transition: all 0.2s ease;
+    }
+
+    .result:hover {
+      border-color: rgba(236, 200, 106, 0.35);
+      background: rgba(26, 21, 14, 0.88);
+      transform: translateX(2px);
+    }
 
     .result-head {
       display: grid;
-      grid-template-columns: 25px minmax(0, 1fr) auto;
+      grid-template-columns: 28px minmax(0, 1fr) auto;
       align-items: center;
-      gap: 8px;
-      margin-bottom: 8px;
+      gap: 10px;
+      margin-bottom: 7px;
     }
 
-    .rank {
-      color: var(--blue);
+    .rank-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: rgba(40, 31, 18, 0.85);
+      border: 1px solid rgba(236, 200, 106, 0.3);
+      color: #F8DE8B;
       font-weight: 900;
-      font-size: 13px;
+      font-size: 12px;
+      box-shadow: inset 0 1px 2px rgba(255, 249, 219, 0.15);
     }
 
     .township-name {
       min-width: 0;
       overflow-wrap: anywhere;
       font-size: 14px;
+      font-weight: 600;
       color: var(--white);
     }
 
+    .vote-stat {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .vote-percentage-pill {
+      font-size: 11px;
+      font-weight: 750;
+      color: #C7BAA5;
+      background: rgba(0, 0, 0, 0.35);
+      padding: 2px 7px;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
     .vote-count {
-      color: var(--blue);
-      font-size: 12px;
-      font-weight: 800;
+      background: var(--bullion-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-size: 13.5px;
+      font-weight: 900;
       white-space: nowrap;
       text-align: right;
     }
 
     .bar-bg {
-      height: 7px;
-      background: #20262D;
+      height: 8px;
+      background: rgba(30, 24, 15, 0.95);
       border-radius: 20px;
       overflow: hidden;
+      box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(236, 200, 106, 0.1);
     }
 
     .bar {
       height: 100%;
-      background: var(--blue);
+      background: var(--bullion-gradient);
       border-radius: 20px;
-      transition: width 0.3s ease;
+      transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 0 12px var(--gold-glow);
     }
 
     footer {
       width: 100%;
       min-height: 24px;
-      background: #000000;
+      background: transparent;
       border: 0;
       padding: 0;
       margin: 0;
     }
 
+    /* Modal styling */
     .modal {
       position: fixed;
       inset: 0;
@@ -374,171 +939,242 @@
       padding: 20px;
       padding-top: max(20px, env(safe-area-inset-top));
       padding-bottom: max(20px, env(safe-area-inset-bottom));
-      background: #000000E8;
+      background: rgba(5, 4, 3, 0.88);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
       overflow-y: auto;
+      animation: modalFadeIn 0.25s ease-out;
+    }
+
+    @keyframes modalFadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
     }
 
     .modal[hidden] { display: none !important; }
 
     .modal-box {
       width: 100%;
-      max-width: 350px;
+      max-width: 390px;
       max-height: 85vh;
       max-height: 85dvh;
       overflow-y: auto;
-      padding: 22px 18px;
-      border: 1px solid var(--blue);
-      border-radius: 14px;
-      background: #080808;
+      padding: 26px 22px;
+      border: 1.5px solid rgba(236, 200, 106, 0.4);
+      border-radius: 24px;
+      background: #110D07;
       text-align: center;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.85), 0 0 40px rgba(236, 200, 106, 0.22), inset 0 1px 1px rgba(255, 243, 179, 0.3);
+      animation: modalPop 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+    }
+
+    @keyframes modalPop {
+      from { transform: scale(0.95); }
+      to { transform: scale(1); }
     }
 
     .modal-box h2 {
-      color: var(--blue);
-      font-size: 18px;
+      justify-content: center;
+      background: var(--gold-text-metal);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-size: 20px;
       margin-bottom: 12px;
     }
 
     #announcementTitle {
       display: block;
       width: 100%;
-      padding: 0 0 10px;
-      margin: 0 0 16px;
-      color: var(--blue);
+      padding: 0 0 12px;
+      margin: 0 0 18px;
+      background: var(--gold-text-metal);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
       border: 0;
-      border-bottom: 1px solid var(--blue);
+      border-bottom: 1px solid rgba(236, 200, 106, 0.3);
       border-radius: 0;
-      font-size: 18px;
+      font-size: 20px;
+      font-weight: 800;
       text-align: center;
     }
 
     #fixedNoticeTitle {
       display: block;
       width: 100%;
-      padding: 8px 10px;
+      padding: 0 0 12px;
       margin: 0 0 16px;
-      color: var(--red);
+      color: #F87185;
       border: 0;
       border-radius: 0;
-      font-size: 18px;
+      font-size: 20px;
+      font-weight: 800;
       text-align: center;
     }
 
     .fixed-notice-divider {
       width: 100%;
       height: 1px;
-      background: var(--red);
-      margin: -4px 0 16px;
+      background: rgba(224, 82, 99, 0.3);
+      margin: -6px 0 18px;
     }
 
     .modal-box p {
-      color: var(--white);
+      color: #EAE3D6;
       overflow-wrap: anywhere;
+      font-size: 14.5px;
     }
 
     .modal-actions {
       display: flex;
-      gap: 10px;
-      margin-top: 18px;
+      gap: 12px;
+      margin-top: 22px;
     }
 
     .modal-actions button {
       flex: 1;
       min-width: 0;
-      min-height: 39px;
-      padding: 8px;
-      border-radius: 8px;
-      font-size: 13px;
+      min-height: 46px;
+      padding: 10px 14px;
+      border-radius: 12px;
+      font-size: 14px;
       font-weight: 800;
     }
 
     .cancel-button {
-      border: 1px solid #69737D;
+      border: 1px solid rgba(175, 165, 149, 0.35);
+      color: var(--muted);
+      background: rgba(30, 24, 17, 0.6);
+    }
+
+    .cancel-button:hover {
+      background: rgba(50, 41, 29, 0.8);
       color: var(--white);
-      background: #151515;
     }
 
     .confirm-button {
-      border: 1px solid var(--blue);
-      color: #000000;
-      background: var(--blue);
+      border: 1px solid #FFE9A0;
+      color: #171104;
+      background: var(--bullion-gradient);
+      box-shadow: 0 0 18px var(--gold-glow);
+    }
+
+    .confirm-button:hover {
+      background: var(--bullion-hover);
+      box-shadow: 0 0 25px rgba(255, 217, 115, 0.7);
     }
 
     .success-icon {
-      color: var(--blue);
-      font-size: 40px;
+      color: #181205;
+      font-size: 32px;
       font-weight: 900;
-      line-height: 1.3;
+      line-height: 1;
+      width: 62px;
+      height: 62px;
+      margin: 0 auto 14px;
+      background: var(--bullion-gradient);
+      border: 2px solid #FFF3B3;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 28px var(--gold-glow-intense), inset 0 2px 2px #FFFFFF;
     }
 
     .selected-township {
-      border: 1px solid var(--blue);
-      border-radius: 9px;
-      padding: 12px;
-      margin: 16px 0;
+      border: 1.5px solid rgba(236, 200, 106, 0.35);
+      background: rgba(236, 200, 106, 0.08);
+      border-radius: 16px;
+      padding: 15px;
+      margin: 18px 0;
+      box-shadow: inset 0 1px 1px rgba(255, 240, 184, 0.15);
     }
 
     .selected-township .caption {
-      color: var(--white);
+      color: var(--muted);
       font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
     }
 
     .selected-township .name {
-      color: var(--blue);
-      font-size: 17px;
+      background: var(--gold-text-metal);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-size: 19px;
       font-weight: 900;
-      margin-top: 5px;
+      margin-top: 6px;
+      filter: drop-shadow(0 1px 8px var(--gold-glow));
+    }
+
+    @media (max-width: 420px) {
+      .podium-container {
+        gap: 6px;
+      }
+
+      .podium-card {
+        padding: 14px 6px 12px;
+      }
+
+      .podium-badge {
+        font-size: 9.5px;
+        padding: 3px 6px;
+        letter-spacing: 0.4px;
+      }
+
+      .podium-township {
+        font-size: 13px;
+        min-height: 34px;
+      }
+
+      .podium-first .podium-township {
+        font-size: 14px;
+      }
+
+      .podium-votes {
+        font-size: 12px;
+        padding: 3px 7px;
+      }
     }
 
     @media (max-width: 380px) {
       header {
-        gap: 9px;
-        padding-left: 10px;
-        padding-right: 10px;
+        gap: 10px;
+        padding-left: 12px;
+        padding-right: 12px;
       }
 
-      .logo-placeholder {
+      .logo-frame {
         width: 40px;
         height: 40px;
         flex-basis: 40px;
       }
 
-      .brand p { letter-spacing: 0.5px; }
+      .logo-placeholder {
+        width: 36px;
+        height: 36px;
+        border-radius: 11px;
+        font-size: 13px;
+      }
 
       main {
-        margin-top: 14px;
-        padding-left: 10px;
-        padding-right: 10px;
-      }
-
-      .card {
-        padding: 14px;
-        border-radius: 12px;
-      }
-
-      .result-head {
-        grid-template-columns: 22px minmax(0, 1fr) auto;
-        gap: 6px;
-      }
-
-      .vote-count { font-size: 11px; }
-
-      .modal {
+        margin-top: 16px;
         padding-left: 12px;
         padding-right: 12px;
       }
 
-      .modal-box { padding: 18px 14px; }
-    }
-
-    @media (min-width: 700px) {
-      main {
-        max-width: 560px;
-        padding-left: 18px;
-        padding-right: 18px;
+      .card {
+        padding: 18px 15px;
+        border-radius: 18px;
       }
 
-      .card { padding: 20px; }
+      .result-head {
+        grid-template-columns: 24px minmax(0, 1fr) auto;
+        gap: 6px;
+      }
+
+      .modal-box { padding: 20px 16px; }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -547,191 +1183,169 @@
       *::after {
         scroll-behavior: auto !important;
         transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+      }
+      .particle, .ambient-aura, .logo-frame::before, .podium-first .podium-votes .fire {
+        animation: none !important;
       }
     }
   </style>
 </head>
-
 <body>
-  <header>
-    <div class="logo-placeholder" aria-label="KHAN BHAI logo">
-      KB
-    </div>
-
-    <div class="brand">
-      <h1>KHAN BHAI</h1>
-      <p>TOWNSHIP VOTING SYSTEM</p>
-    </div>
-  </header>
-
-  <main>
-    <section class="card">
-      <div id="statusBox" class="status-box"
-        role="status" aria-live="polite">
-
-        <div id="statusTitle" class="status-title">
+<!-- Ambient Luxury Golden Aura Gradients -->
+<div aria-hidden="true" class="ambient-aura aura-1"></div>
+<div aria-hidden="true" class="ambient-aura aura-2"></div>
+<!-- Ambient Floating Gold Dust Particles -->
+<div aria-hidden="true" class="particles-field">
+<div class="particle"></div>
+<div class="particle"></div>
+<div class="particle"></div>
+<div class="particle"></div>
+<div class="particle"></div>
+<div class="particle"></div>
+<div class="particle"></div>
+<div class="particle"></div>
+<div class="particle"></div>
+<div class="particle"></div>
+</div>
+<header>
+<div class="logo-frame">
+<div aria-label="KHAN BHAI logo" class="logo-placeholder">
+<span class="logo-text">KB</span>
+</div>
+</div>
+<div class="brand">
+<h1>KHAN BHAI</h1>
+<p>TOWNSHIP VOTING SYSTEM</p>
+</div>
+</header>
+<main>
+<section class="card">
+<div aria-live="polite" class="status-box" id="statusBox" role="status">
+<div class="status-title" id="statusTitle">
           CHECKING STATUS
         </div>
-
-        <div id="statusMessage" class="status-message">
+<div class="status-message" id="statusMessage">
           Database ချိတ်ဆက်မှုကို စစ်ဆေးနေပါသည်...
         </div>
-
-        <div id="timerLabel" class="timer-label">
+<div class="timer-label" id="timerLabel">
           VOTING CLOSES IN
         </div>
-
-        <div id="countdown">--:--:--</div>
-      </div>
-
-      <label for="township">မြို့နယ်ရွေးချယ်ပါ</label>
-
-      <!-- အတည်ပြုထားသော မြို့နယ် 33 ခု -->
-      <select id="township">
-        <option value="">မြို့နယ်ရွေးချယ်ရန်</option>
-        <option>အလုံ</option>
-        <option>ဗဟန်း</option>
-        <option>ဒဂုံ</option>
-        <option>ဒဂုံမြို့သစ် (မြောက်ပိုင်း)</option>
-        <option>ဒဂုံမြို့သစ် (တောင်ပိုင်း)</option>
-        <option>ဒဂုံမြို့သစ် (အရှေ့ပိုင်း)</option>
-        <option>ဒဂုံမြို့သစ် (ဆိပ်ကမ်း)</option>
-        <option>ဒလ</option>
-        <option>အင်းစိန်</option>
-        <option>ကမာရွတ်</option>
-        <option>ကျောက်တံတား</option>
-        <option>ကြည့်မြင်တိုင်</option>
-        <option>လှိုင်</option>
-        <option>လှိုင်သာယာ (အရှေ့ပိုင်း)</option>
-        <option>လှိုင်သာယာ (အနောက်ပိုင်း)</option>
-        <option>လမ်းမတော်</option>
-        <option>လသာ</option>
-        <option>မင်္ဂလာဒုံ</option>
-        <option>မင်္ဂလာတောင်ညွန့်</option>
-        <option>မြောက်ဥက္ကလာပ</option>
-        <option>ပန်းဘဲတန်း</option>
-        <option>စမ်းချောင်း</option>
-        <option>ရွှေပြည်သာ</option>
-        <option>တောင်ဥက္ကလာပ</option>
-        <option>တာမွေ</option>
-        <option>သင်္ဃန်းကျွန်း</option>
-        <option>သန်လျင်</option>
-        <option>တွံတေး</option>
-        <option>ရန်ကင်း</option>
-        <option>လှည်းကူး</option>
-        <option>တိုက်ကြီး</option>
-        <option>မှော်ဘီ</option>
-        <option>မရမ်းကုန်း</option>
-      </select>
-
-      <button id="voteButton" class="primary-button" disabled>
+<div id="countdown">--:--:--</div>
+</div>
+<label for="township">မြို့နယ်ရွေးချယ်ပါ</label>
+<!-- အတည်ပြုထားသော မြို့နယ် 33 ခု -->
+<select id="township">
+<option value="">မြို့နယ်ရွေးချယ်ရန်</option>
+<option>အလုံ</option>
+<option>ဗဟန်း</option>
+<option>ဒဂုံ</option>
+<option>ဒဂုံမြို့သစ် (မြောက်ပိုင်း)</option>
+<option>ဒဂုံမြို့သစ် (တောင်ပိုင်း)</option>
+<option>ဒဂုံမြို့သစ် (အရှေ့ပိုင်း)</option>
+<option>ဒဂုံမြို့သစ် (ဆိပ်ကမ်း)</option>
+<option>ဒလ</option>
+<option>အင်းစိန်</option>
+<option>ကမာရွတ်</option>
+<option>ကျောက်တံတား</option>
+<option>ကြည့်မြင်တိုင်</option>
+<option>လှိုင်</option>
+<option>လှိုင်သာယာ (အရှေ့ပိုင်း)</option>
+<option>လှိုင်သာယာ (အနောက်ပိုင်း)</option>
+<option>လမ်းမတော်</option>
+<option>လသာ</option>
+<option>မင်္ဂလာဒုံ</option>
+<option>မင်္ဂလာတောင်ညွန့်</option>
+<option>မြောက်ဥက္ကလာပ</option>
+<option>ပန်းဘဲတန်း</option>
+<option>စမ်းချောင်း</option>
+<option>ရွှေပြည်သာ</option>
+<option>တောင်ဥက္ကလာပ</option>
+<option>တာမွေ</option>
+<option>သင်္ဃန်းကျွန်း</option>
+<option>သန်လျင်</option>
+<option>တွံတေး</option>
+<option>ရန်ကင်း</option>
+<option>လှည်းကူး</option>
+<option>တိုက်ကြီး</option>
+<option>မှော်ဘီ</option>
+<option>မရမ်းကုန်း</option>
+</select>
+<button class="primary-button" disabled="" id="voteButton">
         Voting လုပ်မည်
       </button>
-
-      <div id="message" class="message"
-        role="status" aria-live="polite"></div>
-    </section>
-
-    <section class="notice">
-      <button id="openAnnouncement" class="announcement-button">
+<div aria-live="polite" class="message" id="message" role="status"></div>
+</section>
+<section class="notice">
+<button class="announcement-button" id="openAnnouncement">
         ကြေညာချက်ကြည့်ရန်
       </button>
-    </section>
-
-    <section class="notice">
-      <button id="openFixedNotice" class="fixed-notice-button">
+</section>
+<section class="notice">
+<button class="fixed-notice-button" id="openFixedNotice">
         အသိပေးချက်ကြည့်ရန်
       </button>
-    </section>
-
-    <section class="card">
-      <h2 class="blue">VOTING RESULTS</h2>
-
-      <p id="resultsStatus" aria-live="polite">
+</section>
+<section class="card">
+<h2 class="blue">VOTING RESULTS</h2>
+<p aria-live="polite" id="resultsStatus">
         မဲရလဒ်ကို မြန်မာစံတော်ချိန် ည 10 နာရီရောက်မှ ပြသပါမည်။
       </p>
-
-      <div id="results"></div>
-    </section>
-  </main>
-
-  <footer aria-hidden="true"></footer>
-
-  <div id="confirmModal" class="modal" hidden>
-    <div class="modal-box" role="dialog"
-      aria-modal="true" aria-labelledby="confirmTitle">
-
-      <h2 id="confirmTitle">အတည်ပြုရန်</h2>
-      <p id="confirmText"></p>
-
-      <div class="modal-actions">
-        <button id="cancelVote" class="cancel-button">
+<div id="results"></div>
+</section>
+</main>
+<footer aria-hidden="true"></footer>
+<div class="modal" hidden="" id="confirmModal">
+<div aria-labelledby="confirmTitle" aria-modal="true" class="modal-box" role="dialog">
+<h2 id="confirmTitle">အတည်ပြုရန်</h2>
+<p id="confirmText"></p>
+<div class="modal-actions">
+<button class="cancel-button" id="cancelVote">
           မလုပ်တော့ပါ
         </button>
-
-        <button id="confirmVote" class="confirm-button">
+<button class="confirm-button" id="confirmVote">
           အတည်ပြုမည်
         </button>
-      </div>
-    </div>
-  </div>
-
-  <div id="successModal" class="modal" hidden>
-    <div class="modal-box" role="dialog"
-      aria-modal="true" aria-labelledby="successTitle">
-
-      <div class="success-icon">✓</div>
-      <h2 id="successTitle">Vote Successful!</h2>
-
-      <div class="selected-township">
-        <div class="caption">သင်ရွေးချယ်ထားသော မြို့နယ်</div>
-        <div id="successTownship" class="name"></div>
-      </div>
-
-      <button id="closeSuccess" class="secondary-button">
+</div>
+</div>
+</div>
+<div class="modal" hidden="" id="successModal">
+<div aria-labelledby="successTitle" aria-modal="true" class="modal-box" role="dialog">
+<div class="success-icon">✓</div>
+<h2 id="successTitle">Vote Successful!</h2>
+<div class="selected-township">
+<div class="caption">သင်ရွေးချယ်ထားသော မြို့နယ်</div>
+<div class="name" id="successTownship"></div>
+</div>
+<button class="secondary-button" id="closeSuccess">
         ပိတ်မည်
       </button>
-    </div>
-  </div>
-
-  <div id="announcementModal" class="modal" hidden>
-    <div class="modal-box" role="dialog"
-      aria-modal="true" aria-labelledby="announcementTitle">
-
-      <h2 id="announcementTitle">ကြေညာချက်</h2>
-
-      <div id="announcement">
+</div>
+</div>
+<div class="modal" hidden="" id="announcementModal">
+<div aria-labelledby="announcementTitle" aria-modal="true" class="modal-box" role="dialog">
+<h2 id="announcementTitle">ကြေညာချက်</h2>
+<div id="announcement">
         ကြေညာချက်ကို ရယူနေပါသည်...
       </div>
-
-      <button id="closeAnnouncement"
-        class="secondary-button"
-        style="margin-top:18px">
+<button class="secondary-button" id="closeAnnouncement" style="margin-top:18px">
         ပိတ်မည်
       </button>
-    </div>
-  </div>
-
-  <div id="fixedNoticeModal" class="modal" hidden>
-    <div class="modal-box" role="dialog"
-      aria-modal="true" aria-labelledby="fixedNoticeTitle">
-
-      <h2 id="fixedNoticeTitle">အသိပေးချက်</h2>
-      <div class="fixed-notice-divider"></div>
-
-      <div id="fixedNoticeText">
+</div>
+</div>
+<div class="modal" hidden="" id="fixedNoticeModal">
+<div aria-labelledby="fixedNoticeTitle" aria-modal="true" class="modal-box" role="dialog">
+<h2 id="fixedNoticeTitle">အသိပေးချက်</h2>
+<div class="fixed-notice-divider"></div>
+<div id="fixedNoticeText">
         Voting ရလဒ်များသည် မြို့နယ်အလိုက် လူအများ၏ စိတ်ဝင်စားမှုကို သိရှိနိုင်ရန်အတွက်သာ ဖြစ်ပါသည်။ မဲအများဆုံးရရှိသည့် မြို့နယ်သို့ နောက်နေ့တွင် Khan Bhai လာရောက်ရောင်းချမည်ဟု အာမခံထားခြင်း မဟုတ်ပါ။ မည်သည့်မြို့နယ်တွင် မည်သည့်အချိန် လာရောက်ရောင်းချမည်ဆိုသည်မှာ Khan Bhai ဘက်မှ တရားဝင်ထုတ်ပြန်ကြေညာချက်အတိုင်းသာ အတည်ဖြစ်ပါသည်။
       </div>
-
-      <button id="closeFixedNotice"
-        class="secondary-button"
-        style="margin-top:18px">
+<button class="secondary-button" id="closeFixedNotice" style="margin-top:18px">
         ပိတ်မည်
       </button>
-    </div>
-  </div>
-
-  <script type="module">
+</div>
+</div>
+<script type="module">
     import { createClient } from
       "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
 
@@ -944,6 +1558,8 @@
       const sorted = Object.entries(counts)
         .sort((a, b) => b[1] - a[1]);
 
+      const activeEntries = sorted.filter(([_, count]) => count > 0);
+
       const total = Object.values(counts)
         .reduce((sum, count) => sum + count, 0);
 
@@ -952,50 +1568,110 @@
       $("resultsStatus").textContent =
         "စုစုပေါင်း Votes: " + englishDigits(total);
 
-      let rank = 0;
-
-      for (const [name, count] of sorted) {
-        if (count === 0) continue;
-
-        rank++;
-
-        const row = document.createElement("div");
-        row.className = "result";
-
-        const head = document.createElement("div");
-        head.className = "result-head";
-
-        const rankLabel = document.createElement("span");
-        rankLabel.className = "rank";
-        rankLabel.textContent = englishDigits(rank) + ".";
-
-        const townshipName = document.createElement("span");
-        townshipName.className = "township-name";
-        townshipName.textContent = name;
-
-        const voteCount = document.createElement("strong");
-        voteCount.className = "vote-count";
-        voteCount.textContent =
-          englishDigits(count) + " Votes";
-
-        head.append(rankLabel, townshipName, voteCount);
-
-        const barBg = document.createElement("div");
-        barBg.className = "bar-bg";
-
-        const bar = document.createElement("div");
-        bar.className = "bar";
-
-        bar.style.width =
-          (highest > 0 ? count / highest * 100 : 0) + "%";
-
-        barBg.append(bar);
-        row.append(head, barBg);
-        $("results").append(row);
+      if (total === 0 || activeEntries.length === 0) {
+        $("results").textContent = "လက်ရှိ Results မရှိသေးပါ။";
+        return;
       }
 
-      if (total === 0) {
-        $("results").textContent = "လက်ရှိ Results မရှိသေးပါ။";
+      const topEntries = activeEntries.slice(0, 3);
+      const remainingEntries = activeEntries.slice(3);
+
+      // 1. Build Top 3 Leaderboard Podium
+      const podium = document.createElement("div");
+      podium.className = "podium-container";
+
+      topEntries.forEach(([name, count], index) => {
+        const rank = index + 1;
+        const card = document.createElement("div");
+        const percentage = total > 0 ? ((count / total) * 100).toFixed(1) : "0";
+
+        if (rank === 1) {
+          card.className = "podium-card podium-first";
+          card.innerHTML = `
+            <div class="podium-badge">👑 1st Rank</div>
+            <div class="podium-township">${name}</div>
+            <div class="podium-votes">
+              <span class="fire">🔥</span> ${englishDigits(count)} Votes
+            </div>
+            <div class="podium-percentage">${englishDigits(percentage)}% of total</div>
+          `;
+        } else if (rank === 2) {
+          card.className = "podium-card podium-second";
+          card.innerHTML = `
+            <div class="podium-badge">🥈 2nd Rank</div>
+            <div class="podium-township">${name}</div>
+            <div class="podium-votes">
+              ${englishDigits(count)} Votes
+            </div>
+            <div class="podium-percentage">${englishDigits(percentage)}%</div>
+          `;
+        } else if (rank === 3) {
+          card.className = "podium-card podium-third";
+          card.innerHTML = `
+            <div class="podium-badge">🥉 3rd Rank</div>
+            <div class="podium-township">${name}</div>
+            <div class="podium-votes">
+              ${englishDigits(count)} Votes
+            </div>
+            <div class="podium-percentage">${englishDigits(percentage)}%</div>
+          `;
+        }
+
+        podium.appendChild(card);
+      });
+
+      $("results").append(podium);
+
+      // 2. Build Ranks 4+ Leaderboard List
+      if (remainingEntries.length > 0) {
+        const listHeader = document.createElement("div");
+        listHeader.className = "ranks-list-title";
+        listHeader.textContent = "Rankings 4+";
+        $("results").append(listHeader);
+
+        remainingEntries.forEach(([name, count], index) => {
+          const rank = index + 4;
+          const percentage = total > 0 ? ((count / total) * 100).toFixed(1) : "0";
+
+          const row = document.createElement("div");
+          row.className = "result";
+
+          const head = document.createElement("div");
+          head.className = "result-head";
+
+          const rankBadge = document.createElement("span");
+          rankBadge.className = "rank-badge";
+          rankBadge.textContent = englishDigits(rank);
+
+          const townshipName = document.createElement("span");
+          townshipName.className = "township-name";
+          townshipName.textContent = name;
+
+          const statGroup = document.createElement("div");
+          statGroup.className = "vote-stat";
+
+          const pctPill = document.createElement("span");
+          pctPill.className = "vote-percentage-pill";
+          pctPill.textContent = englishDigits(percentage) + "%";
+
+          const voteCount = document.createElement("strong");
+          voteCount.className = "vote-count";
+          voteCount.textContent = englishDigits(count) + " Votes";
+
+          statGroup.append(pctPill, voteCount);
+          head.append(rankBadge, townshipName, statGroup);
+
+          const barBg = document.createElement("div");
+          barBg.className = "bar-bg";
+
+          const bar = document.createElement("div");
+          bar.className = "bar";
+          bar.style.width = (highest > 0 ? (count / highest) * 100 : 0) + "%";
+
+          barBg.append(bar);
+          row.append(head, barBg);
+          $("results").append(row);
+        });
       }
     }
 
@@ -1221,5 +1897,4 @@
       refreshStatus();
     }, 30000);
   </script>
-</body>
-</html>
+</body></html>
